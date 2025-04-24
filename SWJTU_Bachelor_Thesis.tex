@@ -1,0 +1,77 @@
+%%%==============================导言区设置==============================%%%
+% 主文件：西南交通大学本科毕业论文模板示例
+% 使用 XeLaTeX 编译，中文环境依赖 ctex 宏包
+\documentclass[UTF8,openany,oneside,fontset=none]{ctexbook}
+
+% 自定义样式
+\usepackage{style/swjtu}
+
+%%%==============================正文结构==============================%%%
+
+\begin{document}
+
+%%%==============================前置部分==============================%%%
+
+% 1. 直接用key-value方式调用各命令
+\swjtuCover[
+  ctitle={中文论文题目},
+  etitle={ENGLISH TITLE},
+  grade={2021级},
+  id={2021114514},
+  name={张三},
+  major={软件工程},
+  advisor={李四教授},
+  year={2025},
+  month={6}
+]
+
+\swjtuDeclaration[
+  text={本人声明所提交的本科毕业论文是本人在导师指导下的独立研究成果，除文中已注明引用的内容外，不包含任何他人已发表或撰写的成果。}
+]
+
+\swjtuTask[
+  text={填写课题名称、研究内容、方法、进度等。}
+]
+
+\swjtuAbstractCNCmd[
+  text={这里填写中文摘要内容，简要说明研究背景、目的、方法、结果及结论，字数约300字。},
+  keywords={关键词1；关键词2；关键词3}
+]
+
+\swjtuAbstractENCmd[
+  text={Here is the English abstract. Briefly describe the background, objectives, methods, results, and conclusions, about 300 words.},
+  keywords={keyword1; keyword2; keyword3}
+]
+
+
+%%%==============================目录==============================%%%
+
+\tableofcontents
+\clearpage
+
+
+%%%==============================正文章节==============================%%%
+
+\input{chapters/introduction}     % 绪论
+\input{chapters/chapter1}         % 第一章
+
+
+%%%==============================结论与致谢==============================%%%
+
+\input{chapters/conclusion}       % 结论
+
+\input{chapters/acknowledgments}  % 致谢
+
+
+%%%==============================参考文献==============================%%%
+
+\bibliographystyle{plain}
+\bibliography{bibliography/references}
+
+
+%%%==============================附录==============================%%%
+
+\appendix
+\input{appendix/appendix}
+
+\end{document}

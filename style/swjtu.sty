@@ -1,0 +1,187 @@
+% swjtu.sty – 西南交通大学本科毕业论文样式
+% 版本：2025/04/24
+\ProvidesPackage{style/swjtu}[2025/04/24 SWJTU Thesis Style]
+
+% 页面页眉页脚设置
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}    % 清空默认页眉
+\fancyfoot{}    % 清空默认页脚
+
+% 页眉内容：居中西南交通大学本科毕业设计（论文）
+\fancyhead[C]{\zihao{-4}\heiti 西南交通大学本科毕业设计（论文）}
+% 页脚内容：居中第X页
+\fancyfoot[C]{第\zihao{-4}\heiti\thepage 页}
+
+% 分割线
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% 页面设置
+\RequirePackage{geometry}
+\geometry{
+  paper=a4paper,
+  left=2.7cm, right=2.7cm,
+  top=2.6cm, bottom=2.6cm
+}
+
+% 设置字体
+\setmainfont{Times New Roman}
+\setCJKmainfont[Path=fonts/]{simsun.ttc}
+
+\setCJKfamilyfont{songti}[Path=fonts/]{simsun.ttc}
+\newcommand{\songti}{\CJKfamily{songti}}
+
+\setCJKfamilyfont{heiti}[Path=fonts/]{simhei.ttf}
+\newcommand{\heiti}{\CJKfamily{heiti}}
+
+\newfontfamily{\ensongti}[Path=fonts/]{simsun.ttc}
+\newfontfamily{\enheiti}[Path=fonts/]{simhei.ttf}
+
+% ================== 中英文混排统一字体环境 ==================
+% 定义两个环境，使中英文在环境内使用相同字体
+\RequirePackage{environ}
+
+% 黑体环境：中英文都使用黑体
+\NewEnviron{allheiti}{%
+  {\heiti\enheiti\BODY}%
+}
+
+% 宋体环境：中英文都使用宋体
+\NewEnviron{allsongti}{%
+  {\songti\ensongti\BODY}%
+}
+
+% ================== 引入 xkeyval 宏包 ==================
+\RequirePackage{xkeyval}
+
+% ================== 新版封面命令（key-value 方式，完全自定义格式，单倍行距，空格用\hspace） ==================
+\makeatletter
+\define@key[swjtu]{cover}{ctitle}{\def\swjtu@ctitle{#1}}
+\define@key[swjtu]{cover}{etitle}{\def\swjtu@etitle{#1}}
+\define@key[swjtu]{cover}{grade}{\def\swjtu@grade{#1}}
+\define@key[swjtu]{cover}{id}{\def\swjtu@id{#1}}
+\define@key[swjtu]{cover}{name}{\def\swjtu@name{#1}}
+\define@key[swjtu]{cover}{major}{\def\swjtu@major{#1}}
+\define@key[swjtu]{cover}{advisor}{\def\swjtu@advisor{#1}}
+\define@key[swjtu]{cover}{year}{\def\swjtu@year{#1}}
+\define@key[swjtu]{cover}{month}{\def\swjtu@month{#1}}
+
+\newcommand{\swjtuCover}[1][]{
+  \def\swjtu@ctitle{}
+  \def\swjtu@etitle{}
+  \def\swjtu@grade{}
+  \def\swjtu@id{}
+  \def\swjtu@name{}
+  \def\swjtu@major{}
+  \def\swjtu@advisor{}
+  \def\swjtu@year{}
+  \def\swjtu@month{}
+  \setkeys[swjtu]{cover}{#1}
+
+  \begin{titlepage}
+    \zihao{5} \songti
+    \centering
+
+    % 宋体五号空行*3
+    ~\\
+    \vspace{2\baselineskip}
+
+    % 黑体小二标题
+    \begin{allheiti} \zihao{-2}
+      西\hspace{0.5em}南\hspace{0.5em}交\hspace{0.5em}通\hspace{0.5em}大\hspace{0.5em}学 \strut\\
+      本科毕业设计（论文）
+    \end{allheiti}\\
+
+    % 宋体五号空行*3
+    \vspace{3\baselineskip}
+
+    % 黑体二号中英文题目
+    \begin{allheiti} \zihao{2}
+      \swjtu@ctitle\strut\\
+      \swjtu@etitle
+    \end{allheiti}\\
+
+    % 宋体五号空行*7
+    \vspace{7\baselineskip}
+
+    % 黑体小四个人信息
+    \begin{allheiti} \zihao{-4}
+      \begin{tabular}{l}
+        年\hspace{2em}级:~\swjtu@grade \\
+        学\hspace{2em}号:~\swjtu@id    \\
+        姓\hspace{2em}名:~\swjtu@name  \\
+        专\hspace{2em}业:~\swjtu@major \\
+        指导老师:~\swjtu@advisor
+      \end{tabular}
+    \end{allheiti} \\
+
+    % 宋体五号空行*13
+    \vspace{13\baselineskip}
+
+    % 宋体小四日期
+    \begin{allsongti} \zihao{-4}
+      \swjtu@year 年\swjtu@month 月
+    \end{allsongti}
+
+  \end{titlepage}
+}
+\makeatother
+
+% ================== 中文摘要命令（key-value 方式） ==================
+\makeatletter
+\define@key[swjtu]{abstractcn}{text}{\def\swjtu@abstractcn{#1}}
+\define@key[swjtu]{abstractcn}{keywords}{\def\swjtu@keywordsCN{#1}}
+\newcommand{\swjtuAbstractCNCmd}[1][]{%
+  \def\swjtu@abstractcn{}
+  \def\swjtu@keywordsCN{}
+  \setkeys[swjtu]{abstractcn}{#1}
+  \chapter*{中文摘要}
+  \noindent
+  \swjtu@abstractcn
+  \\
+  \textbf{关键词：}\swjtu@keywordsCN
+}
+\makeatother
+
+% ================== 英文摘要命令（key-value 方式） ==================
+\makeatletter
+\define@key[swjtu]{abstracten}{text}{\def\swjtu@abstracten{#1}}
+\define@key[swjtu]{abstracten}{keywords}{\def\swjtu@keywordsEN{#1}}
+\newcommand{\swjtuAbstractENCmd}[1][]{%
+  \def\swjtu@abstracten{}
+  \def\swjtu@keywordsEN{}
+  \setkeys[swjtu]{abstracten}{#1}
+  \chapter*{Abstract}
+  \noindent
+  \swjtu@abstracten
+  \\
+  \textbf{Keywords:} \swjtu@keywordsEN
+}
+\makeatother
+
+% ================== 学术诚信声明命令（key-value 方式） ==================
+\makeatletter
+\define@key[swjtu]{declaration}{text}{\def\swjtu@declaration{#1}}
+\newcommand{\swjtuDeclaration}[1][]{%
+  \def\swjtu@declaration{}
+  \setkeys[swjtu]{declaration}{#1}
+  \chapter*{学术诚信声明}
+  \noindent
+  \swjtu@declaration
+}
+\makeatother
+
+% ================== 任务书命令（key-value 方式） ==================
+\makeatletter
+\define@key[swjtu]{task}{text}{\def\swjtu@task{#1}}
+\newcommand{\swjtuTask}[1][]{%
+  \def\swjtu@task{}
+  \setkeys[swjtu]{task}{#1}
+  \chapter*{任务书}
+  \noindent
+  \swjtu@task
+}
+\makeatother
+
+% 后续可添加自定义命令和格式设置
