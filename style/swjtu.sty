@@ -67,6 +67,7 @@
 \newcommand{\boxsurd}{      % 复选框
   \rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}
 }
+% 下划线
 \usepackage{xeCJKfntef}
 \renewcommand{\underline}{\CJKunderline[skip=false]}
 
@@ -428,38 +429,67 @@
 }
 \makeatother
 
-% ================== 中文摘要命令（key-value 方式） ==================
+%%% ======================= 中文摘要 ======================= %%%
 \makeatletter
-\define@key[swjtu]{abstractcn}{text}{\def\swjtu@abstractcn{#1}}
+\define@key[swjtu]{abstractcn}{abstract}{\def\swjtu@abstractCN{#1}}
 \define@key[swjtu]{abstractcn}{keywords}{\def\swjtu@keywordsCN{#1}}
-\newcommand{\swjtuAbstractCNCmd}[1][]{%
-  \def\swjtu@abstractcn{}
+
+\newcommand{\swjtuAbstractCN}[1][]{%
+  \def\swjtu@abstractCN{}
   \def\swjtu@keywordsCN{}
   \setkeys[swjtu]{abstractcn}{#1}
-  \chapter*{中文摘要}
+
+  \newpage
+
+  % 标题
+  \begin{center}
+    {\zihao{-2} \heiti 摘\hspace{3em}要}
+  \end{center}
+
+  \vspace{\baselineskip}
+
+  \swjtu@abstractCN
+
+  \vspace{\baselineskip}
+
   \noindent
-  \swjtu@abstractcn
-  \\
-  \textbf{关键词：}\swjtu@keywordsCN
+  {\zihao{-4} \heiti
+    关键词：\hspace{1em}\swjtu@keywordsCN
+  }
 }
 \makeatother
 
-% ================== 英文摘要命令（key-value 方式） ==================
+%%% ======================= 英文摘要 ======================= %%%
 \makeatletter
-\define@key[swjtu]{abstracten}{text}{\def\swjtu@abstracten{#1}}
+\define@key[swjtu]{abstracten}{abstract}{\def\swjtu@abstractEN{#1}}
 \define@key[swjtu]{abstracten}{keywords}{\def\swjtu@keywordsEN{#1}}
-\newcommand{\swjtuAbstractENCmd}[1][]{%
-  \def\swjtu@abstracten{}
+
+\newcommand{\swjtuAbstractEN}[1][]{%
+  \def\swjtu@abstractEN{}
   \def\swjtu@keywordsEN{}
   \setkeys[swjtu]{abstracten}{#1}
-  \chapter*{Abstract}
+
+  \newpage
+
+  % 标题
+  \begin{center}
+    \zihao{-2} Abstract
+  \end{center}
+
+  \vspace{\baselineskip}
+
+  \swjtu@abstractEN
+
+  \vspace{\baselineskip}
+
   \noindent
-  \swjtu@abstracten
-  \\
-  \textbf{Keywords:} \swjtu@keywordsEN
+    Key words:\hspace{1em}\swjtu@keywordsEN
 }
 \makeatother
 
-
-
-% 后续可添加自定义命令和格式设置
+%%% ======================== 目录 ======================== %%%
+\newcommand{\swjtuTable}{%
+  \tableofcontents
+  \clearpage
+  \pagenumbering{arabic}
+}
