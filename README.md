@@ -7,6 +7,7 @@
 - 完成版权使用授权
 - 完成任务书
 - 完成摘要
+- 完成目录
 
 ## 简介
 本项目为西南交通大学本科毕业设计（论文）LaTeX模板，依据《西南交通大学本科毕业设计（论文）撰写规范》（2022年修订稿）进行设计。
@@ -25,6 +26,7 @@
    xelatex SWJTU_Bachelor_Thesis.tex
    xelatex SWJTU_Bachelor_Thesis.tex
    ```
+   > 编译链：xelatex -> biber -> xelatex*2
 5. 参考文献请在`bibliography/references.bib`中维护。
 6. 你也可以将本模板上传到Overleaf平台进行在线编写，只需在Overleaf的“菜单-编译器”中选择XeLaTeX即可，无需其他特殊设置。
 
@@ -42,11 +44,14 @@
 
 ```json
 {
-    "latex-workshop.latex.outDir": "build",
+    "latex-workshop.latex.outDir": "./build",
     "latex-workshop.latex.recipes": [
         {
-            "name": "xelatex",
+            "name": "xelatex -> biber -> xelatex*2",
             "tools": [
+                "xelatex",
+                "biber",
+                "xelatex",
                 "xelatex"
             ]
         }
@@ -61,6 +66,14 @@
                 "-file-line-error",
                 "-output-directory=build",
                 "%DOC%"
+            ]
+        },
+        {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "--output-directory=build",
+                "%DOCFILE%"
             ]
         }
     ],

@@ -59,10 +59,16 @@
 
 %%% ======================== 杂项 ======================== %%%
 \RequirePackage{xkeyval}    % key-value
+\RequirePackage[
+  hidelinks,
+  colorlinks=false
+]{hyperref}
 \usepackage{setspace}       % 行距
 \usepackage{graphicx}       % 插入图片
 \usepackage{amssymb}        % 数学符号
 \usepackage{tabularx}       % 表格
+\usepackage{tocloft}        % 目录
+\usepackage{changepage}     % adjustwidth
 \setlength{\parindent}{2em} % 段首缩进
 \newcommand{\boxsurd}{      % 复选框
   \rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}
@@ -70,6 +76,10 @@
 % 下划线
 \usepackage{xeCJKfntef}
 \renewcommand{\underline}{\CJKunderline[skip=false]}
+
+%%% ======================= 参考文献 ======================= %%%
+\usepackage{biblatex}
+\addbibresource{bibliography/references.bib}
 
 %%% ======================== 扉页 ======================== %%%
 \makeatletter
@@ -483,13 +493,72 @@
   \vspace{\baselineskip}
 
   \noindent
-    Key words:\hspace{1em}\swjtu@keywordsEN
+  Key words:\hspace{1em}\swjtu@keywordsEN
 }
 \makeatother
 
 %%% ======================== 目录 ======================== %%%
-\newcommand{\swjtuTable}{%
-  \tableofcontents
+% 目录标题格式
+\renewcommand{\contentsname}{}
+
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{0pt}
+
+\ctexset{
+  chapter = {
+    number = \arabic{chapter},
+   }
+}
+
+% 章节条目格式
+\renewcommand{\cftchapfont}{\zihao{-4} \heiti}       % 章标题字体
+\renewcommand{\cftsecfont}{\zihao{-4} \songti}       % 节标题字体
+\renewcommand{\cftsubsecfont}{\zihao{-4} \songti}    % 子节标题字体
+\renewcommand{\cftchappagefont}{\zihao{-4}\rmfamily}
+\renewcommand{\cftsecpagefont}{\zihao{-4}\rmfamily}
+\renewcommand{\cftsubsecpagefont}{\zihao{-4}\rmfamily}
+
+\setlength{\cftchapnumwidth}{2em}    % 章编号宽度
+\setlength{\cftsecnumwidth}{0em}     % 节编号宽度
+\setlength{\cftsubsecnumwidth}{0em}  % 子节编号宽度
+
+\renewcommand{\cftchapaftersnum}{\hspace{0.5em}}
+\renewcommand{\cftsecaftersnum}{\hspace{0.5em}}
+\renewcommand{\cftsubsecaftersnum}{\hspace{0.5em}}
+
+% 缩进设置
+\setlength{\cftchapindent}{0em}    % 章缩进
+\setlength{\cftsecindent}{0em}     % 节缩进
+\setlength{\cftsubsecindent}{2em}  % 子节缩进
+
+% 取消章目录项之间的额外间距
+\setlength{\cftbeforechapskip}{0pt}
+
+% 点线间隔
+\renewcommand{\cftdotsep}{1}        % 点线密度
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % 章引导符
+
+\newcommand{\swjtuTableOfContents}{
+  \newpage
+
+  \begin{center}
+    \zihao{-4} \heiti 目\hspace{1em}录
+  \end{center}
+
+  \vspace{\baselineskip}
+
+  \begin{adjustwidth}{4em}{4em}
+    \begin{spacing}{1.5}
+      \tableofcontents
+    \end{spacing}
+  \end{adjustwidth}
+  \thispagestyle{fancy}
+
+  \ifodd\value{page}
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
+  \fi
   \clearpage
   \pagenumbering{arabic}
 }
