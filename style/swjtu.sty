@@ -48,8 +48,10 @@
 }
 
 %%% ======================== 杂项 ======================== %%%
-\RequirePackage{xkeyval} % key-value 方式
-\usepackage{setspace} % 行距包
+\RequirePackage{xkeyval}    % key-value
+\usepackage{setspace}       % 行距
+\usepackage{graphicx}       % 插入图片
+\usepackage{amssymb}        % 数学符号
 \setlength{\parindent}{2em} % 段首缩进
 
 %%% ======================== 扉页 ======================== %%%
@@ -149,7 +151,7 @@
     % 标题
     \begin{center}
       \begin{allheiti} \onehalfspacing \zihao{-2}
-        \textbf{西南交通大学} \strut\\
+        \textbf{西南交通大学}\strut\\
         \textbf{本科毕业设计（论文）学术诚信声明}
       \end{allheiti}
     \end{center}
@@ -165,21 +167,123 @@
 
     % 签名
     {\noindent \hspace*{0.5\textwidth}
-      作者签名：%\raisebox{-0.5\baselineskip}{\includegraphics[height=2\baselineskip]{\swjtu@signature}}
+      作者签名：%
+      \ifx\swjtu@signature\@empty\else
+        \raisebox{-0.5\baselineskip}{\includegraphics[height=1.5\baselineskip]{\swjtu@signature}}
+      \fi
     }
 
     % 空行
     \vspace{\baselineskip}
 
     % 日期
-    {\noindent \hspace*{0.5\textwidth}
+    \begin{allsongti} \zihao{4}
+      \noindent \hspace*{0.5\textwidth}
       日期：\swjtu@year~年~\swjtu@month~月~\swjtu@day~日
-    }
+    \end{allsongti}
   \end{titlepage}
 }
 \makeatother
 
 %%% ====================== 版权使用授权 ====================== %%%
+% 方框带勾符号
+\newcommand{\boxsurd}{\rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}}
+
+\makeatletter
+\define@key[swjtu]{copyright}{confidentialityPeriod}{\def\swjtu@confidentialityPeriod{#1}}
+\define@key[swjtu]{copyright}{authorSignature}{\def\swjtu@authorSignature{#1}}
+\define@key[swjtu]{copyright}{advisorSignature}{\def\swjtu@advisorSignature{#1}}
+\define@key[swjtu]{copyright}{authorYear}{\def\swjtu@authorYear{#1}}
+\define@key[swjtu]{copyright}{authorMonth}{\def\swjtu@authorMonth{#1}}
+\define@key[swjtu]{copyright}{authorDay}{\def\swjtu@authorDay{#1}}
+\define@key[swjtu]{copyright}{advisorYear}{\def\swjtu@advisorYear{#1}}
+\define@key[swjtu]{copyright}{advisorMonth}{\def\swjtu@advisorMonth{#1}}
+\define@key[swjtu]{copyright}{advisorDay}{\def\swjtu@advisorDay{#1}}
+
+\newcommand{\swjtuCopyrightAuthorization}[1][]{%
+  \def\swjtu@confidentialityPeriod{0}
+  \def\swjtu@authorSignature{}
+  \def\swjtu@advisorSignature{}
+  \def\swjtu@authorYear{}
+  \def\swjtu@authorMonth{}
+  \def\swjtu@authorDay{}
+  \def\swjtu@advisorYear{}
+  \def\swjtu@advisorMonth{}
+  \def\swjtu@advisorDay{}
+  \setkeys[swjtu]{copyright}{#1}
+
+  \begin{titlepage}
+    \doublespacing \zihao{4} \songti
+
+    % 标题
+    \begin{center}
+      \begin{allheiti} \onehalfspacing \zihao{-2}
+        \textbf{西南交通大学}\strut\\
+        \textbf{本科毕业设计（论文）版权使用授权书}
+      \end{allheiti}
+    \end{center}
+
+    % 空行
+    \vspace{\baselineskip}
+
+    \begin{allsongti} \zihao{4}
+      % 正文
+      本毕业设计（论文）作者同意学校保留并向国家有关部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。本人授权西南交通大学可以将本毕业设计（论文）的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本毕业设计（论文）。
+
+      % 保密/不保密自动判断，勾选用\boxsurd，未选用\Box，分段显示
+      \ifnum\swjtu@confidentialityPeriod>0
+        \hspace{7em}保密$\boxsurd$，在~\underline{\hspace{0.5em}\swjtu@confidentialityPeriod\hspace{0.5em}}~年解密后适用本授权书。
+        \par
+        本论文属于
+        \par
+        \hspace{7em}不保密$\Box$。
+      \else
+        \hspace{7em}保密$\Box$，在~\underline{\hspace{2em}}~年解密后适用本授权书。
+        \par
+        本论文属于
+        \par
+        \hspace{7em}不保密$\boxsurd$。
+      \fi
+
+      （请在以上方框内打“$\surd$”）
+    \end{allsongti}
+
+    % 空行 * 3
+    \vspace{3\baselineskip}
+
+    % 签名与日期
+    {
+      \noindent
+      \begin{minipage}{0.48\textwidth}
+        作者签名：%
+        \ifx\swjtu@authorSignature\@empty\else
+          \raisebox{-0.5\baselineskip}{
+            \includegraphics[height=1.5\baselineskip]{\swjtu@authorSignature}
+          }
+        \fi
+
+        \vspace{\baselineskip}
+
+        日期：~\swjtu@authorYear~年~\swjtu@authorMonth~月~\swjtu@authorDay~日
+      \end{minipage}
+      \hfill
+      \begin{minipage}{0.48\textwidth}
+        指导教师签名：%
+        \ifx\swjtu@advisorSignature\@empty\else
+          \raisebox{-0.5\baselineskip}{
+            \includegraphics[height=1.5\baselineskip]{\swjtu@advisorSignature}
+          }
+        \fi
+
+        \vspace{\baselineskip}
+
+        日期：~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日
+      \end{minipage}
+    }
+
+  \end{titlepage}
+}
+\makeatother
 
 % ================== 任务 ==================
 \makeatletter
