@@ -42,7 +42,11 @@
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
 
-\fancyhead[C]{\zihao{-4} \heiti 西南交通大学本科毕业设计(论文)}
+\fancyhead[C]{
+  \begin{allheiti} \zihao{-4}
+    西南交通大学本科毕业设计(论文)
+  \end{allheiti}
+}
 \renewcommand{\headrulewidth}{0.8mm}
 
 \fancyfoot[C]{
@@ -303,6 +307,24 @@
 \define@key[swjtu]{task}{purpose}{\def\swjtu@purpose{#1}}
 \define@key[swjtu]{task}{tasks}{\def\swjtu@tasks{#1}}
 \define@key[swjtu]{task}{requirement}{\def\swjtu@requirement{#1}}
+\define@key[swjtu]{task}{weeks}{\def\swjtu@weeks{#1}}
+\define@key[swjtu]{task}{partOne}{\def\swjtu@partOne{#1}}
+\define@key[swjtu]{task}{partOneWeeks}{\def\swjtu@partOneWeeks{#1}}
+\define@key[swjtu]{task}{partTwo}{\def\swjtu@partTwo{#1}}
+\define@key[swjtu]{task}{partTwoWeeks}{\def\swjtu@partTwoWeeks{#1}}
+\define@key[swjtu]{task}{partThree}{\def\swjtu@partThree{#1}}
+\define@key[swjtu]{task}{partThreeWeeks}{\def\swjtu@partThreeWeeks{#1}}
+\define@key[swjtu]{task}{partFour}{\def\swjtu@partFour{#1}}
+\define@key[swjtu]{task}{partFourWeeks}{\def\swjtu@partFourWeeks{#1}}
+\define@key[swjtu]{task}{partFive}{\def\swjtu@partFive{#1}}
+\define@key[swjtu]{task}{partFiveWeeks}{\def\swjtu@partFiveWeeks{#1}}
+\define@key[swjtu]{task}{partReview}{\def\swjtu@partReview{#1}}
+\define@key[swjtu]{task}{partReviewWeeks}{\def\swjtu@partReviewWeeks{#1}}
+\define@key[swjtu]{task}{remark}{\def\swjtu@remark{#1}}
+\define@key[swjtu]{task}{advisor}{\def\swjtu@advisor{#1}}
+\define@key[swjtu]{task}{advisorYear}{\def\swjtu@advisorYear{#1}}
+\define@key[swjtu]{task}{advisorMonth}{\def\swjtu@advisorMonth{#1}}
+\define@key[swjtu]{task}{advisorDay}{\def\swjtu@advisorDay{#1}}
 
 \newcommand{\swjtuTask}[1][]{%
   \def\swjtu@class{}
@@ -318,6 +340,24 @@
   \def\swjtu@purpose{}
   \def\swjtu@tasks{}
   \def\swjtu@requirement{}
+  \def\swjtu@weeks{}
+  \def\swjtu@partOne{}
+  \def\swjtu@partOneWeeks{}
+  \def\swjtu@partTwo{}
+  \def\swjtu@partTwoWeeks{}
+  \def\swjtu@partThree{}
+  \def\swjtu@partThreeWeeks{}
+  \def\swjtu@partFour{}
+  \def\swjtu@partFourWeeks{}
+  \def\swjtu@partFive{}
+  \def\swjtu@partFiveWeeks{}
+  \def\swjtu@partReview{}
+  \def\swjtu@partReviewWeeks{}
+  \def\swjtu@remark{}
+  \def\swjtu@advisor{}
+  \def\swjtu@advisorYear{}
+  \def\swjtu@advisorMonth{}
+  \def\swjtu@advisorDay{}
   \setkeys[swjtu]{task}{#1}
 
   \pagestyle{fancy}
@@ -333,11 +373,11 @@
   \vspace{\baselineskip}
 
 
-  \begin{allsongti}
+  \begin{allsongti} \zihao{-4}
     \setlength{\parindent}{0pt}
     \setlength{\baselineskip}{26pt}
 
-    \begin{tabularx}{\textwidth}{@{}XXX@{}}
+    \begin{tabularx}{\textwidth}{@{}>{\hsize=1.2\hsize}X>{\hsize=0.9\hsize}X>{\hsize=0.9\hsize}X@{}}
       班\hspace{2em}级\underline{\hspace{0.5em}\swjtu@class\hfill}
        &
       学生姓名\underline{\hspace{0.5em}\swjtu@name\hfill}
@@ -357,7 +397,33 @@
 
     3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
 
-    \underline{\swjtu@requirement\hfill}\par
+    \underline{\swjtu@requirement\hfill}
+
+    \newpage
+
+    4、本设计（论文）各部分内容及时间分配（共\underline{\hspace{0.5em}\swjtu@weeks\hspace{0.5em}}周）：
+
+    { \setlength{\parindent}{1.5em}
+    第一部分\underline{\hspace{0.5em}\swjtu@partOne\hfill} (\swjtu@partOneWeeks~周)
+
+    第二部分\underline{\hspace{0.5em}\swjtu@partTwo\hfill} (\swjtu@partTwoWeeks~周)
+
+    第三部分\underline{\hspace{0.5em}\swjtu@partThree\hfill} (\swjtu@partThreeWeeks~周)
+
+    第四部分\underline{\hspace{0.5em}\swjtu@partFour\hfill} (\swjtu@partFourWeeks~周)
+
+    第五部分\underline{\hspace{0.5em}\swjtu@partFive\hfill} (\swjtu@partFiveWeeks~周)
+
+    评阅及答辩\underline{\hspace{0.5em}\swjtu@partReview\hfill} (\swjtu@partReviewWeeks~周)%
+    }
+
+    \vspace{\baselineskip}
+
+    备\hspace{2em}注\underline{\hspace{0.5em}\swjtu@remark\hfill}
+
+    \vspace{\baselineskip}
+
+    指导教师：\underline{\makebox[5em][l]{\hspace{0.5em}\swjtu@advisor}}\hspace{2em}~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日\par
   \end{allsongti}
 }
 \makeatother
