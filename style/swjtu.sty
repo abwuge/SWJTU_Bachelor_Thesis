@@ -1,23 +1,10 @@
 % swjtu.sty – 西南交通大学本科毕业论文样式
-% 版本：2025/04/24
-\ProvidesPackage{style/swjtu}[2025/04/24 SWJTU Thesis Style]
+% 版本：2022年修订版
+% 作者：abwuge
+% 修改日期：2025年4月25日
+\ProvidesPackage{style/swjtu}[SWJTU Thesis Style]
 
-% 页面页眉页脚设置
-\RequirePackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhead{}    % 清空默认页眉
-\fancyfoot{}    % 清空默认页脚
-
-% 页眉内容：居中西南交通大学本科毕业设计（论文）
-\fancyhead[C]{\zihao{-4}\heiti 西南交通大学本科毕业设计（论文）}
-% 页脚内容：居中第X页
-\fancyfoot[C]{第\zihao{-4}\heiti\thepage 页}
-
-% 分割线
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\footrulewidth}{0pt}
-
-% 页面设置
+%%% ======================== 版面 ======================== %%%
 \RequirePackage{geometry}
 \geometry{
   paper=a4paper,
@@ -25,49 +12,59 @@
   top=2.6cm, bottom=2.6cm
 }
 
-% 设置字体
+%%% ======================= 页眉页脚 ======================= %%%
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead[C]{\zihao{-4}\heiti 西南交通大学本科毕业设计(论文)}
+\renewcommand{\headrulewidth}{0.8pt}
+
+\fancyfoot[C]{第\zihao{-4}\heiti\thepage 页}
+\renewcommand{\footrulewidth}{0pt}
+
+%%% ======================== 字体 ======================== %%%
 \setmainfont{Times New Roman}
 \setCJKmainfont[Path=fonts/]{simsun.ttc}
 
-\setCJKfamilyfont{songti}[Path=fonts/]{simsun.ttc}
+\setCJKfamilyfont{songti}[Path=fonts/, AutoFakeBold=2.5]{simsun.ttc}
 \newcommand{\songti}{\CJKfamily{songti}}
 
-\setCJKfamilyfont{heiti}[Path=fonts/]{simhei.ttf}
+\setCJKfamilyfont{heiti}[Path=fonts/, AutoFakeBold=2.5]{simhei.ttf}
 \newcommand{\heiti}{\CJKfamily{heiti}}
 
-\newfontfamily{\ensongti}[Path=fonts/]{simsun.ttc}
-\newfontfamily{\enheiti}[Path=fonts/]{simhei.ttf}
+\newfontfamily{\ensongti}[Path=fonts/, AutoFakeBold=2.5]{simsun.ttc}
+\newfontfamily{\enheiti}[Path=fonts/, AutoFakeBold=2.5]{simhei.ttf}
 
-% ================== 中英文混排统一字体环境 ==================
-% 定义两个环境，使中英文在环境内使用相同字体
 \RequirePackage{environ}
 
-% 黑体环境：中英文都使用黑体
+% 黑体环境
 \NewEnviron{allheiti}{%
   {\heiti\enheiti\BODY}%
 }
 
-% 宋体环境：中英文都使用宋体
+% 宋体环境
 \NewEnviron{allsongti}{%
   {\songti\ensongti\BODY}%
 }
 
-% ================== 引入 xkeyval 宏包 ==================
-\RequirePackage{xkeyval}
+%%% ======================== 杂项 ======================== %%%
+\RequirePackage{xkeyval} % key-value 方式
+\usepackage{setspace} % 行距包
+\setlength{\parindent}{2em} % 段首缩进
 
-% ================== 新版封面命令（key-value 方式，完全自定义格式，单倍行距，空格用\hspace） ==================
+%%% ======================== 扉页 ======================== %%%
 \makeatletter
-\define@key[swjtu]{cover}{ctitle}{\def\swjtu@ctitle{#1}}
-\define@key[swjtu]{cover}{etitle}{\def\swjtu@etitle{#1}}
-\define@key[swjtu]{cover}{grade}{\def\swjtu@grade{#1}}
-\define@key[swjtu]{cover}{id}{\def\swjtu@id{#1}}
-\define@key[swjtu]{cover}{name}{\def\swjtu@name{#1}}
-\define@key[swjtu]{cover}{major}{\def\swjtu@major{#1}}
-\define@key[swjtu]{cover}{advisor}{\def\swjtu@advisor{#1}}
-\define@key[swjtu]{cover}{year}{\def\swjtu@year{#1}}
-\define@key[swjtu]{cover}{month}{\def\swjtu@month{#1}}
+\define@key[swjtu]{titlepage}{ctitle}{\def\swjtu@ctitle{#1}}
+\define@key[swjtu]{titlepage}{etitle}{\def\swjtu@etitle{#1}}
+\define@key[swjtu]{titlepage}{grade}{\def\swjtu@grade{#1}}
+\define@key[swjtu]{titlepage}{id}{\def\swjtu@id{#1}}
+\define@key[swjtu]{titlepage}{name}{\def\swjtu@name{#1}}
+\define@key[swjtu]{titlepage}{major}{\def\swjtu@major{#1}}
+\define@key[swjtu]{titlepage}{advisor}{\def\swjtu@advisor{#1}}
+\define@key[swjtu]{titlepage}{year}{\def\swjtu@year{#1}}
+\define@key[swjtu]{titlepage}{month}{\def\swjtu@month{#1}}
 
-\newcommand{\swjtuCover}[1][]{
+\newcommand{\swjtuTitlePage}[1][]{%
   \def\swjtu@ctitle{}
   \def\swjtu@etitle{}
   \def\swjtu@grade{}
@@ -77,54 +74,122 @@
   \def\swjtu@advisor{}
   \def\swjtu@year{}
   \def\swjtu@month{}
-  \setkeys[swjtu]{cover}{#1}
+  \setkeys[swjtu]{titlepage}{#1}
 
   \begin{titlepage}
-    \zihao{5} \songti
-    \centering
+    \onehalfspacing \zihao{5} \songti
 
-    % 宋体五号空行*3
-    ~\\
-    \vspace{2\baselineskip}
+    \begin{center}
+      % 空行 * 3
+      ~\\ \vspace{2\baselineskip}
 
-    % 黑体小二标题
-    \begin{allheiti} \zihao{-2}
-      西\hspace{0.5em}南\hspace{0.5em}交\hspace{0.5em}通\hspace{0.5em}大\hspace{0.5em}学 \strut\\
-      本科毕业设计（论文）
-    \end{allheiti}\\
+      % 标题
+      \begin{allheiti} \doublespacing \zihao{-2}
+        西\hspace{0.5em}南\hspace{0.5em}交\hspace{0.5em}通\hspace{0.5em}大\hspace{0.5em}学\strut\\
+        本科毕业设计（论文）
+      \end{allheiti}
 
-    % 宋体五号空行*3
+      % 空行 * 3
+      \vspace{3\baselineskip}
+
+      % 中英文题目
+      \begin{allheiti} \singlespacing \zihao{2}
+        \swjtu@ctitle\strut\\
+        \MakeUppercase{\swjtu@etitle}
+      \end{allheiti}
+
+      % 空行 * 7
+      \vspace{7\baselineskip}
+
+      % 个人信息
+      \begin{allheiti} \zihao{-4}
+        \begin{tabular}{l}
+          年\hspace{2em}级:~\swjtu@grade \\
+          学\hspace{2em}号:~\swjtu@id    \\
+          姓\hspace{2em}名:~\swjtu@name  \\
+          专\hspace{2em}业:~\swjtu@major \\
+          指导老师:~\swjtu@advisor
+        \end{tabular}
+      \end{allheiti}
+
+      % 空行 * 13
+      \vspace{13\baselineskip}
+
+      % 日期
+      \begin{allsongti} \zihao{-4}
+        \swjtu@year\:年\:\swjtu@month\:月
+      \end{allsongti}
+    \end{center}
+  \end{titlepage}
+
+  % 空白页
+  \newpage
+  \thispagestyle{empty}
+  \mbox{}
+}
+\makeatother
+
+%%% ====================== 学术诚信声明 ====================== %%%
+\makeatletter
+\define@key[swjtu]{integrity}{signature}{\def\swjtu@signature{#1}}
+\define@key[swjtu]{integrity}{year}{\def\swjtu@year{#1}}
+\define@key[swjtu]{integrity}{month}{\def\swjtu@month{#1}}
+\define@key[swjtu]{integrity}{day}{\def\swjtu@day{#1}}
+
+\newcommand{\swjtuIntegrityDeclaration}[1][]{%
+  \def\swjtu@signature{}
+  \def\swjtu@year{}
+  \def\swjtu@month{}
+  \def\swjtu@day{}
+  \setkeys[swjtu]{integrity}{#1}
+
+  \begin{titlepage}
+    \doublespacing \zihao{4} \songti
+
+    % 标题
+    \begin{center}
+      \begin{allheiti} \onehalfspacing \zihao{-2}
+        \textbf{西南交通大学} \strut\\
+        \textbf{本科毕业设计（论文）学术诚信声明}
+      \end{allheiti}
+    \end{center}
+
+    % 空行
+    \vspace{\baselineskip}
+
+    % 正文
+    本人郑重声明：所呈交的毕业设计（论文），是本人在导师的指导下，独立进行研究工作所取得的成果。除文中已经注明引用的内容外，本论文不包含任何其他个人或集体已经发表或撰写过的作品成果。对本文的研究做出重要贡献的个人和集体，均已在文中以明确方式标明。本人完全意识到本声明的法律结果由本人承担。
+
+    % 空行 * 3
     \vspace{3\baselineskip}
 
-    % 黑体二号中英文题目
-    \begin{allheiti} \zihao{2}
-      \swjtu@ctitle\strut\\
-      \swjtu@etitle
-    \end{allheiti}\\
+    % 签名
+    {\noindent \hspace*{0.5\textwidth}
+      作者签名：%\raisebox{-0.5\baselineskip}{\includegraphics[height=2\baselineskip]{\swjtu@signature}}
+    }
 
-    % 宋体五号空行*7
-    \vspace{7\baselineskip}
+    % 空行
+    \vspace{\baselineskip}
 
-    % 黑体小四个人信息
-    \begin{allheiti} \zihao{-4}
-      \begin{tabular}{l}
-        年\hspace{2em}级:~\swjtu@grade \\
-        学\hspace{2em}号:~\swjtu@id    \\
-        姓\hspace{2em}名:~\swjtu@name  \\
-        专\hspace{2em}业:~\swjtu@major \\
-        指导老师:~\swjtu@advisor
-      \end{tabular}
-    \end{allheiti} \\
-
-    % 宋体五号空行*13
-    \vspace{13\baselineskip}
-
-    % 宋体小四日期
-    \begin{allsongti} \zihao{-4}
-      \swjtu@year 年\swjtu@month 月
-    \end{allsongti}
-
+    % 日期
+    {\noindent \hspace*{0.5\textwidth}
+      日期：\swjtu@year~年~\swjtu@month~月~\swjtu@day~日
+    }
   \end{titlepage}
+}
+\makeatother
+
+%%% ====================== 版权使用授权 ====================== %%%
+
+% ================== 任务 ==================
+\makeatletter
+\define@key[swjtu]{task}{text}{\def\swjtu@task{#1}}
+\newcommand{\swjtuTask}[1][]{%
+  \def\swjtu@task{}
+  \setkeys[swjtu]{task}{#1}
+  \chapter*{任务书}
+  \noindent
+  \swjtu@task
 }
 \makeatother
 
@@ -160,28 +225,6 @@
 }
 \makeatother
 
-% ================== 学术诚信声明命令（key-value 方式） ==================
-\makeatletter
-\define@key[swjtu]{declaration}{text}{\def\swjtu@declaration{#1}}
-\newcommand{\swjtuDeclaration}[1][]{%
-  \def\swjtu@declaration{}
-  \setkeys[swjtu]{declaration}{#1}
-  \chapter*{学术诚信声明}
-  \noindent
-  \swjtu@declaration
-}
-\makeatother
 
-% ================== 任务书命令（key-value 方式） ==================
-\makeatletter
-\define@key[swjtu]{task}{text}{\def\swjtu@task{#1}}
-\newcommand{\swjtuTask}[1][]{%
-  \def\swjtu@task{}
-  \setkeys[swjtu]{task}{#1}
-  \chapter*{任务书}
-  \noindent
-  \swjtu@task
-}
-\makeatother
 
 % 后续可添加自定义命令和格式设置

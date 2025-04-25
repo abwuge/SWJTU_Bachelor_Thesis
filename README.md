@@ -1,7 +1,9 @@
 # 西南交通大学本科毕业论文LaTeX模板
 
 ## 开发进度
-- 完成扉页设计
+- 完成扉页
+- 完成扉页后空白页
+- 完成学术诚信声明
 
 ## 简介
 本项目为西南交通大学本科毕业设计（论文）LaTeX模板，依据《西南交通大学本科毕业设计（论文）撰写规范》（2022年修订稿）进行设计。
@@ -58,6 +60,12 @@
                 "%DOC%"
             ]
         }
+    ],
+    "latex-workshop.formatting.latexindent.args": [
+        "-c",
+        "%DIR%/build/",
+        "%TMPFILE%",
+        "-y=defaultIndent: '%INDENT%'"
     ]
 }
 ```
