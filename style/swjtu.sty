@@ -12,19 +12,10 @@
   top=2.6cm, bottom=2.6cm
 }
 
-%%% ======================= 页眉页脚 ======================= %%%
-\RequirePackage{fancyhdr}
-\pagestyle{fancy}
-
-\fancyhead[C]{\zihao{-4}\heiti 西南交通大学本科毕业设计(论文)}
-\renewcommand{\headrulewidth}{0.8pt}
-
-\fancyfoot[C]{第\zihao{-4}\heiti\thepage 页}
-\renewcommand{\footrulewidth}{0pt}
-
 %%% ======================== 字体 ======================== %%%
 \setmainfont{Times New Roman}
 \setCJKmainfont[Path=fonts/]{simsun.ttc}
+\zihao{-4}
 
 \setCJKfamilyfont{songti}[Path=fonts/, AutoFakeBold=2.5]{simsun.ttc}
 \newcommand{\songti}{\CJKfamily{songti}}
@@ -47,12 +38,33 @@
   {\songti\ensongti\BODY}%
 }
 
+%%% ======================= 页眉页脚 ======================= %%%
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead[C]{\zihao{-4} \heiti 西南交通大学本科毕业设计(论文)}
+\renewcommand{\headrulewidth}{0.8mm}
+
+\fancyfoot[C]{
+  \zihao{-4} \heiti
+  第\thepage 页
+}
+\renewcommand{\footrulewidth}{0pt}
+
+\setlength{\headheight}{14.45398pt}
+
 %%% ======================== 杂项 ======================== %%%
 \RequirePackage{xkeyval}    % key-value
 \usepackage{setspace}       % 行距
 \usepackage{graphicx}       % 插入图片
 \usepackage{amssymb}        % 数学符号
+\usepackage{tabularx}       % 表格
 \setlength{\parindent}{2em} % 段首缩进
+\newcommand{\boxsurd}{      % 复选框
+  \rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}
+}
+\usepackage{xeCJKfntef}
+\renewcommand{\underline}{\CJKunderline[skip=false]}
 
 %%% ======================== 扉页 ======================== %%%
 \makeatletter
@@ -186,9 +198,6 @@
 \makeatother
 
 %%% ====================== 版权使用授权 ====================== %%%
-% 方框带勾符号
-\newcommand{\boxsurd}{\rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}}
-
 \makeatletter
 \define@key[swjtu]{copyright}{confidentialityPeriod}{\def\swjtu@confidentialityPeriod{#1}}
 \define@key[swjtu]{copyright}{authorSignature}{\def\swjtu@authorSignature{#1}}
@@ -230,18 +239,18 @@
       % 正文
       本毕业设计（论文）作者同意学校保留并向国家有关部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。本人授权西南交通大学可以将本毕业设计（论文）的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本毕业设计（论文）。
 
-      % 保密/不保密自动判断，勾选用\boxsurd，未选用\Box，分段显示
+      % 保密
       \ifnum\swjtu@confidentialityPeriod>0
         \hspace{7em}保密$\boxsurd$，在~\underline{\hspace{0.5em}\swjtu@confidentialityPeriod\hspace{0.5em}}~年解密后适用本授权书。
-        \par
+
         本论文属于
-        \par
+
         \hspace{7em}不保密$\Box$。
       \else
         \hspace{7em}保密$\Box$，在~\underline{\hspace{2em}}~年解密后适用本授权书。
-        \par
+
         本论文属于
-        \par
+
         \hspace{7em}不保密$\boxsurd$。
       \fi
 
@@ -252,48 +261,104 @@
     \vspace{3\baselineskip}
 
     % 签名与日期
-    {
-      \noindent
-      \begin{minipage}{0.48\textwidth}
-        作者签名：%
-        \ifx\swjtu@authorSignature\@empty\else
-          \raisebox{-0.5\baselineskip}{
-            \includegraphics[height=1.5\baselineskip]{\swjtu@authorSignature}
-          }
-        \fi
-
-        \vspace{\baselineskip}
-
-        日期：~\swjtu@authorYear~年~\swjtu@authorMonth~月~\swjtu@authorDay~日
-      \end{minipage}
-      \hfill
-      \begin{minipage}{0.48\textwidth}
-        指导教师签名：%
-        \ifx\swjtu@advisorSignature\@empty\else
-          \raisebox{-0.5\baselineskip}{
-            \includegraphics[height=1.5\baselineskip]{\swjtu@advisorSignature}
-          }
-        \fi
-
-        \vspace{\baselineskip}
-
-        日期：~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日
-      \end{minipage}
-    }
+    \noindent
+    \begin{tabularx}{\textwidth}{@{}XX@{}}
+      作者签名：%
+      \ifx\swjtu@authorSignature\@empty\else
+        \raisebox{-0.5\baselineskip}{
+          \includegraphics[height=1.5\baselineskip, width=3cm, keepaspectratio]{\swjtu@authorSignature}
+        }
+      \fi
+       &
+      指导教师签名：%
+      \ifx\swjtu@advisorSignature\@empty\else
+        \raisebox{-0.5\baselineskip}{
+          \includegraphics[height=1.5\baselineskip, width=3cm, keepaspectratio]{\swjtu@advisorSignature}
+        }
+      \fi \\
+      ~
+       &
+      ~   \\
+      日期：~\swjtu@authorYear~年~\swjtu@authorMonth~月~\swjtu@authorDay~日
+       &
+      日期：~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日
+    \end{tabularx}
 
   \end{titlepage}
 }
 \makeatother
 
-% ================== 任务 ==================
+%%% ======================= 任务书 ======================= %%%
 \makeatletter
-\define@key[swjtu]{task}{text}{\def\swjtu@task{#1}}
+\define@key[swjtu]{task}{class}{\def\swjtu@class{#1}}
+\define@key[swjtu]{task}{name}{\def\swjtu@name{#1}}
+\define@key[swjtu]{task}{id}{\def\swjtu@id{#1}}
+\define@key[swjtu]{task}{issueYear}{\def\swjtu@issueYear{#1}}
+\define@key[swjtu]{task}{issueMonth}{\def\swjtu@issueMonth{#1}}
+\define@key[swjtu]{task}{issueDay}{\def\swjtu@issueDay{#1}}
+\define@key[swjtu]{task}{dueYear}{\def\swjtu@dueYear{#1}}
+\define@key[swjtu]{task}{dueMonth}{\def\swjtu@dueMonth{#1}}
+\define@key[swjtu]{task}{dueDay}{\def\swjtu@dueDay{#1}}
+\define@key[swjtu]{task}{title}{\def\swjtu@title{#1}}
+\define@key[swjtu]{task}{purpose}{\def\swjtu@purpose{#1}}
+\define@key[swjtu]{task}{tasks}{\def\swjtu@tasks{#1}}
+\define@key[swjtu]{task}{requirement}{\def\swjtu@requirement{#1}}
+
 \newcommand{\swjtuTask}[1][]{%
-  \def\swjtu@task{}
+  \def\swjtu@class{}
+  \def\swjtu@name{}
+  \def\swjtu@id{}
+  \def\swjtu@issueYear{}
+  \def\swjtu@issueMonth{}
+  \def\swjtu@issueDay{}
+  \def\swjtu@dueYear{}
+  \def\swjtu@dueMonth{}
+  \def\swjtu@dueDay{}
+  \def\swjtu@title{}
+  \def\swjtu@purpose{}
+  \def\swjtu@tasks{}
+  \def\swjtu@requirement{}
   \setkeys[swjtu]{task}{#1}
-  \chapter*{任务书}
-  \noindent
-  \swjtu@task
+
+  \pagestyle{fancy}
+
+  \clearpage
+  \pagenumbering{Roman}
+
+  % 标题
+  \begin{center}
+    {\zihao{3} \heiti \textbf{毕业设计（论文）任务书}}
+  \end{center}
+
+  \vspace{\baselineskip}
+
+
+  \begin{allsongti}
+    \setlength{\parindent}{0pt}
+    \setlength{\baselineskip}{26pt}
+
+    \begin{tabularx}{\textwidth}{@{}XXX@{}}
+      班\hspace{2em}级\underline{\hspace{0.5em}\swjtu@class\hfill}
+       &
+      学生姓名\underline{\hspace{0.5em}\swjtu@name\hfill}
+       &
+      学\hspace{2em}号\underline{\hspace{0.5em}\swjtu@id\hfill}
+    \end{tabularx}
+
+    发题日期：~\swjtu@issueYear~年~\swjtu@issueMonth~月~\swjtu@issueDay~日
+    \hfill
+    完成日期：~\swjtu@dueYear~年~\swjtu@dueMonth~月~\swjtu@dueDay~日
+
+    题\hspace{2em}目\underline{\hspace{0.5em}\swjtu@title\hfill}
+
+    1、本设计（论文）的目的、意义\underline{\hspace{0.5em}\swjtu@purpose\hfill}
+
+    2、学生应完成的任务\underline{\hspace{0.5em}\swjtu@tasks\hfill}
+
+    3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
+
+    \underline{\swjtu@requirement\hfill}\par
+  \end{allsongti}
 }
 \makeatother
 
