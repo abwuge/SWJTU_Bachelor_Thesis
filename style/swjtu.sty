@@ -106,13 +106,13 @@
    },
   section = {
     format = \zihao{-3} \heiti \raggedright,
-    beforeskip = 0em,
-    afterskip = \baselineskip,
+    beforeskip = {\ifnum \value{secnumdepth}>1 12pt \else 0pt \fi},
+    afterskip = 12pt,
    },
   subsection = {
       format = \zihao{4} \heiti \raggedright,
-      beforeskip = 0em,
-      afterskip = \baselineskip,
+      beforeskip = {\ifnum \value{subsection}>0 6pt \else 0pt \fi},
+      afterskip = 6pt,
     },
 }
 
