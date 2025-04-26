@@ -27,7 +27,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Test
-        run: |
-          echo "部署页面: ${{ steps.deployment.outputs.page_url }}"
