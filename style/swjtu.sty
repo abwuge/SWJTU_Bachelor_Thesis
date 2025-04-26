@@ -1,7 +1,7 @@
 % swjtu.sty – 西南交通大学本科毕业论文样式
 % 版本：2022年修订版
-% 作者：abwuge
-% 修改日期：2025年4月25日
+% 作者：吴函迅
+% 修改日期：2025年4月26日
 \ProvidesPackage{style/swjtu}[SWJTU Thesis Style]
 
 %%% ======================== 版面 ======================== %%%
@@ -59,7 +59,7 @@
 \setlength{\headheight}{14.45398pt}
 
 %%% ======================= 参考文献 ======================= %%%
-\usepackage[
+\RequirePackage[
   style=gb7714-2015
 ]{biblatex}
 \addbibresource{bibliography/references.bib}
@@ -78,16 +78,16 @@
     beforeskip = 0em,
     afterskip = \baselineskip,
    },
-   section = {
+  section = {
     format = \zihao{-3} \heiti \raggedright,
     beforeskip = 0em,
     afterskip = \baselineskip,
    },
-   subsection = {
-    format = \zihao{4} \heiti \raggedright,
-    beforeskip = 0em,
-    afterskip = \baselineskip,
-   },
+  subsection = {
+      format = \zihao{4} \heiti \raggedright,
+      beforeskip = 0em,
+      afterskip = \baselineskip,
+    },
 }
 
 %%% ======================== 杂项 ======================== %%%
@@ -96,19 +96,19 @@
   hidelinks,
   colorlinks=false
 ]{hyperref}
-\usepackage{setspace}       % 行距
-\usepackage{graphicx}       % 插入图片
-\usepackage{amssymb}        % 数学符号
-\usepackage{tabularx}       % 表格
-\usepackage{tocloft}        % 目录
-\usepackage{changepage}     % adjustwidth
-\usepackage{caption}
+\RequirePackage{setspace}       % 行距
+\RequirePackage{graphicx}       % 插入图片
+\RequirePackage{amssymb}        % 数学符号
+\RequirePackage{tabularx}       % 表格
+\RequirePackage{tocloft}        % 目录
+\RequirePackage{changepage}     % adjustwidth
+\RequirePackage{caption}
 
 \newcommand{\boxsurd}{      % 复选框
   \rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}
 }
 % 下划线
-\usepackage{xeCJKfntef}
+\RequirePackage{xeCJKfntef}
 \renewcommand{\underline}{\CJKunderline[skip=false]}
 
 %%% ======================== 扉页 ======================== %%%
@@ -562,7 +562,7 @@
 \renewcommand{\cftdotsep}{1}        % 点线密度
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % 章引导符
 
-\newcommand{\swjtuTableOfContents}{
+\newcommand{\swjtuTableOfContents}{%
   \newpage
 
   \begin{center}
@@ -587,10 +587,37 @@
   \pagenumbering{arabic}
 }
 
+%%% ======================== 正文 ======================== %%%
+\newcommand{\swjtuChapter}[1]{\chapter{#1}}
+
+%%% ======================== 结论 ======================== %%%
+\newcommand{\swjtuConclusion}[1]{%
+  \newpage
+  \phantomsection
+  \chapter*{#1}
+  \addcontentsline{toc}{chapter}{#1}
+
+  \setcounter{section}{0}
+  \renewcommand{\thesection}{\arabic{section}}
+}
+
+%%% ======================== 致谢 ======================== %%%
+\newcommand{\swjtuAcknowledgments}[1]{\swjtuConclusion{#1}}
+
+%%% ======================= 参考文献 ======================= %%%
 \newcommand{\swjtuBibliography}{%
   \newpage
   \phantomsection
   \printbibliography
-  \thispagestyle{fancy}
   \addcontentsline{toc}{chapter}{参考文献}
+}
+
+%%% ======================== 附录 ======================== %%%
+\newcommand{\swjtuAppendix}{%
+  \ctexset{
+    chapter/name = {附录},
+  }
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+  \renewcommand{\thesection}{\thechapter.\arabic{section}}
 }

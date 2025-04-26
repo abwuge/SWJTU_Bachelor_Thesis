@@ -1,8 +1,8 @@
 % SWJTU_Bachelor_Thesis.tex - 西南交通大学本科毕业论文模板
-% 使用 XeLaTeX 编译，中文环境依赖 ctex 宏包
+% 编译链: XeLaTeX -> BibTeX -> XeLaTeX -> XeLaTeX
 % 版本：2022年修订版
-% 作者：abwuge
-% 修改日期：2025年4月25日
+% 作者：吴函迅
+% 修改日期：2025年4月26日
 
 %%% ======================== 导言 ======================== %%%
 \documentclass[
@@ -103,34 +103,30 @@
   abstract={
       An abstract is a concise summary of the content of a graduation project (thesis), serving as an independent and self-contained short essay. It should include the creative achievements of the project (thesis) along with their theoretical and practical significance. Formulas, charts, or reference citations should be avoided in the abstract, and it should not be written as a mere table of contents.
 
-      The recommended length for both Chinese and English abstracts is 300–500 words. The English abstract must fully correspond to the Chinese version, with accurate grammar and precise word choice. The Chinese abstract should appear first, followed by the English abstract.
+      The recommended length for both Chinese and English abstracts is 300-500 words. The English abstract must fully correspond to the Chinese version, with accurate grammar and precise word choice. The Chinese abstract should appear first, followed by the English abstract.
     },
   keywords={keyword 1; keyword 2; keyword 3}
 ]
 
-
-%%%==============================目录==============================%%%
+%%% ======================== 目录 ======================== %%%
 \swjtuTableOfContents
 
-%%%==============================正文章节==============================%%%
-
+%%% ======================== 正文 ======================== %%%
 \include{chapters/introduction}     % 绪论
 \include{chapters/chapter1}         % 第一章
 
+%%% ======================= 结致参附 ======================= %%%
+%%% ------------------------ 结论 ------------------------ %%%
+\include{chapters/conclusion}
 
-%%%==============================结论与致谢==============================%%%
+%%% ------------------------ 致谢 ------------------------ %%%
+\include{chapters/acknowledgments}
 
-\include{chapters/conclusion}       % 结论
-
-\include{chapters/acknowledgments}  % 致谢
-
-
-%%% ======================= 参考文献 ======================= %%%
+%%% ----------------------- 参考文献 ----------------------- %%%
 \swjtuBibliography
 
-%%% ======================== 附录 ======================== %%%
-
-\appendix
+%%% ------------------------ 附录 ------------------------ %%%
+\swjtuAppendix
 \include{appendix/appendix}
 
 \end{document}
