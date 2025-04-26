@@ -12,11 +12,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Zip source files (exclude .git*, docs, README.md, build/*)
+      - name: Zip source files (exclude .git*, *.html, README.md, build/*)
         run: |
           zip -r SWJTU_Bachelor_Thesis.zip . \
             -x '*.git*' \
-            -x 'docs/*' \
+            -x '*.html' \
             -x 'README.md' \
             -x 'build/*'
 
