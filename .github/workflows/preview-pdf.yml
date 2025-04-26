@@ -6,7 +6,7 @@ on:
       - 'build/SWJTU_Bachelor_Thesis.pdf'
 
 permissions:
-  contents: write
+  id-token: write
 
 jobs:
   deploy:
