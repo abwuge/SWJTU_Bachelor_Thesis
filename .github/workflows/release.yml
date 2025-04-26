@@ -1,0 +1,66 @@
+name: Release Source Zip
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ github.ref }}
+
+      - name: Get tag message
+        id: tag-message
+        run: |
+          TAG_MSG=$(git tag -l --format='%(contents)' "$(git describe --tags --exact-match)")
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "$TAG_MSG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Get version
+        id: get-version
+        run: |
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$TAG_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Set up TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          packages: >
+            xetex
+            latex-bin
+            latex-extra
+            biber
+            collection-fontsrecommended
+            collection-fontsextra
+
+      - name: Compile LaTeX (xelatex -> biber -> xelatex*2)
+        run: |
+          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+          biber --output-directory=build SWJTU_Bachelor_Thesis
+          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+
+      - name: Zip source files
+        run: |
+          zip -r SWJTU_Bachelor_Thesis_v${{ steps.get-version.outputs.version }}.zip \
+            appendix/ bibliography/ chapters/ fonts/ signatures/ style/ SWJTU_Bachelor_Thesis.tex
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: SWJTU_Bachelor_Thesis_v${{ steps.get-version.outputs.version }}.zip
+          name: ${{ steps.get-version.outputs.version }}
+          body: ${{ steps.tag-message.outputs.message }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

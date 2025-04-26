@@ -12,6 +12,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          packages: >
+            xetex
+            latex-bin
+            latex-extra
+            biber
+            collection-fontsrecommended
+            collection-fontsextra
+
+      - name: Compile LaTeX (xelatex -> biber -> xelatex*2)
+        run: |
+          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+          biber --output-directory=build SWJTU_Bachelor_Thesis
+          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+
       - name: Upload source files
         uses: actions/upload-artifact@v4
         with:
@@ -24,3 +42,10 @@ jobs:
             signatures/
             style/
             SWJTU_Bachelor_Thesis.tex
+
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build/SWJTU_Bachelor_Thesis.log
