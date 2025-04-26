@@ -20,6 +20,7 @@ jobs:
 
       - name: Compile LaTeX (xelatex -> biber -> xelatex*2)
         run: |
+          mkdir -p build\appendix build\chapters
           xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
           biber --output-directory=build SWJTU_Bachelor_Thesis
           xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
