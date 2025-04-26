@@ -5,7 +5,15 @@
 % 修改日期：2025年4月25日
 
 %%% ======================== 导言 ======================== %%%
-\documentclass[UTF8,openany,oneside,fontset=none]{ctexbook}
+\documentclass[
+  UTF8,
+  zihao=-4,
+  openany,
+  twoside,
+  fontset=none,
+  linespread=1.5,
+  autoindent=true
+]{ctexbook}
 \usepackage{style/swjtu}
 
 \begin{document}
@@ -106,23 +114,23 @@
 
 %%%==============================正文章节==============================%%%
 
-\input{chapters/introduction}     % 绪论
-\input{chapters/chapter1}         % 第一章
+\include{chapters/introduction}     % 绪论
+\include{chapters/chapter1}         % 第一章
 
 
 %%%==============================结论与致谢==============================%%%
 
-\input{chapters/conclusion}       % 结论
+\include{chapters/conclusion}       % 结论
 
-\input{chapters/acknowledgments}  % 致谢
+\include{chapters/acknowledgments}  % 致谢
 
 
-%%%==============================参考文献==============================%%%
-\printbibliography
+%%% ======================= 参考文献 ======================= %%%
+\swjtuBibliography
 
-%%%==============================附录==============================%%%
+%%% ======================== 附录 ======================== %%%
 
 \appendix
-\input{appendix/appendix}
+\include{appendix/appendix}
 
 \end{document}

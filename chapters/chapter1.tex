@@ -2,9 +2,45 @@
 
 \chapter{标题}
 
-\section{小标题}
+\section{测试一下吧}
+
+\subsection{测试一下公式}
+
+无编号的公式：$\int_a^b f(x)\mathrm{d}x=F(b)-F(a)$
+
+有编号的公式：
+\begin{equation}
+    \int_a^b f(x)\mathrm{d}x=F(b)-F(a)
+\end{equation}
+
+\subsection{测试一下图表}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{signatures/author.png}
+    \caption{懒得画图了，随便放个签名}
+    \label{fig:example}
+\end{figure}
+
+\begin{table}[htbp]
+    \centering
+    \caption{测试表格}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        列1  & 列2  & 列3  \\
+        \hline
+        数据1 & 数据2 & 数据3 \\
+        \hline
+    \end{tabular}
+    \label{tab:example}
+\end{table}
+
+\subsection{测试一下引用}
+
+如图\ref{fig:example}所示，测试一下图片引用。
+
+如表\ref{tab:example}所示，测试一下表格引用。
+
+还有参考文件引用：
 引用样式1\cite{example2025}。
 引用样式2\parencite{example2025}。
-\subsection{小小标题}
-
-% 撰写本章内容

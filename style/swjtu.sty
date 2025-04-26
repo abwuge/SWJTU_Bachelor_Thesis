@@ -15,7 +15,6 @@
 %%% ======================== 字体 ======================== %%%
 \setmainfont{Times New Roman}
 \setCJKmainfont[Path=fonts/]{simsun.ttc}
-\zihao{-4}
 
 \setCJKfamilyfont{songti}[Path=fonts/, AutoFakeBold=2.5]{simsun.ttc}
 \newcommand{\songti}{\CJKfamily{songti}}
@@ -42,11 +41,13 @@
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
 
+\fancyhead[L]{}
 \fancyhead[C]{
   \begin{allheiti} \zihao{-4}
     西南交通大学本科毕业设计(论文)
   \end{allheiti}
 }
+\fancyhead[R]{}
 \renewcommand{\headrulewidth}{0.8mm}
 
 \fancyfoot[C]{
@@ -56,6 +57,38 @@
 \renewcommand{\footrulewidth}{0pt}
 
 \setlength{\headheight}{14.45398pt}
+
+%%% ======================= 参考文献 ======================= %%%
+\usepackage[
+  style=gb7714-2015
+]{biblatex}
+\addbibresource{bibliography/references.bib}
+
+%%% ======================= 公式图表 ======================= %%%
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
+
+%%% ====================== 其他页面设置 ====================== %%%
+\ctexset{
+  chapter = {
+    number = \arabic{chapter},
+    format = \zihao{-2} \heiti \centering,
+    pagestyle = fancy,
+    beforeskip = 0em,
+    afterskip = \baselineskip,
+   },
+   section = {
+    format = \zihao{-3} \heiti \raggedright,
+    beforeskip = 0em,
+    afterskip = \baselineskip,
+   },
+   subsection = {
+    format = \zihao{4} \heiti \raggedright,
+    beforeskip = 0em,
+    afterskip = \baselineskip,
+   },
+}
 
 %%% ======================== 杂项 ======================== %%%
 \RequirePackage{xkeyval}    % key-value
@@ -69,17 +102,13 @@
 \usepackage{tabularx}       % 表格
 \usepackage{tocloft}        % 目录
 \usepackage{changepage}     % adjustwidth
-\setlength{\parindent}{2em} % 段首缩进
+
 \newcommand{\boxsurd}{      % 复选框
   \rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}
 }
 % 下划线
 \usepackage{xeCJKfntef}
 \renewcommand{\underline}{\CJKunderline[skip=false]}
-
-%%% ======================= 参考文献 ======================= %%%
-\usepackage{biblatex}
-\addbibresource{bibliography/references.bib}
 
 %%% ======================== 扉页 ======================== %%%
 \makeatletter
@@ -504,12 +533,6 @@
 \setlength{\cftbeforetoctitleskip}{0pt}
 \setlength{\cftaftertoctitleskip}{0pt}
 
-\ctexset{
-  chapter = {
-    number = \arabic{chapter},
-   }
-}
-
 % 章节条目格式
 \renewcommand{\cftchapfont}{\zihao{-4} \heiti}       % 章标题字体
 \renewcommand{\cftsecfont}{\zihao{-4} \songti}       % 节标题字体
@@ -561,4 +584,12 @@
   \fi
   \clearpage
   \pagenumbering{arabic}
+}
+
+\newcommand{\swjtuBibliography}{%
+  \newpage
+  \phantomsection
+  \printbibliography
+  \thispagestyle{fancy}
+  \addcontentsline{toc}{chapter}{参考文献}
 }
