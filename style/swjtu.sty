@@ -15,7 +15,6 @@
 %%% ======================== 字体 ======================== %%%
 \setmainfont[
   Path=fonts/,
-  Extension=.TTF,
   UprightFont=TIMES,
   BoldFont=TIMESBD,
   ItalicFont=TIMESI,
@@ -23,17 +22,34 @@
 ]{Times New Roman}
 \setCJKmainfont[
   Path=fonts/,
-  AutoFakeBold=2.5
+  AutoFakeBold,
+  AutoFakeSlant
 ]{simsun.ttc}
 
-\setCJKfamilyfont{songti}[Path=fonts/, AutoFakeBold=2.5]{simsun.ttc}
+\setCJKfamilyfont{songti}[
+  Path=fonts/,
+  AutoFakeBold,
+  AutoFakeSlant
+]{simsun.ttc}
 \newcommand{\songti}{\CJKfamily{songti}}
 
-\setCJKfamilyfont{heiti}[Path=fonts/, AutoFakeBold=2.5]{simhei.ttf}
+\setCJKfamilyfont{heiti}[
+  Path=fonts/,
+  AutoFakeBold,
+  AutoFakeSlant
+]{simhei.ttf}
 \newcommand{\heiti}{\CJKfamily{heiti}}
 
-\newfontfamily{\ensongti}[Path=fonts/, AutoFakeBold=2.5]{simsun.ttc}
-\newfontfamily{\enheiti}[Path=fonts/, AutoFakeBold=2.5]{simhei.ttf}
+\newfontfamily{\ensongti}[
+  Path=fonts/,
+  AutoFakeBold,
+  AutoFakeSlant
+]{simsun.ttc}
+\newfontfamily{\enheiti}[
+  Path=fonts/,
+  AutoFakeBold,
+  AutoFakeSlant
+]{simhei.ttf}
 
 \RequirePackage{environ}
 

@@ -4,6 +4,14 @@ on:
   push:
     branches:
       - '**'
+    paths:
+      - 'appendix/**'
+      - 'bibliography/**'
+      - 'chapters/**'
+      - 'fonts/**'
+      - 'signatures/**'
+      - 'style/**'
+      - 'SWJTU_Bachelor_Thesis.tex'
 
 jobs:
   upload-artifact:
