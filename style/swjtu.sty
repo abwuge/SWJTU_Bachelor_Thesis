@@ -91,9 +91,12 @@
 \addbibresource{bibliography/references.bib}
 
 %%% ======================= 公式图表 ======================= %%%
+\RequirePackage{caption}
 \renewcommand{\theequation}{\thechapter-\arabic{equation}}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
 \renewcommand{\thetable}{\thechapter-\arabic{table}}
+\captionsetup[figure]{labelsep=space}
+\captionsetup[table]{labelsep=space}
 
 %%% ====================== 其他页面设置 ====================== %%%
 \ctexset{
@@ -128,7 +131,6 @@
 \RequirePackage{tabularx}       % 表格
 \RequirePackage{tocloft}        % 目录
 \RequirePackage{changepage}     % adjustwidth
-\RequirePackage{caption}
 
 \newcommand{\boxsurd}{      % 复选框
   \rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}
