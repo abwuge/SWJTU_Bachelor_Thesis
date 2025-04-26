@@ -5,6 +5,9 @@ on:
     paths:
       - 'build/SWJTU_Bachelor_Thesis.pdf'
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
