@@ -13,8 +13,18 @@
 }
 
 %%% ======================== 字体 ======================== %%%
-\setmainfont{Times New Roman}
-\setCJKmainfont[Path=fonts/]{simsun.ttc}
+\setmainfont[
+  Path=fonts/,
+  Extension=.TTF,
+  UprightFont=TIMES,
+  BoldFont=TIMESBD,
+  ItalicFont=TIMESI,
+  BoldItalicFont=TIMESBI
+]{Times New Roman}
+\setCJKmainfont[
+  Path=fonts/,
+  AutoFakeBold=2.5
+]{simsun.ttc}
 
 \setCJKfamilyfont{songti}[Path=fonts/, AutoFakeBold=2.5]{simsun.ttc}
 \newcommand{\songti}{\CJKfamily{songti}}
