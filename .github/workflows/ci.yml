@@ -19,6 +19,7 @@ jobs:
             xetex
             latex-bin
             biber
+            ctex
             collection-fontsrecommended
             collection-fontsextra
 
