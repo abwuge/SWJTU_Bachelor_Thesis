@@ -89,7 +89,7 @@
 感谢所有为本模板做出贡献的同学和老师！
 
 ## 预览
-<embed src="build/SWJTU_Bachelor_Thesis.pdf" type="application/pdf" width="100%" height="600">
+[Google Docs](https://docs.google.com/viewer?url=https://github.com/abwuge/SWJTU_Bachelor_Thesis/raw/refs/heads/master/build/SWJTU_Bachelor_Thesis.pdf&embedded=true)
 
 ---
 本模板仅供学习和学术用途，严禁任何商业用途。
