@@ -16,12 +16,7 @@ jobs:
         uses: teatimeguest/setup-texlive-action@v3
         with:
           packages: >
-            xetex
-            latex-bin
-            biber
-            ctex
-            collection-fontsrecommended
-            collection-fontsextra
+            scheme-full
 
       - name: Compile LaTeX (xelatex -> biber -> xelatex*2)
         run: |
