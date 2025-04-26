@@ -1,0 +1,25 @@
+name: Deploy PDF to GitHub Pages
+
+on:
+  push:
+    paths:
+      - 'build/SWJTU_Bachelor_Thesis.pdf'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload PDF to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
