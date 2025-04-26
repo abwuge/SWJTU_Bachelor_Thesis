@@ -3,4 +3,5 @@
 .github/prompts/
 
 # Latex files
-build/
+build/*
+!build/*.pdf

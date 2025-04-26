@@ -6,7 +6,7 @@
 ## 使用说明
 1. 克隆或下载本项目到本地：
    ```powershell
-   git clone <仓库地址>
+   git clone https://github.com/abwuge/SWJTU_Bachelor_Thesis.git
    ```
 2. 使用支持LaTeX的编辑器（如TeX Live + VS Code、TeXworks等）打开`SWJTU_Bachelor_Thesis.tex`主文件。
 3. 按照论文结构，在`chapters/`、`appendix/`等文件夹中编辑各章节内容。
@@ -87,6 +87,9 @@
 
 ## 致谢
 感谢所有为本模板做出贡献的同学和老师！
+
+## 预览
+<iframe src="https://docs.google.com/viewer?url=https://github.com/abwuge/SWJTU_Bachelor_Thesis/raw/build/SWJTU_Bachelor_Thesis.pdf&embedded=true" style="width:100%; height:600px;" frameborder="0"></iframe>
 
 ---
 本模板仅供学习和学术用途，严禁任何商业用途。
