@@ -1,4 +1,4 @@
-name: Zip Source Files and Upload Artifact
+name: Upload Source Files
 
 on:
   push:
@@ -6,22 +6,21 @@ on:
       - '**'
 
 jobs:
-  zip-and-upload:
+  upload-artifact:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Zip source files (exclude .git*, *.html, README.md, build/*)
-        run: |
-          zip -r SWJTU_Bachelor_Thesis.zip . \
-            -x '*.git*' \
-            -x '*.html' \
-            -x 'README.md' \
-            -x 'build/*'
-
-      - name: Upload zipped source as artifact
+      - name: Upload source files
         uses: actions/upload-artifact@v4
         with:
           name: SWJTU_Bachelor_Thesis
-          path: SWJTU_Bachelor_Thesis.zip
+          path: |
+            appendix/
+            bibliography/
+            chapters/
+            fonts/
+            signatures/
+            style/
+            SWJTU_Bachelor_Thesis.tex
