@@ -3,6 +3,8 @@
 ## 简介
 本项目为西南交通大学本科毕业设计（论文）LaTeX模板，依据《西南交通大学本科毕业设计（论文）撰写规范》（2022年修订稿）进行设计。
 
+点击[此处](https://abwuge.github.io/SWJTU_Bachelor_Thesis)预览该模板。
+
 ## 使用说明
 1. 克隆或下载本项目到本地：
    ```powershell
@@ -87,9 +89,6 @@
 
 ## 致谢
 感谢所有为本模板做出贡献的同学和老师！
-
-## 预览
-[Google Docs](https://docs.google.com/viewer?url=https://github.com/abwuge/SWJTU_Bachelor_Thesis/raw/refs/heads/master/build/SWJTU_Bachelor_Thesis.pdf&embedded=true)
 
 ---
 本模板仅供学习和学术用途，严禁任何商业用途。
