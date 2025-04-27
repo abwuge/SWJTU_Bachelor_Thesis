@@ -1,10 +1,10 @@
 % swjtu.sty – 西南交通大学本科毕业论文样式
 % 版本：2022年修订版
 % 作者：吴函迅
-% 修改日期：2025年4月26日
+% 修改日期：2025年4月27日
 \ProvidesPackage{style/swjtu}[SWJTU Thesis Style]
 
-%%% ======================== 版面 ======================== %%%
+%%% ======================= 版面 ======================= %%%
 \RequirePackage{geometry}
 \geometry{
   paper=a4paper,
@@ -12,7 +12,8 @@
   top=2.6cm, bottom=2.6cm
 }
 
-%%% ======================== 字体 ======================== %%%
+%%% ======================= 字体 ======================= %%%
+%%% --------------------- 默认字体 --------------------- %%%
 \setmainfont[
   Path=fonts/,
   UprightFont=TIMES,
@@ -26,6 +27,7 @@
   AutoFakeSlant
 ]{simsun.ttc}
 
+%%% --------------------- 中文字体 --------------------- %%%
 \setCJKfamilyfont{songti}[
   Path=fonts/,
   AutoFakeBold,
@@ -40,6 +42,7 @@
 ]{simhei.ttf}
 \newcommand{\heiti}{\CJKfamily{heiti}}
 
+%%% --------------------- 英文字体 --------------------- %%%
 \newfontfamily{\ensongti}[
   Path=fonts/,
   AutoFakeBold,
@@ -51,46 +54,44 @@
   AutoFakeSlant
 ]{simhei.ttf}
 
+%%% ------------------- 统一字体环境 ------------------- %%%
 \RequirePackage{environ}
-
-% 黑体环境
-\NewEnviron{allheiti}{%
-  {\heiti\enheiti\BODY}%
+\NewEnviron{allsongti}{
+  {\songti\ensongti\BODY}
+}
+\NewEnviron{allheiti}{
+  {\heiti\enheiti\BODY}
 }
 
-% 宋体环境
-\NewEnviron{allsongti}{%
-  {\songti\ensongti\BODY}%
-}
-
-%%% ======================= 页眉页脚 ======================= %%%
+%%% ===================== 页眉页脚 ===================== %%%
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
 
+%%% ----------------------- 页眉 ----------------------- %%%
 \fancyhead[L]{}
 \fancyhead[C]{
-  \begin{allheiti} \zihao{-4}
+  \begin{allheiti}
     西南交通大学本科毕业设计(论文)
   \end{allheiti}
 }
 \fancyhead[R]{}
 \renewcommand{\headrulewidth}{0.8mm}
+\setlength{\headheight}{14.45398pt}
 
+%%% ----------------------- 页脚 ----------------------- %%%
 \fancyfoot[C]{
-  \zihao{-4} \heiti
+  \heiti
   第\thepage 页
 }
 \renewcommand{\footrulewidth}{0pt}
 
-\setlength{\headheight}{14.45398pt}
-
-%%% ======================= 参考文献 ======================= %%%
+%%% ===================== 参考文献 ===================== %%%
 \RequirePackage[
   style=gb7714-2015
 ]{biblatex}
 \addbibresource{bibliography/references.bib}
 
-%%% ======================= 公式图表 ======================= %%%
+%%% ===================== 公式图表 ===================== %%%
 \RequirePackage{caption}
 \renewcommand{\theequation}{\thechapter-\arabic{equation}}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
@@ -98,7 +99,7 @@
 \captionsetup[figure]{labelsep=space}
 \captionsetup[table]{labelsep=space}
 
-%%% ====================== 其他页面设置 ====================== %%%
+%%% =================== 其他页面设置 =================== %%%
 \ctexset{
   chapter = {
     number = \arabic{chapter},
@@ -118,29 +119,29 @@
       afterskip = 6pt,
     },
 }
-
-%%% ======================== 杂项 ======================== %%%
-\RequirePackage{xkeyval}    % key-value
+%%% ======================= 杂项 ======================= %%%
+\RequirePackage{xkeyval}    % key-value 参数
 \RequirePackage[
   hidelinks,
   colorlinks=false
-]{hyperref}
-\RequirePackage{setspace}       % 行距
-\RequirePackage{graphicx}       % 插入图片
-\RequirePackage{amssymb}        % 数学符号
-\RequirePackage{tabularx}       % 表格
-\RequirePackage{tocloft}        % 目录
-\RequirePackage{changepage}     % adjustwidth
+]{hyperref}                 % 超链接
+\RequirePackage{setspace}   % 行距
+\RequirePackage{graphicx}   % 插入图片
+\RequirePackage{amssymb}    % 数学符号
+\RequirePackage{tabularx}   % 表格
+\RequirePackage{tocloft}    % 目录
+\RequirePackage{changepage} % 页边距
 
-\newcommand{\boxsurd}{      % 复选框
+\newcommand{\boxsurd}{      % 复选框：已选中
   \rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}
 }
-% 下划线
-\RequirePackage{xeCJKfntef}
+
+\RequirePackage{xeCJKfntef} % 下划线
 \renewcommand{\underline}{\CJKunderline[skip=false]}
 
-%%% ======================== 扉页 ======================== %%%
+%%% ======================= 扉页 ======================= %%%
 \makeatletter
+%%% --------------------- 参数定义 --------------------- %%%
 \define@key[swjtu]{titlepage}{ctitle}{\def\swjtu@ctitle{#1}}
 \define@key[swjtu]{titlepage}{etitle}{\def\swjtu@etitle{#1}}
 \define@key[swjtu]{titlepage}{grade}{\def\swjtu@grade{#1}}
@@ -151,6 +152,7 @@
 \define@key[swjtu]{titlepage}{year}{\def\swjtu@year{#1}}
 \define@key[swjtu]{titlepage}{month}{\def\swjtu@month{#1}}
 
+%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTitlePage}[1][]{%
   \def\swjtu@ctitle{}
   \def\swjtu@etitle{}
@@ -164,7 +166,7 @@
   \setkeys[swjtu]{titlepage}{#1}
 
   \begin{titlepage}
-    \onehalfspacing \zihao{5} \songti
+    \onehalfspacing \zihao{5}
 
     \begin{center}
       % 空行 * 3
@@ -189,7 +191,7 @@
       \vspace{7\baselineskip}
 
       % 个人信息
-      \begin{allheiti} \zihao{-4}
+      \begin{allheiti}
         \begin{tabular}{l}
           年\hspace{2em}级:~\swjtu@grade \\
           学\hspace{2em}号:~\swjtu@id    \\
@@ -203,7 +205,7 @@
       \vspace{13\baselineskip}
 
       % 日期
-      \begin{allsongti} \zihao{-4}
+      \begin{allsongti}
         \swjtu@year\:年\:\swjtu@month\:月
       \end{allsongti}
     \end{center}
@@ -216,13 +218,15 @@
 }
 \makeatother
 
-%%% ====================== 学术诚信声明 ====================== %%%
+%%% =================== 学术诚信声明 =================== %%%
 \makeatletter
+%%% --------------------- 参数定义 --------------------- %%%
 \define@key[swjtu]{integrity}{signature}{\def\swjtu@signature{#1}}
 \define@key[swjtu]{integrity}{year}{\def\swjtu@year{#1}}
 \define@key[swjtu]{integrity}{month}{\def\swjtu@month{#1}}
 \define@key[swjtu]{integrity}{day}{\def\swjtu@day{#1}}
 
+%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuIntegrityDeclaration}[1][]{%
   \def\swjtu@signature{}
   \def\swjtu@year{}
@@ -231,7 +235,7 @@
   \setkeys[swjtu]{integrity}{#1}
 
   \begin{titlepage}
-    \doublespacing \zihao{4} \songti
+    \doublespacing \zihao{4}
 
     % 标题
     \begin{center}
@@ -270,8 +274,9 @@
 }
 \makeatother
 
-%%% ====================== 版权使用授权 ====================== %%%
+%%% =================== 版权使用授权 =================== %%%
 \makeatletter
+%%% --------------------- 参数定义 --------------------- %%%
 \define@key[swjtu]{copyright}{confidentialityPeriod}{\def\swjtu@confidentialityPeriod{#1}}
 \define@key[swjtu]{copyright}{authorSignature}{\def\swjtu@authorSignature{#1}}
 \define@key[swjtu]{copyright}{advisorSignature}{\def\swjtu@advisorSignature{#1}}
@@ -282,6 +287,7 @@
 \define@key[swjtu]{copyright}{advisorMonth}{\def\swjtu@advisorMonth{#1}}
 \define@key[swjtu]{copyright}{advisorDay}{\def\swjtu@advisorDay{#1}}
 
+%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuCopyrightAuthorization}[1][]{%
   \def\swjtu@confidentialityPeriod{0}
   \def\swjtu@authorSignature{}
@@ -295,7 +301,7 @@
   \setkeys[swjtu]{copyright}{#1}
 
   \begin{titlepage}
-    \doublespacing \zihao{4} \songti
+    \doublespacing \zihao{4}
 
     % 标题
     \begin{center}
@@ -361,8 +367,9 @@
 }
 \makeatother
 
-%%% ======================= 任务书 ======================= %%%
+%%% ====================== 任务书 ====================== %%%
 \makeatletter
+%%% --------------------- 参数定义 --------------------- %%%
 \define@key[swjtu]{task}{class}{\def\swjtu@class{#1}}
 \define@key[swjtu]{task}{name}{\def\swjtu@name{#1}}
 \define@key[swjtu]{task}{id}{\def\swjtu@id{#1}}
@@ -395,6 +402,7 @@
 \define@key[swjtu]{task}{advisorMonth}{\def\swjtu@advisorMonth{#1}}
 \define@key[swjtu]{task}{advisorDay}{\def\swjtu@advisorDay{#1}}
 
+%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTask}[1][]{%
   \def\swjtu@class{}
   \def\swjtu@name{}
@@ -439,13 +447,14 @@
     {\zihao{3} \heiti \textbf{毕业设计（论文）任务书}}
   \end{center}
 
+  % 空行
   \vspace{\baselineskip}
 
-
-  \begin{allsongti} \zihao{-4}
+  \begin{allsongti}
     \setlength{\parindent}{0pt}
     \setlength{\baselineskip}{26pt}
 
+    % 班级姓名学号
     \begin{tabularx}{\textwidth}{@{}>{\hsize=1.2\hsize}X>{\hsize=0.9\hsize}X>{\hsize=0.9\hsize}X@{}}
       班\hspace{2em}级\underline{\hspace{0.5em}\swjtu@class\hfill}
        &
@@ -454,22 +463,28 @@
       学\hspace{2em}号\underline{\hspace{0.5em}\swjtu@id\hfill}
     \end{tabularx}
 
+    % 日期
     发题日期：~\swjtu@issueYear~年~\swjtu@issueMonth~月~\swjtu@issueDay~日
     \hfill
     完成日期：~\swjtu@dueYear~年~\swjtu@dueMonth~月~\swjtu@dueDay~日
 
+    % 题目
     题\hspace{2em}目\underline{\hspace{0.5em}\swjtu@title\hfill}
 
+    % 1、本设计（论文）的目的、意义
     1、本设计（论文）的目的、意义\underline{\hspace{0.5em}\swjtu@purpose\hfill}
 
+    % 2、学生应完成的任务
     2、学生应完成的任务\underline{\hspace{0.5em}\swjtu@tasks\hfill}
 
+    % 3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
     3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
 
     \underline{\swjtu@requirement\hfill}
 
     \newpage
 
+    % 4、本设计（论文）各部分内容及时间分配
     4、本设计（论文）各部分内容及时间分配（共\underline{\hspace{0.5em}\swjtu@weeks\hspace{0.5em}}周）：
 
     { \setlength{\parindent}{1.5em}
@@ -486,22 +501,28 @@
     评阅及答辩\underline{\hspace{0.5em}\swjtu@partReview\hfill} (\swjtu@partReviewWeeks~周)%
     }
 
+    % 空行
     \vspace{\baselineskip}
 
+    % 备注
     备\hspace{2em}注\underline{\hspace{0.5em}\swjtu@remark\hfill}
 
+    % 空行
     \vspace{\baselineskip}
 
+    % 指导教师与日期
     指导教师：\underline{\makebox[5em][l]{\hspace{0.5em}\swjtu@advisor}}\hspace{2em}~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日\par
   \end{allsongti}
 }
 \makeatother
 
-%%% ======================= 中文摘要 ======================= %%%
+%%% ===================== 中文摘要 ===================== %%%
 \makeatletter
+%%% --------------------- 参数定义 --------------------- %%%
 \define@key[swjtu]{abstractcn}{abstract}{\def\swjtu@abstractCN{#1}}
 \define@key[swjtu]{abstractcn}{keywords}{\def\swjtu@keywordsCN{#1}}
 
+%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuAbstractCN}[1][]{%
   \def\swjtu@abstractCN{}
   \def\swjtu@keywordsCN{}
@@ -514,24 +535,30 @@
     {\zihao{-2} \heiti 摘\hspace{3em}要}
   \end{center}
 
+  % 空行
   \vspace{\baselineskip}
 
+  % 摘要正文
   \swjtu@abstractCN
 
+  % 空行
   \vspace{\baselineskip}
 
-  \noindent
-  {\zihao{-4} \heiti
+  % 关键词
+  {\heiti
+    \noindent
     关键词：\hspace{1em}\swjtu@keywordsCN
   }
 }
 \makeatother
 
-%%% ======================= 英文摘要 ======================= %%%
+%%% ===================== 英文摘要 ===================== %%%
 \makeatletter
+%%% --------------------- 参数定义 --------------------- %%%
 \define@key[swjtu]{abstracten}{abstract}{\def\swjtu@abstractEN{#1}}
 \define@key[swjtu]{abstracten}{keywords}{\def\swjtu@keywordsEN{#1}}
 
+%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuAbstractEN}[1][]{%
   \def\swjtu@abstractEN{}
   \def\swjtu@keywordsEN{}
@@ -544,61 +571,75 @@
     \zihao{-2} Abstract
   \end{center}
 
+  % 空行
   \vspace{\baselineskip}
 
+  % 摘要正文
   \swjtu@abstractEN
 
+  % 空行
   \vspace{\baselineskip}
 
+  % 关键词
   \noindent
   Key words:\hspace{1em}\swjtu@keywordsEN
 }
 \makeatother
 
-%%% ======================== 目录 ======================== %%%
-% 目录标题格式
+%%% ======================= 目录 ======================= %%%
+%%% ------------------- 去除自带标题 ------------------- %%%
 \renewcommand{\contentsname}{}
-
 \setlength{\cftbeforetoctitleskip}{0pt}
 \setlength{\cftaftertoctitleskip}{0pt}
 
-% 章节条目格式
-\renewcommand{\cftchapfont}{\zihao{-4} \heiti}       % 章标题字体
-\renewcommand{\cftsecfont}{\zihao{-4} \songti}       % 节标题字体
-\renewcommand{\cftsubsecfont}{\zihao{-4} \songti}    % 子节标题字体
-\renewcommand{\cftchappagefont}{\zihao{-4}\rmfamily}
-\renewcommand{\cftsecpagefont}{\zihao{-4}\rmfamily}
-\renewcommand{\cftsubsecpagefont}{\zihao{-4}\rmfamily}
+%%% --------------------- 条目字体 --------------------- %%%
+% 章目录项
+\renewcommand{\cftchapfont}{\heiti}         % 标题
+\renewcommand{\cftchappagefont}{\rmfamily}   % 页码
 
-\setlength{\cftchapnumwidth}{2em}    % 章编号宽度
-\setlength{\cftsecnumwidth}{0em}     % 节编号宽度
-\setlength{\cftsubsecnumwidth}{0em}  % 子节编号宽度
+% 节目录项
+\renewcommand{\cftsecfont}{\songti}         % 标题
+\renewcommand{\cftsecpagefont}{\rmfamily}    % 页码
 
-\renewcommand{\cftchapaftersnum}{\hspace{0.5em}}
-\renewcommand{\cftsecaftersnum}{\hspace{0.5em}}
-\renewcommand{\cftsubsecaftersnum}{\hspace{0.5em}}
+% 子节目录项
+\renewcommand{\cftsubsecfont}{\songti}      % 标题
+\renewcommand{\cftsubsecpagefont}{\rmfamily} % 页码
 
-% 缩进设置
-\setlength{\cftchapindent}{0em}    % 章缩进
-\setlength{\cftsecindent}{0em}     % 节缩进
-\setlength{\cftsubsecindent}{2em}  % 子节缩进
+%%% -------------------- 编号盒宽度 -------------------- %%%
+\setlength{\cftchapnumwidth}{0em}    % 章
+\setlength{\cftsecnumwidth}{0em}     % 节
+\setlength{\cftsubsecnumwidth}{0em}  % 子节
 
-% 取消章目录项之间的额外间距
-\setlength{\cftbeforechapskip}{0pt}
+%%% ------------------- 编号标题间隔 ------------------- %%%
+\renewcommand{\cftchapaftersnum}{\hspace{0.5em}}   % 章
+\renewcommand{\cftsecaftersnum}{\hspace{0.5em}}    % 节
+\renewcommand{\cftsubsecaftersnum}{\hspace{0.5em}} % 子节
 
-% 点线间隔
-\renewcommand{\cftdotsep}{1}        % 点线密度
+%%% ----------------------- 缩进 ----------------------- %%%
+\setlength{\cftchapindent}{0em}   % 章
+\setlength{\cftsecindent}{0em}    % 节
+\setlength{\cftsubsecindent}{2em} % 子节
+
+%%% --------------------- 目录间距 --------------------- %%%
+\setlength{\cftbeforechapskip}{0pt} % 章
+
+%%% ---------------------- 引导符 ---------------------- %%%
+\renewcommand{\cftdotsep}{1}                           % 点线密度
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % 章引导符
 
+%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTableOfContents}{%
   \newpage
 
+  % 标题
   \begin{center}
-    \zihao{-4} \heiti 目\hspace{1em}录
+    \heiti 目\hspace{1em}录
   \end{center}
 
+  % 空行
   \vspace{\baselineskip}
 
+  % 正文
   \begin{adjustwidth}{4em}{4em}
     \begin{spacing}{1.5}
       \tableofcontents
@@ -606,46 +647,62 @@
   \end{adjustwidth}
   \thispagestyle{fancy}
 
+  % 空白页
   \ifodd\value{page}
     \newpage
     \thispagestyle{empty}
     \mbox{}
   \fi
+
+  % 重置页码
   \clearpage
   \pagenumbering{arabic}
 }
 
-%%% ======================== 正文 ======================== %%%
-\newcommand{\swjtuChapter}[1]{\chapter{#1}}
+%%% ======================= 正文 ======================= %%%
+\newcommand{\swjtuIntroduction}[1]{\chapter{#1}} % 绪论章节
+\newcommand{\swjtuChapter}[1]{\chapter{#1}}      % 正常章节
 
-%%% ======================== 结论 ======================== %%%
+%%% ======================= 结论 ======================= %%%
 \newcommand{\swjtuConclusion}[1]{%
   \newpage
-  \phantomsection
+  \phantomsection % 添加锚点
   \chapter*{#1}
-  \addcontentsline{toc}{chapter}{#1}
+  \addcontentsline{toc}{chapter}{#1} % 添加到目录
 
+  % 修改结论节号格式
   \setcounter{section}{0}
   \renewcommand{\thesection}{\arabic{section}}
 }
 
-%%% ======================== 致谢 ======================== %%%
+%%% ======================= 致谢 ======================= %%%
 \newcommand{\swjtuAcknowledgments}[1]{\swjtuConclusion{#1}}
 
-%%% ======================= 参考文献 ======================= %%%
-\newcommand{\swjtuBibliography}{%
+%%% ===================== 参考文献 ===================== %%%
+\newcommand{\swjtuBibliography}[1]{%
   \newpage
-  \phantomsection
+  \phantomsection % 添加锚点
   \printbibliography
-  \addcontentsline{toc}{chapter}{参考文献}
+  \addcontentsline{toc}{chapter}{#1} % 添加到目录
 }
 
-%%% ======================== 附录 ======================== %%%
-\newcommand{\swjtuAppendix}{%
-  \ctexset{
-    chapter/name = {附录},
-  }
-  \setcounter{chapter}{0}
-  \setcounter{section}{0}
-  \renewcommand{\thesection}{\thechapter.\arabic{section}}
+%%% ======================= 附录 ======================= %%%
+%%% --------------------- 条件定义 --------------------- %%%
+\newif\ifinswjtuappendix
+\inswjtuappendixfalse
+
+%%% ----------------------- 命令 ----------------------- %%%
+\newcommand{\swjtuAppendix}[1]{%
+  \ifinswjtuappendix
+    % 已经切换到附录模式
+  \else
+    % 切换到附录模式
+    \ctexset{
+      chapter/name = {附录},
+    }
+    \setcounter{chapter}{0}
+    \renewcommand{\thesection}{\thechapter.\arabic{section}}
+    \inswjtuappendixtrue
+  \fi
+  \chapter{#1}
 }

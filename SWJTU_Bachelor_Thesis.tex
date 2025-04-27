@@ -2,9 +2,9 @@
 % 编译链: XeLaTeX -> BibTeX -> XeLaTeX -> XeLaTeX
 % 版本：2022年修订版
 % 作者：吴函迅
-% 修改日期：2025年4月26日
+% 修改日期：2025年4月27日
 
-%%% ======================== 导言 ======================== %%%
+%%% ======================= 导言 ======================= %%%
 \documentclass[
   autoindent=true,
   fontset=none,
@@ -17,8 +17,8 @@
 \usepackage{style/swjtu}
 
 \begin{document}
-%%% ======================== 前置 ======================== %%%
-% 扉页
+%%% ======================= 前置 ======================= %%%
+%%% ----------------------- 扉页 ----------------------- %%%
 \swjtuTitlePage[
   ctitle={中文题目},
   etitle={English Title},
@@ -31,7 +31,7 @@
   month={五}
 ]
 
-% 学术诚信声明
+%%% ------------------- 学术诚信声明 ------------------- %%%
 \swjtuIntegrityDeclaration[
   signature={signatures/author.png},
   year={2025},
@@ -39,7 +39,7 @@
   day={10}
 ]
 
-% 版权使用授权
+%%% ------------------- 版权使用授权 ------------------- %%%
 \swjtuCopyrightAuthorization[
   confidentialityPeriod=0,
   authorSignature=signatures/author.png,
@@ -52,8 +52,8 @@
   advisorDay=11
 ]
 
-%%% ====================== 任务书和摘要 ====================== %%%
-%%% ----------------------- 任务书 ----------------------- %%%
+%%% =================== 任务书和摘要 =================== %%%
+%%% ---------------------- 任务书 ---------------------- %%%
 \swjtuTask[
   class={物理2021-05班},
   name={张三},
@@ -88,7 +88,7 @@
   advisorDay={10}
 ]
 
-%%% ----------------------- 中文摘要 ----------------------- %%%
+%%% --------------------- 中文摘要 --------------------- %%%
 \swjtuAbstractCN[
   abstract={
       摘要是毕业设计（论文）内容的简要陈述，是一篇具有独立性和完整性的短文。摘要应包括本设计（论文）的创造性成果及其理论与实际意义。摘要中不宜使用公式、图表，不标注引用文献编号。避免将摘要写成目录式的内容介绍。
@@ -98,7 +98,7 @@
   keywords={关键词1；关键词2；关键词3}
 ]
 
-%%% ----------------------- 英文摘要 ----------------------- %%%
+%%% --------------------- 英文摘要 --------------------- %%%
 \swjtuAbstractEN[
   abstract={
       An abstract is a concise summary of the content of a graduation project (thesis), serving as an independent and self-contained short essay. It should include the creative achievements of the project (thesis) along with their theoretical and practical significance. Formulas, charts, or reference citations should be avoided in the abstract, and it should not be written as a mere table of contents.
@@ -108,25 +108,25 @@
   keywords={keyword 1; keyword 2; keyword 3}
 ]
 
-%%% ======================== 目录 ======================== %%%
+%%% ======================= 目录 ======================= %%%
 \swjtuTableOfContents
 
-%%% ======================== 正文 ======================== %%%
-\include{chapters/introduction}     % 绪论
-\include{chapters/chapter1}         % 第一章
+%%% ======================= 正文 ======================= %%%
+\include{chapters/introduction}
+\include{chapters/chapter1}
 
-%%% ======================= 结致参附 ======================= %%%
-%%% ------------------------ 结论 ------------------------ %%%
+%%% ===================== 结致参附 ===================== %%%
+%%% ----------------------- 结论 ----------------------- %%%
 \include{chapters/conclusion}
 
-%%% ------------------------ 致谢 ------------------------ %%%
+%%% ----------------------- 致谢 ----------------------- %%%
 \include{chapters/acknowledgments}
 
-%%% ----------------------- 参考文献 ----------------------- %%%
-\swjtuBibliography
+%%% --------------------- 参考文献 --------------------- %%%
+\swjtuBibliography{参考文献}
 
-%%% ------------------------ 附录 ------------------------ %%%
-\swjtuAppendix
-\include{appendix/appendix}
+%%% ----------------------- 附录 ----------------------- %%%
+\include{appendix/appendix1}
+\include{appendix/appendix2}
 
 \end{document}
