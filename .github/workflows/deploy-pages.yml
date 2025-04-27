@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - master
+    tags:
+      - 'v*.*.*'
     paths:
       - 'appendix/**'
       - 'bibliography/**'
@@ -24,6 +26,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Delay 2 minutes (tag push only)
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        run: sleep 120
+
       - name: Checkout source
         uses: actions/checkout@v4
 
