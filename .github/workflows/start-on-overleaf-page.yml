@@ -1,0 +1,46 @@
+name: Deploy Start on Overleaf Redirect Page
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+  pages: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Latest Release URL
+        id: get-latest-release-url
+        run: |
+          VERSION=$(curl -s https://api.github.com/repos/abwuge/SWJTU_Bachelor_Thesis/releases/latest | jq -r .tag_name)
+          ZIP_NAME="SWJTU_Bachelor_Thesis_${VERSION}.zip"
+          OVERLEAF_URL="https://www.overleaf.com/docs?snip_uri=https://github.com/abwuge/SWJTU_Bachelor_Thesis/releases/download/${VERSION}/${ZIP_NAME}&main_document=SWJTU_Bachelor_Thesis.tex&engine=xelatex"
+          echo "overleafUrl=$OVERLEAF_URL" >> $GITHUB_OUTPUT
+
+      - name: Generate HTML
+        run: |
+          cat <<EOF > index.html
+          <!DOCTYPE html>
+          <html>  
+          <head>
+              <meta http-equiv="refresh" content="0; url=${{ steps.get-latest-release-url.outputs.overleafUrl }}" />
+              <title>正在跳转至 Overleaf...</title>
+          </head>
+          <body>
+              <p>正在跳转至 <a href="${{ steps.get-latest-release-url.outputs.overleafUrl }}">Overleaf</a>...</p>
+          </body>
+          </html>
+          EOF
+
+      - name: Deploy to GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./index.html
+
+      - name: Deploy
+        uses: actions/deploy-pages@v3

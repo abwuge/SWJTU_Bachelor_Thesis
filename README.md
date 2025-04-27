@@ -37,8 +37,10 @@
 你也可以将本模板上传到[Overleaf](https://cn.overleaf.com/)平台进行在线编写：
 1. 从[Release](../../releases/latest)中下载最新版本的源代码压缩包。
 2. 在Overleaf创建新项目，上传项目压缩包。
-3. 打开项目后，点击右上角菜单，并将编译器从pdfLaTeX改为XeLaTeX。
+3. 打开项目后，点击左上角菜单，并将编译器从pdfLaTeX改为XeLaTeX。
+4. 点击右上角重新编译，即可正常编译项目。
 
+或者点击[此处](https://abwuge.github.io/SWJTU_Bachelor_Thesis)直接在Overleaf中创建该项目。
 
 ### 模板自定义命令说明
 - `\songti`：将中文切换到模板内置字体——宋体。

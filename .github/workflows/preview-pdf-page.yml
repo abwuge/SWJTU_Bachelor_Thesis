@@ -1,4 +1,4 @@
-name: Deploy PDF to GitHub Pages
+name: Deploy PDF Preview Page
 
 on:
   push:
