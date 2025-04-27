@@ -20,10 +20,16 @@ jobs:
   build-and-push-pdf:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout default branch
+      - name: Checkout gh_pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh_pages
+
+      - name: Checkout source (master)
         uses: actions/checkout@v4
         with:
           ref: master
+          path: source
 
       - name: Set up TeX Live
         uses: teatimeguest/setup-texlive-action@v3
@@ -32,6 +38,7 @@ jobs:
             scheme-full
 
       - name: Build PDF
+        working-directory: source
         run: |
           mkdir -p build/appendix build/chapters
           xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
@@ -39,19 +46,14 @@ jobs:
           xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
           xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
 
-      - name: Create or switch to gh_pages branch
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git fetch origin gh_pages || true
-          git checkout gh_pages 2>/dev/null || git checkout -b gh_pages
-
       - name: Copy PDF to gh_pages branch
         run: |
-          cp build/SWJTU_Bachelor_Thesis.pdf ./SWJTU_Bachelor_Thesis.pdf
+          cp source/build/SWJTU_Bachelor_Thesis.pdf ./SWJTU_Bachelor_Thesis.pdf
 
       - name: Commit and Push PDF to gh_pages
         run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add SWJTU_Bachelor_Thesis.pdf
           git commit -m "Update PDF preview" || echo "No changes to commit"
           git push origin gh_pages
