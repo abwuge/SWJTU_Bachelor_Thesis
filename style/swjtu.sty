@@ -101,7 +101,7 @@
     number = \arabic{chapter},
     format = \zihao{-2} \heiti \centering,
     pagestyle = fancy,
-    beforeskip = 0em,
+    beforeskip = 0pt,
     afterskip = \baselineskip,
    },
   section = {
@@ -113,6 +113,11 @@
       format = \zihao{4} \heiti \raggedright,
       beforeskip = {\ifnum \value{subsection}>0 6pt \else 0pt \fi},
       afterskip = 6pt,
+    },
+  subsubsection = {
+      format = \zihao{-4} \heiti \raggedright,
+      beforeskip = 0pt,
+      afterskip = 0pt,
     },
 }
 %%% ======================= 杂项 ======================= %%%
