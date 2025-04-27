@@ -2,6 +2,8 @@ name: Deploy PDF to GitHub Pages
 
 on:
   push:
+    branches:
+      - '**'
     paths:
       - 'build/SWJTU_Bachelor_Thesis.pdf'
 
