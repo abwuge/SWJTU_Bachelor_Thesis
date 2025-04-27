@@ -1,0 +1,82 @@
+name: Build and Deploy Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - 'appendix/**'
+      - 'bibliography/**'
+      - 'chapters/**'
+      - 'fonts/**'
+      - 'signatures/**'
+      - 'style/**'
+      - 'SWJTU_Bachelor_Thesis.tex'
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+  pages: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          packages: >
+            scheme-full
+
+      - name: Build PDF
+        run: |
+          mkdir -p build/appendix build/chapters
+          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+          biber --output-directory=build SWJTU_Bachelor_Thesis
+          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+
+      - name: Prepare site directory
+        run: |
+          mkdir -p site
+          cp build/SWJTU_Bachelor_Thesis.pdf site/
+
+      - name: Get Latest Release URL
+        id: get-latest-release-url
+        run: |
+          VERSION=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
+          ZIP_NAME="SWJTU_Bachelor_Thesis_${VERSION}.zip"
+          OVERLEAF_URL="https://www.overleaf.com/docs?snip_uri=https://github.com/${{ github.repository }}/releases/download/${VERSION}/${ZIP_NAME}&main_document=SWJTU_Bachelor_Thesis.tex&engine=xelatex"
+          echo "overleafUrl=$OVERLEAF_URL" >> $GITHUB_OUTPUT
+
+      - name: Generate Overleaf Redirect HTML
+        run: |
+          cat <<EOF > site/index.html
+          <!DOCTYPE html>
+          <html>  
+          <head>
+              <meta http-equiv="refresh" content="0; url=${{ steps.get-latest-release-url.outputs.overleafUrl }}" />
+              <title>正在跳转至 Overleaf...</title>
+          </head>
+          <body>
+              <p>正在跳转至 <a href="${{ steps.get-latest-release-url.outputs.overleafUrl }}">Overleaf</a>...</p>
+          </body>
+          </html>
+          EOF
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload static site to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
