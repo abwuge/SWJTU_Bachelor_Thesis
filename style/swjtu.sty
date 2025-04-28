@@ -22,6 +22,11 @@
   AutoFakeBold,
   AutoFakeSlant
 ]{simsun.ttc}
+\setCJKmonofont[
+  Path=fonts/,
+  AutoFakeBold,
+  AutoFakeSlant
+]{simsun.ttc}
 
 %%% --------------------- 中文字体 --------------------- %%%
 \setCJKfamilyfont{songti}[
@@ -134,6 +139,7 @@
 \RequirePackage{tabularx}   % 表格
 \RequirePackage{tocloft}    % 目录
 \RequirePackage{changepage} % 页边距
+\RequirePackage{physics}   % 物理符号
 
 \newcommand{\boxsurd}{      % 复选框：已选中
   \rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}
