@@ -128,25 +128,46 @@
 \raggedbottom % 避免强制拉伸
 
 %%% ======================= 杂项 ======================= %%%
-\RequirePackage{xkeyval}    % key-value 参数
-\RequirePackage[
-  hidelinks,
-  colorlinks=false
-]{hyperref}                 % 超链接
-\RequirePackage{setspace}   % 行距
-\RequirePackage{graphicx}   % 插入图片
+%%% --------------------- 常用宏包 --------------------- %%%
 \RequirePackage{amssymb}    % 数学符号
-\RequirePackage{tabularx}   % 表格
-\RequirePackage{tocloft}    % 目录
 \RequirePackage{changepage} % 页边距
-\RequirePackage{physics}   % 物理符号
+\RequirePackage{graphicx}   % 插入图片
+\RequirePackage{physics}    % 物理符号
+\RequirePackage{setspace}   % 行距
+\RequirePackage{tocloft}    % 目录
+\RequirePackage{xkeyval}    % key-value 参数
+\RequirePackage{makecell}   % 表格单元格换行
 
-\newcommand{\boxsurd}{      % 复选框：已选中
-  \rlap{$\Box$}{\raisebox{0.1ex}{\hspace{-0.1em}$\surd$}}
+%%% ---------------------- 超链接 ---------------------- %%%
+\RequirePackage[
+  colorlinks=false,
+  hidelinks,
+]{hyperref}
+
+%%% ---------------------- 下划线 ---------------------- %%%
+\RequirePackage{xeCJKfntef}
+\renewcommand{\underline}{\CJKunderline[skip=false]}
+
+%%% ----------------------- 列表 ----------------------- %%%
+\RequirePackage{enumitem}
+\setlist[description]{
+    labelindent=2em,
+    labelsep=1em,
+    leftmargin=0pt,
+    nosep,
 }
 
-\RequirePackage{xeCJKfntef} % 下划线
-\renewcommand{\underline}{\CJKunderline[skip=false]}
+%%% ------------------------ 表格 ---------------------- %%%
+\RequirePackage{tabularx}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\renewcommand{\arraystretch}{1.2}
+
+%%% ----------------------- 符号 ----------------------- %%%
+\newcommand{\boxsurd}{ % 复选框：已选中
+  \rlap{$\Box$}{\raisebox{0.1em}{\hspace{-0.1em}$\surd$}}
+}
 
 %%% ======================= 扉页 ======================= %%%
 \makeatletter
