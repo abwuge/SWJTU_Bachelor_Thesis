@@ -111,12 +111,12 @@
    },
   section = {
     format = \zihao{-3} \heiti \raggedright,
-    beforeskip = {\ifnum \value{secnumdepth}>1 12pt \else 0pt \fi},
+    beforeskip = {\ifx\lastskip\parskip 12pt \else 0pt \fi},
     afterskip = 12pt,
    },
   subsection = {
       format = \zihao{4} \heiti \raggedright,
-      beforeskip = {\ifnum \value{subsection}>0 6pt \else 0pt \fi},
+      beforeskip = {\ifx\lastskip\parskip 6pt \else 0pt \fi},
       afterskip = 6pt,
     },
   subsubsection = {
@@ -136,7 +136,7 @@
 \RequirePackage{setspace}   % 行距
 \RequirePackage{tocloft}    % 目录
 \RequirePackage{xkeyval}    % key-value 参数
-\RequirePackage{makecell}   % 表格单元格换行
+\RequirePackage{xparse}     % 变长参数命令
 
 %%% ---------------------- 超链接 ---------------------- %%%
 \RequirePackage[
@@ -151,10 +151,10 @@
 %%% ----------------------- 列表 ----------------------- %%%
 \RequirePackage{enumitem}
 \setlist[description]{
-    labelindent=2em,
-    labelsep=1em,
-    leftmargin=0pt,
-    nosep,
+  labelindent=2em,
+  labelsep=1em,
+  leftmargin=0pt,
+  nosep,
 }
 
 %%% ------------------------ 表格 ---------------------- %%%
@@ -162,25 +162,66 @@
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X}
-\renewcommand{\arraystretch}{1.2}
 
 %%% ----------------------- 符号 ----------------------- %%%
 \newcommand{\boxsurd}{ % 复选框：已选中
   \rlap{$\Box$}{\raisebox{0.1em}{\hspace{-0.1em}$\surd$}}
 }
 
-%%% ======================= 扉页 ======================= %%%
 \makeatletter
+%%% ===================== 公式注释 ===================== %%%
+
+\newcounter{swjtu@itemCount}
+\newcounter{swjtu@currentIndex}
+
+\newcommand{\swjtu@stepItem}[1]{\stepcounter{swjtu@itemCount}}
+\newcommand{\swjtu@stepCurrent}{\stepcounter{swjtu@currentIndex}}
+
+\NewDocumentCommand{\swjtuExplanation}{>{\SplitList{;}} m}{%
+  \setcounter{swjtu@itemCount}{0}%
+  \setcounter{swjtu@currentIndex}{0}%
+  \ProcessList{#1}{\swjtu@stepItem}%
+
+  \noindent
+  \begin{tabularx}{\linewidth}{@{}p{6em}@{}L@{}}%
+    \hspace{2em}式中 & %
+    \begin{tabular}[t]{@{}l@{}}%
+      \ProcessList{#1}{\swjtu@splitSymbolAndExplanationPair}%
+    \end{tabular}%
+  \end{tabularx}\par
+}
+
+\NewDocumentCommand{\swjtu@splitSymbolAndExplanationPair}{>{\SplitArgument{1}{,}} m}{%
+  \swjtu@stepCurrent%
+  \swjtu@explainSymbol #1%
+}
+
+\NewDocumentCommand{\swjtu@explainSymbol}{mm}{%
+  \begin{tabularx}{\linewidth}[t]{@{}l@{}L@{}}%
+    \raggedright #1—— & %
+    #2%
+    \ifnum\value{swjtu@currentIndex}<\value{swjtu@itemCount}
+    ；%
+    \else
+    。%
+    \fi
+  \end{tabularx}%
+  \ifnum\value{swjtu@currentIndex}<\value{swjtu@itemCount}
+    \\%
+  \fi
+}
+
+%%% ======================= 扉页 ======================= %%%
 %%% --------------------- 参数定义 --------------------- %%%
-\define@key[swjtu]{titlepage}{ctitle}{\def\swjtu@ctitle{#1}}
-\define@key[swjtu]{titlepage}{etitle}{\def\swjtu@etitle{#1}}
-\define@key[swjtu]{titlepage}{grade}{\def\swjtu@grade{#1}}
-\define@key[swjtu]{titlepage}{id}{\def\swjtu@id{#1}}
-\define@key[swjtu]{titlepage}{name}{\def\swjtu@name{#1}}
-\define@key[swjtu]{titlepage}{major}{\def\swjtu@major{#1}}
-\define@key[swjtu]{titlepage}{advisor}{\def\swjtu@advisor{#1}}
-\define@key[swjtu]{titlepage}{year}{\def\swjtu@year{#1}}
-\define@key[swjtu]{titlepage}{month}{\def\swjtu@month{#1}}
+\define@key[swjtu]{titlePage}{ctitle}{\def\swjtu@ctitle{#1}}
+\define@key[swjtu]{titlePage}{etitle}{\def\swjtu@etitle{#1}}
+\define@key[swjtu]{titlePage}{grade}{\def\swjtu@grade{#1}}
+\define@key[swjtu]{titlePage}{id}{\def\swjtu@id{#1}}
+\define@key[swjtu]{titlePage}{name}{\def\swjtu@name{#1}}
+\define@key[swjtu]{titlePage}{major}{\def\swjtu@major{#1}}
+\define@key[swjtu]{titlePage}{advisor}{\def\swjtu@advisor{#1}}
+\define@key[swjtu]{titlePage}{year}{\def\swjtu@year{#1}}
+\define@key[swjtu]{titlePage}{month}{\def\swjtu@month{#1}}
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTitlePage}[1][]{%
@@ -193,7 +234,7 @@
   \def\swjtu@advisor{}
   \def\swjtu@year{}
   \def\swjtu@month{}
-  \setkeys[swjtu]{titlepage}{#1}
+  \setkeys[swjtu]{titlePage}{#1}
 
   \begin{titlepage}
     \onehalfspacing \zihao{5}
@@ -246,10 +287,8 @@
   \thispagestyle{empty}
   \mbox{}
 }
-\makeatother
 
 %%% =================== 学术诚信声明 =================== %%%
-\makeatletter
 %%% --------------------- 参数定义 --------------------- %%%
 \define@key[swjtu]{integrity}{signature}{\def\swjtu@signature{#1}}
 \define@key[swjtu]{integrity}{year}{\def\swjtu@year{#1}}
@@ -285,7 +324,7 @@
     \vspace{3\baselineskip}
 
     % 签名
-    {\noindent \hspace*{0.5\textwidth}
+    {\noindent \hspace*{0.5\linewidth}
       作者签名：%
       \ifx\swjtu@signature\@empty\else
         \raisebox{-0.5\baselineskip}{\includegraphics[height=1.5\baselineskip]{\swjtu@signature}}
@@ -297,15 +336,13 @@
 
     % 日期
     \begin{allsongti} \zihao{4}
-      \noindent \hspace*{0.5\textwidth}
+      \noindent \hspace*{0.5\linewidth}
       日期：\swjtu@year~年~\swjtu@month~月~\swjtu@day~日
     \end{allsongti}
   \end{titlepage}
 }
-\makeatother
 
 %%% =================== 版权使用授权 =================== %%%
-\makeatletter
 %%% --------------------- 参数定义 --------------------- %%%
 \define@key[swjtu]{copyright}{confidentialityPeriod}{\def\swjtu@confidentialityPeriod{#1}}
 \define@key[swjtu]{copyright}{authorSignature}{\def\swjtu@authorSignature{#1}}
@@ -371,7 +408,7 @@
 
     % 签名与日期
     \noindent
-    \begin{tabularx}{\textwidth}{@{}XX@{}}
+    \begin{tabularx}{\linewidth}{@{}XX@{}}
       作者签名：%
       \ifx\swjtu@authorSignature\@empty\else
         \raisebox{-0.5\baselineskip}{
@@ -395,10 +432,8 @@
 
   \end{titlepage}
 }
-\makeatother
 
 %%% ====================== 任务书 ====================== %%%
-\makeatletter
 %%% --------------------- 参数定义 --------------------- %%%
 \define@key[swjtu]{task}{class}{\def\swjtu@class{#1}}
 \define@key[swjtu]{task}{name}{\def\swjtu@name{#1}}
@@ -485,7 +520,7 @@
     \setlength{\baselineskip}{26pt}
 
     % 班级姓名学号
-    \begin{tabularx}{\textwidth}{@{}>{\hsize=1.2\hsize}X>{\hsize=0.9\hsize}X>{\hsize=0.9\hsize}X@{}}
+    \begin{tabularx}{\linewidth}{@{}>{\hsize=1.2\hsize}X>{\hsize=0.9\hsize}X>{\hsize=0.9\hsize}X@{}}
       班\hspace{2em}级\underline{\hspace{0.5em}\swjtu@class\hfill}
        &
       学生姓名\underline{\hspace{0.5em}\swjtu@name\hfill}
@@ -544,19 +579,17 @@
     指导教师：\underline{\makebox[5em][l]{\hspace{0.5em}\swjtu@advisor}}\hspace{2em}~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日\par
   \end{allsongti}
 }
-\makeatother
 
 %%% ===================== 中文摘要 ===================== %%%
-\makeatletter
 %%% --------------------- 参数定义 --------------------- %%%
-\define@key[swjtu]{abstractcn}{abstract}{\def\swjtu@abstractCN{#1}}
-\define@key[swjtu]{abstractcn}{keywords}{\def\swjtu@keywordsCN{#1}}
+\define@key[swjtu]{abstractCN}{abstract}{\def\swjtu@abstractCN{#1}}
+\define@key[swjtu]{abstractCN}{keywords}{\def\swjtu@keywordsCN{#1}}
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuAbstractCN}[1][]{%
   \def\swjtu@abstractCN{}
   \def\swjtu@keywordsCN{}
-  \setkeys[swjtu]{abstractcn}{#1}
+  \setkeys[swjtu]{abstractCN}{#1}
 
   \newpage
 
@@ -580,19 +613,17 @@
     关键词：\hspace{1em}\swjtu@keywordsCN
   }
 }
-\makeatother
 
 %%% ===================== 英文摘要 ===================== %%%
-\makeatletter
 %%% --------------------- 参数定义 --------------------- %%%
-\define@key[swjtu]{abstracten}{abstract}{\def\swjtu@abstractEN{#1}}
-\define@key[swjtu]{abstracten}{keywords}{\def\swjtu@keywordsEN{#1}}
+\define@key[swjtu]{abstractEN}{abstract}{\def\swjtu@abstractEN{#1}}
+\define@key[swjtu]{abstractEN}{keywords}{\def\swjtu@keywordsEN{#1}}
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuAbstractEN}[1][]{%
   \def\swjtu@abstractEN{}
   \def\swjtu@keywordsEN{}
-  \setkeys[swjtu]{abstracten}{#1}
+  \setkeys[swjtu]{abstractEN}{#1}
 
   \newpage
 
@@ -614,7 +645,6 @@
   \noindent
   Key words:\hspace{1em}\swjtu@keywordsEN
 }
-\makeatother
 
 %%% ======================= 目录 ======================= %%%
 %%% ------------------- 去除自带标题 ------------------- %%%
@@ -736,3 +766,5 @@
   \fi
   \chapter{#1}
 }
+
+\makeatother
