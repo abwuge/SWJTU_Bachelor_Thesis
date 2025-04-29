@@ -150,11 +150,20 @@
 
 %%% ----------------------- 列表 ----------------------- %%%
 \RequirePackage{enumitem}
+\newlist{explainSymbol}{itemize}{1}
 \setlist[description]{
   labelindent=2em,
   labelsep=1em,
   leftmargin=0pt,
   nosep,
+}
+\setlist[explainSymbol]{
+  font=\normalfont,
+  labelindent=2em,
+  labelsep=0pt,
+  leftmargin=!,
+  align=parleft,
+  nosep
 }
 
 %%% ------------------------ 表格 ---------------------- %%%
@@ -170,44 +179,44 @@
 
 \makeatletter
 %%% ===================== 公式注释 ===================== %%%
-
 \newcounter{swjtu@itemCount}
 \newcounter{swjtu@currentIndex}
+\newlength{\swjtu@labelwidth}
 
-\newcommand{\swjtu@stepItem}[1]{\stepcounter{swjtu@itemCount}}
+\newcommand{\swjtu@countItem}[1]{\IfBlankF{#1}{\stepcounter{swjtu@itemCount}}}
 \newcommand{\swjtu@stepCurrent}{\stepcounter{swjtu@currentIndex}}
 
 \NewDocumentCommand{\swjtuExplanation}{>{\SplitList{;}} m}{%
-  \setcounter{swjtu@itemCount}{0}%
+  \setcounter{swjtu@itemCount}{0}
   \setcounter{swjtu@currentIndex}{0}%
-  \ProcessList{#1}{\swjtu@stepItem}%
-
-  \noindent
-  \begin{tabularx}{\linewidth}{@{}p{6em}@{}L@{}}%
-    \hspace{2em}式中 & %
-    \begin{tabular}[t]{@{}l@{}}%
-      \ProcessList{#1}{\swjtu@splitSymbolAndExplanationPair}%
-    \end{tabular}%
-  \end{tabularx}\par
+  \ProcessList{#1}{\swjtu@countItem}%
+  \ProcessList{#1}{\swjtu@splitSymbolAndExplanationPair}%
 }
 
 \NewDocumentCommand{\swjtu@splitSymbolAndExplanationPair}{>{\SplitArgument{1}{,}} m}{%
   \swjtu@stepCurrent%
+  \ifnum\value{swjtu@currentIndex}>\value{swjtu@itemCount}
+  \else
   \swjtu@explainSymbol #1%
+  \fi
 }
 
 \NewDocumentCommand{\swjtu@explainSymbol}{mm}{%
-  \begin{tabularx}{\linewidth}[t]{@{}l@{}L@{}}%
-    \raggedright #1—— & %
-    #2%
-    \ifnum\value{swjtu@currentIndex}<\value{swjtu@itemCount}
-    ；%
+  \settowidth{\swjtu@labelwidth}{\hspace{6em}#1}
+  \begin{explainSymbol}[labelwidth=\swjtu@labelwidth]
+    \ifnum\value{swjtu@currentIndex}=1
+    \swjtu@explainItem{式中\hspace{2em}#1——}{#2}
     \else
-    。%
+    \swjtu@explainItem{\hspace{4em}#1——}{#2}
     \fi
-  \end{tabularx}%
+  \end{explainSymbol}
+}
+
+\newcommand{\swjtu@explainItem}[2]{
   \ifnum\value{swjtu@currentIndex}<\value{swjtu@itemCount}
-    \\%
+    \item[#1] #2；
+  \else
+    \item[#1] #2。
   \fi
 }
 
