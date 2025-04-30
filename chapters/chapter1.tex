@@ -4,17 +4,18 @@
 
 \subsection{测试一下公式}
 
-无编号的公式：$\int_a^b f(x)\mathrm{d}x=F(b)-F(a)$
+无编号的公式：\(\int_a^b f(x)\mathrm{d}x=F(b)-F(a)\)
 
 有编号的公式：
 \begin{equation}
     \int_a^b f(x)\mathrm{d}x=F(b)-F(a)
+    \label{eq:example}
 \end{equation}
 
 \swjtuExplanation{
-  $a$, 积分下界;
-  $b$, 积分上界;
-  $F(x)$, {原函数，如果需要打英文逗号(,)，或者需要打英文分号(;)，记得包围在大括号里};
+    \(a\), 积分下界;
+    \(b\), 积分上界;
+    \(F(x)\), {原函数，如果需要打英文逗号(,)，或者需要打英文分号(;)，记得包围在大括号里};
 }
 
 来点正文，稍微长一点点吧。
@@ -41,11 +42,57 @@
     \label{tab:example}
 \end{table}
 
+\begin{table}[htbp]
+    \centering
+    \caption{三线表}
+    \begin{tabularx}{0.8\linewidth}{LCR}
+        \toprule
+        列1   & 列2   & 列3   \\
+        \midrule
+        数据11 & 数据12 & 数据13 \\
+        数据21 & 数据22 & 数据23 \\
+        \bottomrule
+    \end{tabularx}
+    \label{tab:example2}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \caption{主表格标题}
+    \begin{subtable}[t]{0.45\textwidth}
+        \centering
+        \caption{子表A标题}
+        \label{tab:subtableA}
+        \begin{tabular}{|c|c|}
+            \hline
+            列1 & 列2 \\ \hline
+            数据1 & 数据2 \\ \hline
+        \end{tabular}
+    \end{subtable}
+    \hfill
+    \begin{subtable}[t]{0.45\textwidth}
+        \centering
+        \caption{子表B标题}
+        \label{tab:subtableB}
+        \begin{tabular}{|c|c|}
+            \hline
+            列1 & 列2 \\ \hline
+            数据3 & 数据4 \\ \hline
+        \end{tabular}
+    \end{subtable}
+\end{table}
+
 \subsection{测试一下引用}
 
-如图\ref{fig:example}所示，测试一下图片引用。
+如\cref{eq:example}所示，测试一下公式引用。
 
-如表\ref{tab:example}所示，测试一下表格引用。
+如\cref{fig:example}所示，测试一下图片引用。
+
+如\cref{tab:example}所示，测试一下表格引用。
+
+如\cref{tab:example,tab:example2,tab:subtableA,tab:subtableB}所示，测试一下多个表格引用。
+
+如\crefrange{tab:example}{tab:example2}所示，测试一下表格范围引用。
 
 还有参考文件引用：
 引用样式1\cite{example2025}。
