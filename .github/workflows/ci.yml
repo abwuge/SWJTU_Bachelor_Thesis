@@ -46,6 +46,7 @@ jobs:
             signatures/
             style/
             SWJTU_Bachelor_Thesis.tex
+            LICENSE
 
       - name: Upload build log
         if: failure()

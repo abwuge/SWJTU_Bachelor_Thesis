@@ -50,7 +50,7 @@ jobs:
       - name: Zip source files
         run: |
           zip -r SWJTU_Bachelor_Thesis_v${{ steps.get-version.outputs.version }}.zip \
-            appendix/ bibliography/ chapters/ fonts/ signatures/ style/ SWJTU_Bachelor_Thesis.tex
+            appendix/ bibliography/ chapters/ fonts/ signatures/ style/ SWJTU_Bachelor_Thesis.tex LICENSE
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
