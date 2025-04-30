@@ -222,3 +222,19 @@ Windows下的[TeX Live](https://tug.org/texlive/) & [VS Code](https://code.visua
 - 如有建议或问题，请提交Issue。
 - 欢迎提交Pull Request。
 - 贡献前请确保遵循最新《西南交通大学本科毕业设计（论文）撰写规范》。
+
+## 感谢所有贡献者！
+[![贡献者](https://contrib.rocks/image?repo=abwuge/SWJTU_Bachelor_Thesis)](https://github.com/abwuge/SWJTU_Bachelor_Thesis/graphs/contributors)
+
+## Star
+
+> [!TIP] 
+> 若对您有帮助，请给这个项目点上 Star!
+
+<a href="https://www.star-history.com/#abwuge/SWJTU_Bachelor_Thesis&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=abwuge/SWJTU_Bachelor_Thesis&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=abwuge/SWJTU_Bachelor_Thesis&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=abwuge/SWJTU_Bachelor_Thesis&type=Date" />
+ </picture>
+</a>
