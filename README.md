@@ -1,7 +1,7 @@
 <div align="center">
   <h1>西南交通大学本科毕业论文LaTeX模板</h1>
   
-  [![LICENSE](https://badgen.net/static/license/PPL)](LICENSE)
+  [![LICENSE](https://badgen.net/static/LICENSE/非商业许可)](LICENSE)
 </div>
 
 ------------------------------------------------------------
@@ -220,8 +220,3 @@ Windows下的[TeX Live](https://tug.org/texlive/) & [VS Code](https://code.visua
 - 如有建议或问题，请提交Issue。
 - 欢迎提交Pull Request。
 - 贡献前请确保遵循最新《西南交通大学本科毕业设计（论文）撰写规范》。
-
-------------------------------------------------------------
-
-**关于许可证选用PPL**：
-> 强制项目用于非商业用途
