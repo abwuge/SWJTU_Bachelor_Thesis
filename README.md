@@ -49,9 +49,31 @@
 或者点击[此处](https://abwuge.github.io/SWJTU_Bachelor_Thesis)直接在Overleaf中创建该项目。
 
 ### 模板自定义命令说明
+#### 无参数命令
 - `\songti`：将中文切换到模板内置字体——宋体。
 - `\heiti`：将中文切换到模板内置字体——黑体。
 - `\boxsurd`：在当前位置生成已选中的复选框。
+- `\swjtuTableOfContents`：生成目录页。
+
+#### 普通参数命令
+- `\swjtuIntroduction{章节名}`：生成绪论章节。
+- `\swjtuChapter{章节名}`：生成普通章节。
+- `\swjtuConclusion{章节名}`：生成结论章节。
+- `\swjtuAcknowledgments{章节名}`：生成致谢章节。
+- `\swjtuBibliography{章节名}`：生成参考文献章节。
+- `\swjtuAppendix{章节名}`：生成附录章节。
+- `\swjtuExplanation{符号, 解释; ...}`：生成公式的符号注释。
+  ```latex
+  % 使用示例
+  % 若符号或解释本身含有分隔符，用`{}`包围即可，`{}`本身也可嵌套
+  \swjtuExplanation{
+    符号1, 解释1;
+    {含有","的符号2}, {含有";"或"{}"的解释2};
+  }
+  ```
+
+
+#### 键值对参数命令
 - `\swjtuTitlePage`：生成扉页。
   - `[ ]` `ctitle`：中文标题。
   - `[ ]` `etitle`：英文标题。
@@ -95,15 +117,8 @@
 - `\swjtuAbstractEN`：生成英文摘要。
   - `[ ]` `abstract`：英文摘要正文。
   - `[ ]` `keywords`：英文关键词（请自行用分号分隔）。
-- `\swjtuTableOfContents`：生成目录页。
-- `\swjtuIntroduction{章节名}`：生成绪论章节。
-- `\swjtuChapter{章节名}`：生成普通章节。
-- `\swjtuConclusion{章节名}`：生成结论章节。
-- `\swjtuAcknowledgments{章节名}`：生成致谢章节。
-- `\swjtuBibliography{章节名}`：生成参考文献章节。
-- `\swjtuAppendix`：生成附录章节。
 
-**注1**：所有带参数的命令，参数均为可选参数。在参数名之前用`[]`表示其默认值。
+**注1**：键值对参数命令的参数均为可选参数。在参数名之前用`[]`表示其默认值。
 > 例如：`[ ]`表示默认参数为空，`[0]`表示默认参数为0。
 
 **注2**：由于本人能力有限，模板中部分自定义命名中修改了全局定义。因此若您未按照主文件示例的命令执行方式进行论文撰写，恐有非预期行为。
