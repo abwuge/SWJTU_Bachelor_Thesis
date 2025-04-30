@@ -136,10 +136,12 @@
 ## 目录结构说明
    ```powershell
    .
+   │  LICENSE                   # 许可证
    │  SWJTU_Bachelor_Thesis.tex # 主文件
    │  
    ├─appendix # 附录
-   │      appendix.tex
+   │      appendix1.tex
+   │      appendix2.tex
    │      
    ├─bibliography # 参考文献
    │      references.bib
