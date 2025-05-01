@@ -217,16 +217,17 @@
 
 Windows下的[TeX Live](https://tug.org/texlive/) & [VS Code](https://code.visualstudio.com/)配置方法可参考[知乎文章](https://zhuanlan.zhihu.com/p/382472221)。
 
-## 贡献指南
+## 贡献
+### 贡献指南
 欢迎大家为本模板贡献代码、修正bug或完善文档！
 - 如有建议或问题，请提交Issue。
 - 欢迎提交Pull Request。
 - 贡献前请确保遵循最新《西南交通大学本科毕业设计（论文）撰写规范》。
 
-## 感谢所有贡献者！
+### 感谢所有贡献者！
 [![贡献者](https://contrib.rocks/image?repo=abwuge/SWJTU_Bachelor_Thesis)](https://github.com/abwuge/SWJTU_Bachelor_Thesis/graphs/contributors)
 
-## Star
+### Star
 
 > [!TIP] 
 > 若对您有帮助，请给这个项目点上 Star!
