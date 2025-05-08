@@ -113,6 +113,31 @@
 \captionsetup[figure]{labelsep=space}
 \captionsetup[table]{labelsep=space}
 
+%%% ===================== 标题间距 ===================== %%%
+\RequirePackage{titlesec}    % 标题格式
+\RequirePackage{indentfirst} % 首行缩进
+
+% 节标题
+\titleformat{\section}
+  {\zihao{-3}\heiti}
+  {\thesection}{1em}{}
+\titlespacing*{\section}
+  {0pt}{12pt plus 2pt minus 2pt}{12pt}
+
+% 子节标题
+\titleformat{\subsection}
+  {\zihao{4}\heiti}
+  {\thesubsection}{1em}{}
+\titlespacing*{\subsection}
+  {0pt}{6pt plus 2pt minus 2pt}{6pt}
+
+% 子子节标题
+\titleformat{\subsubsection}
+  {\zihao{-4}\heiti}
+  {\thesubsubsection}{1em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{0pt}{0pt}
+
 %%% =================== 其他页面设置 =================== %%%
 \ctexset{
   chapter = {
@@ -121,22 +146,7 @@
     pagestyle = fancy,
     beforeskip = 0pt,
     afterskip = \baselineskip,
-   },
-  section = {
-    format = \zihao{-3} \heiti \raggedright,
-    beforeskip = {\ifx\lastskip\parskip 12pt \else 0pt \fi},
-    afterskip = 12pt,
-   },
-  subsection = {
-      format = \zihao{4} \heiti \raggedright,
-      beforeskip = {\ifx\lastskip\parskip 6pt \else 0pt \fi},
-      afterskip = 6pt,
-    },
-  subsubsection = {
-      format = \zihao{-4} \heiti \raggedright,
-      beforeskip = 0pt,
-      afterskip = 0pt,
-    },
+   }
 }
 \raggedbottom % 避免强制拉伸
 
