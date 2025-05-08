@@ -12,7 +12,7 @@
 >
 > 若您需要最新模板，可在Action中下载产物，或直接克隆本项目。
 
-> [!TIP] 
+> [!CAUTION] 
 > 西南交通大学教务网在线论文提交仅支持doc, docx。详见[#3](https://github.com/abwuge/SWJTU_Bachelor_Thesis/issues/3)。
 
 ## 简介
