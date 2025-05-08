@@ -213,7 +213,6 @@
   \clearpage
 }
 
-
 \makeatletter
 %%% ===================== 公式注释 ===================== %%%
 \newcounter{swjtu@itemCount}
@@ -637,27 +636,28 @@
   \def\swjtu@keywordsCN{}
   \setkeys[swjtu]{abstractCN}{#1}
 
-  \newpage
-
-  % 标题
-  \begin{center}
-    {\zihao{-2} \heiti 摘\hspace{3em}要}
-  \end{center}
-
-  % 空行
-  \vspace{\baselineskip}
-
-  % 摘要正文
-  \swjtu@abstractCN
-
-  % 空行
-  \vspace{\baselineskip}
-
-  % 关键词
-  {\heiti
-    \noindent
-    关键词：\hspace{1em}\swjtu@keywordsCN
-  }
+  \begin{titlepage}
+      % 标题
+      \begin{center}
+        {\zihao{-2} \heiti 摘\hspace{3em}要}
+      \end{center}
+    
+      % 空行
+      \vspace{\baselineskip}
+    
+      % 摘要正文
+      \swjtu@abstractCN
+    
+      % 空行
+      \vspace{\baselineskip}
+    
+      % 关键词
+      {\heiti
+        \noindent
+        关键词：\hspace{1em}\swjtu@keywordsCN
+      }
+      
+    \end{titlepage}
 }
 
 %%% ===================== 英文摘要 ===================== %%%
