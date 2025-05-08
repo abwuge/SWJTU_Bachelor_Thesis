@@ -758,22 +758,15 @@
     \end{spacing}
   \end{adjustwidth}
   \thispagestyle{fancy}
-
-  % 空白页
-  \ifodd\value{page}
-    \newpage
-    \thispagestyle{empty}
-    \mbox{}
-  \fi
-
-  % 重置页码
-  \clearpage
-  \pagenumbering{arabic}
 }
 
 %%% ======================= 正文 ======================= %%%
-\newcommand{\swjtuIntroduction}[1]{\chapter{#1}} % 绪论章节
-\newcommand{\swjtuChapter}[1]{\chapter{#1}}      % 正常章节
+\newcommand{\swjtuIntroduction}[1]{ 
+  \cleardoublepage
+  \pagenumbering{arabic} % 重置页码
+  \chapter{#1}
+} % 绪论章节
+\newcommand{\swjtuChapter}[1]{\chapter{#1}} % 正常章节
 
 %%% ======================= 结论 ======================= %%%
 \newcommand{\swjtuConclusion}[1]{%
