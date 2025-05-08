@@ -205,6 +205,15 @@
   \rlap{\(\Box\)}{\raisebox{0.1em}{\hspace{-0.1em}\(\surd\)}}
 }
 
+%%% ---------------------- 干净页 ----------------------- %%%
+\newenvironment{cleanpage}{ % 区别于titlepage book类双面打印导致的空白偶数页
+  \clearpage
+  \thispagestyle{empty}
+}{
+  \clearpage
+}
+
+
 \makeatletter
 %%% ===================== 公式注释 ===================== %%%
 \newcounter{swjtu@itemCount}
@@ -340,7 +349,7 @@
   \def\swjtu@day{}
   \setkeys[swjtu]{integrity}{#1}
 
-  \begin{titlepage}
+  \begin{cleanpage}
     \doublespacing \zihao{4}
 
     % 标题
@@ -376,7 +385,7 @@
       \noindent \hspace*{0.5\linewidth}
       日期：\swjtu@year~年~\swjtu@month~月~\swjtu@day~日
     \end{allsongti}
-  \end{titlepage}
+  \end{cleanpage}
 }
 
 %%% =================== 版权使用授权 =================== %%%
@@ -404,7 +413,7 @@
   \def\swjtu@advisorDay{}
   \setkeys[swjtu]{copyright}{#1}
 
-  \begin{titlepage}
+  \begin{cleanpage}
     \doublespacing \zihao{4}
 
     % 标题
@@ -467,7 +476,7 @@
       日期：~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日
     \end{tabularx}
 
-  \end{titlepage}
+  \end{cleanpage}
 }
 
 %%% ====================== 任务书 ====================== %%%
