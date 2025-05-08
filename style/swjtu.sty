@@ -64,6 +64,19 @@
   {\heiti\enheiti\BODY}
 }
 
+%%% ===================== 排版策略 ===================== %%%
+%%% ----------------- 微调字间距和伸缩 ------------------ %%%
+\RequirePackage{microtype}
+
+%%% ----------------------- 断行 ----------------------- %%%
+\RequirePackage{etoolbox}
+\pretocmd{\section}{\sloppy}{}{}
+\pretocmd{\subsection}{\sloppy}{}{}
+\pretocmd{\subsubsection}{\sloppy}{}{}
+\pretocmd{\paragraph}{\sloppy}{}{}
+\pretocmd{\subparagraph}{\sloppy}{}{}
+\sloppy
+
 %%% ===================== 页眉页脚 ===================== %%%
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
