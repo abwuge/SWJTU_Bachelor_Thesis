@@ -653,7 +653,7 @@
   \begin{titlepage}
     % 标题
     \begin{center}
-      {\zihao{-2} \heiti 摘\hspace{3em}要}
+      {\zihao{-2} \heiti 摘\ 要}
     \end{center}
   
     % 空行
@@ -738,11 +738,17 @@
 
 %%% ----------------------- 缩进 ----------------------- %%%
 \setlength{\cftchapindent}{0em}   % 章
-\setlength{\cftsecindent}{0em}    % 节
-\setlength{\cftsubsecindent}{2em} % 子节
+\setlength{\cftsecindent}{2em}    % 节
+\setlength{\cftsubsecindent}{4em} % 子节
 
 %%% --------------------- 目录间距 --------------------- %%%
-\setlength{\cftbeforechapskip}{0pt} % 章
+\setlength{\cftbeforechapskip}{0.25\baselineskip}  % 章 段前 0.25 行
+\setlength{\cftbeforesecskip}{0pt}
+\setlength{\cftbeforesubsecskip}{0pt}
+
+% 章 段后 0.25 行
+\renewcommand{\cftchapafterpnum}{}
+\renewcommand{\cftchapafterpnum}{\par\vspace{0.25\baselineskip}}
 
 %%% ---------------------- 引导符 ---------------------- %%%
 \renewcommand{\cftdotsep}{1}                           % 点线密度
@@ -750,39 +756,38 @@
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTableOfContents}{%
-  \newpage
+  \begin{cleanpage}
 
-  % 标题
-  \begin{center}
-    \heiti 目\hspace{1em}录
-  \end{center}
+    % 标题
+    \begin{center}
+      {\zihao{-2} \heiti 目\ 录}
+    \end{center}
 
-  % 空行
-  \vspace{\baselineskip}
+    % 空行
+    \vspace{\baselineskip}
 
-  % 正文
-  \begin{adjustwidth}{4em}{4em}
-    \begin{spacing}{1.5}
-      \tableofcontents
-    \end{spacing}
-  \end{adjustwidth}
-  \thispagestyle{fancy}
+    % 把所有 plain 样式都重定义成 fancy
+    \makeatletter
+    \let\ps@plain\ps@fancy
+    \makeatother
 
-  % 空白页
-  \ifodd\value{page}
-    \newpage
-    \thispagestyle{empty}
-    \mbox{}
-  \fi
-
-  % 重置页码
-  \clearpage
-  \pagenumbering{arabic}
+    % 正文
+    \begin{adjustwidth}{0em}{0em}
+      \begin{spacing}{1.3}
+        \tableofcontents
+      \end{spacing}
+    \end{adjustwidth}
+    
+  \end{cleanpage}
 }
 
 %%% ======================= 正文 ======================= %%%
-\newcommand{\swjtuIntroduction}[1]{\chapter{#1}} % 绪论章节
-\newcommand{\swjtuChapter}[1]{\chapter{#1}}      % 正常章节
+\newcommand{\swjtuIntroduction}[1]{ 
+  \cleardoublepage
+  \pagenumbering{arabic} % 重置页码
+  \chapter{#1}
+} % 绪论章节
+\newcommand{\swjtuChapter}[1]{\chapter{#1}} % 正常章节
 
 %%% ======================= 结论 ======================= %%%
 \newcommand{\swjtuConclusion}[1]{%
