@@ -208,7 +208,7 @@
 %%% ---------------------- 干净页 ----------------------- %%%
 \newenvironment{cleanpage}{ % 区别于titlepage book类双面打印导致的空白偶数页
   \clearpage
-  \thispagestyle{empty}
+  % \thispagestyle{empty}
 }{
   \clearpage
 }
@@ -549,80 +549,85 @@
 
   \pagestyle{fancy}
 
-  \clearpage
-  \pagenumbering{Roman}
-
-  % 标题
-  \begin{center}
-    {\zihao{3} \heiti \textbf{毕业设计（论文）任务书}}
-  \end{center}
-
-  % 空行
-  \vspace{\baselineskip}
-
-  \begin{allsongti}
-    \setlength{\parindent}{0pt}
-    \setlength{\baselineskip}{26pt}
-
-    % 班级姓名学号
-    \begin{tabularx}{\linewidth}{@{}>{\hsize=1.2\hsize}X>{\hsize=0.9\hsize}X>{\hsize=0.9\hsize}X@{}}
-      班\hspace{2em}级\underline{\hspace{0.5em}\swjtu@class\hfill}
-       &
-      学生姓名\underline{\hspace{0.5em}\swjtu@name\hfill}
-       &
-      学\hspace{2em}号\underline{\hspace{0.5em}\swjtu@id\hfill}
-    \end{tabularx}
-
-    % 日期
-    发题日期：~\swjtu@issueYear~年~\swjtu@issueMonth~月~\swjtu@issueDay~日
-    \hfill
-    完成日期：~\swjtu@dueYear~年~\swjtu@dueMonth~月~\swjtu@dueDay~日
-
-    % 题目
-    题\hspace{2em}目\underline{\hspace{0.5em}\swjtu@title\hfill}
-
-    % 1、本设计（论文）的目的、意义
-    1、本设计（论文）的目的、意义\underline{\hspace{0.5em}\swjtu@purpose\hfill}
-
-    % 2、学生应完成的任务
-    2、学生应完成的任务\underline{\hspace{0.5em}\swjtu@tasks\hfill}
-
-    % 3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
-    3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
-
-    \underline{\swjtu@requirement\hfill}
-
-    \newpage
-
-    % 4、本设计（论文）各部分内容及时间分配
-    4、本设计（论文）各部分内容及时间分配（共\underline{\hspace{0.5em}\swjtu@weeks\hspace{0.5em}}周）：
-
-    { \setlength{\parindent}{1.5em}
-    第一部分\underline{\hspace{0.5em}\swjtu@partOne\hfill} (\swjtu@partOneWeeks~周)
-
-    第二部分\underline{\hspace{0.5em}\swjtu@partTwo\hfill} (\swjtu@partTwoWeeks~周)
-
-    第三部分\underline{\hspace{0.5em}\swjtu@partThree\hfill} (\swjtu@partThreeWeeks~周)
-
-    第四部分\underline{\hspace{0.5em}\swjtu@partFour\hfill} (\swjtu@partFourWeeks~周)
-
-    第五部分\underline{\hspace{0.5em}\swjtu@partFive\hfill} (\swjtu@partFiveWeeks~周)
-
-    评阅及答辩\underline{\hspace{0.5em}\swjtu@partReview\hfill} (\swjtu@partReviewWeeks~周)%
-    }
-
+  \begin{cleanpage}
+    \pagenumbering{Roman}
+  
+    % 标题
+    \begin{center}
+      {\zihao{3} \heiti \textbf{毕业设计（论文）任务书}}
+    \end{center}
+  
     % 空行
     \vspace{\baselineskip}
-
-    % 备注
-    备\hspace{2em}注\underline{\hspace{0.5em}\swjtu@remark\hfill}
-
-    % 空行
-    \vspace{\baselineskip}
-
-    % 指导教师与日期
-    指导教师：\underline{\makebox[5em][l]{\hspace{0.5em}\swjtu@advisor}}\hspace{2em}~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日\par
-  \end{allsongti}
+  
+    \begin{allsongti}
+      \setlength{\parindent}{0pt}
+      \setlength{\baselineskip}{26pt}
+  
+      % 班级姓名学号
+      \begin{tabularx}{\linewidth}{@{}>{\hsize=1.2\hsize}X>{\hsize=0.9\hsize}X>{\hsize=0.9\hsize}X@{}}
+        班\hspace{2em}级\underline{\hspace{0.5em}\swjtu@class\hfill}
+          &
+        学生姓名\underline{\hspace{0.5em}\swjtu@name\hfill}
+          &
+        学\hspace{2em}号\underline{\hspace{0.5em}\swjtu@id\hfill}
+      \end{tabularx}
+  
+      % 日期
+      发题日期：~\swjtu@issueYear~年~\swjtu@issueMonth~月~\swjtu@issueDay~日
+      \hfill
+      完成日期：~\swjtu@dueYear~年~\swjtu@dueMonth~月~\swjtu@dueDay~日
+  
+      % 题目
+      题\hspace{2em}目\underline{\hspace{0.5em}\swjtu@title\hfill}
+  
+      % 1、本设计（论文）的目的、意义
+      1、本设计（论文）的目的、意义
+      
+      \underline{\swjtu@purpose\hfill}
+  
+      % 2、学生应完成的任务
+      2、学生应完成的任务
+      
+      \underline{\swjtu@tasks\hfill}
+  
+      % 3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
+      3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
+  
+      \underline{\swjtu@requirement\hfill}
+  
+      \newpage
+  
+      % 4、本设计（论文）各部分内容及时间分配
+      4、本设计（论文）各部分内容及时间分配（共\underline{\hspace{0.5em}\swjtu@weeks\hspace{0.5em}}周）：
+  
+      { \setlength{\parindent}{1.5em}
+      第一部分\underline{\hspace{0.5em}\swjtu@partOne\hfill} (\swjtu@partOneWeeks~周)
+  
+      第二部分\underline{\hspace{0.5em}\swjtu@partTwo\hfill} (\swjtu@partTwoWeeks~周)
+  
+      第三部分\underline{\hspace{0.5em}\swjtu@partThree\hfill} (\swjtu@partThreeWeeks~周)
+  
+      第四部分\underline{\hspace{0.5em}\swjtu@partFour\hfill} (\swjtu@partFourWeeks~周)
+  
+      第五部分\underline{\hspace{0.5em}\swjtu@partFive\hfill} (\swjtu@partFiveWeeks~周)
+  
+      评阅及答辩\underline{\hspace{0.5em}\swjtu@partReview\hfill} (\swjtu@partReviewWeeks~周)%
+      }
+  
+      % 空行
+      \vspace{\baselineskip}
+  
+      % 备注
+      备\hspace{2em}注\underline{\hspace{0.5em}\swjtu@remark\hfill}
+  
+      % 空行
+      \vspace{\baselineskip}
+  
+      % 指导教师与日期
+      指导教师：\underline{\makebox[5em][l]{\hspace{0.5em}\swjtu@advisor}}\hspace{2em}~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日\par
+    \end{allsongti}
+  \end{cleanpage}
 }
 
 %%% ===================== 中文摘要 ===================== %%%
@@ -637,27 +642,27 @@
   \setkeys[swjtu]{abstractCN}{#1}
 
   \begin{titlepage}
-      % 标题
-      \begin{center}
-        {\zihao{-2} \heiti 摘\hspace{3em}要}
-      \end{center}
+    % 标题
+    \begin{center}
+      {\zihao{-2} \heiti 摘\hspace{3em}要}
+    \end{center}
+  
+    % 空行
+    \vspace{\baselineskip}
+  
+    % 摘要正文
+    \swjtu@abstractCN
+  
+    % 空行
+    \vspace{\baselineskip}
+  
+    % 关键词
+    {\heiti
+      \noindent
+      关键词：\hspace{1em}\swjtu@keywordsCN
+    }
     
-      % 空行
-      \vspace{\baselineskip}
-    
-      % 摘要正文
-      \swjtu@abstractCN
-    
-      % 空行
-      \vspace{\baselineskip}
-    
-      % 关键词
-      {\heiti
-        \noindent
-        关键词：\hspace{1em}\swjtu@keywordsCN
-      }
-      
-    \end{titlepage}
+  \end{titlepage}
 }
 
 %%% ===================== 英文摘要 ===================== %%%
@@ -671,25 +676,26 @@
   \def\swjtu@keywordsEN{}
   \setkeys[swjtu]{abstractEN}{#1}
 
-  \newpage
+  \begin{cleanpage}
 
-  % 标题
-  \begin{center}
-    \zihao{-2} Abstract
-  \end{center}
+    % 标题
+    \begin{center}
+      \zihao{-2} Abstract
+    \end{center}
 
-  % 空行
-  \vspace{\baselineskip}
+    % 空行
+    \vspace{\baselineskip}
 
-  % 摘要正文
-  \swjtu@abstractEN
+    % 摘要正文
+    \swjtu@abstractEN
 
-  % 空行
-  \vspace{\baselineskip}
+    % 空行
+    \vspace{\baselineskip}
 
-  % 关键词
-  \noindent
-  Key words:\hspace{1em}\swjtu@keywordsEN
+    % 关键词
+    \noindent
+    Key words:\hspace{1em}\swjtu@keywordsEN
+  \end{cleanpage}
 }
 
 %%% ======================= 目录 ======================= %%%
