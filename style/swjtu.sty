@@ -119,24 +119,24 @@
 
 % 节标题
 \titleformat{\section}
-  {\zihao{-3}\heiti}
-  {\thesection}{1em}{}
+{\zihao{-3}\heiti}
+{\thesection}{1em}{}
 \titlespacing*{\section}
-  {0pt}{12pt plus 2pt minus 2pt}{12pt}
+{0pt}{12pt plus 2pt minus 2pt}{6pt}
 
 % 子节标题
 \titleformat{\subsection}
-  {\zihao{4}\heiti}
-  {\thesubsection}{1em}{}
+{\zihao{4}\heiti}
+{\thesubsection}{1em}{}
 \titlespacing*{\subsection}
-  {0pt}{6pt plus 2pt minus 2pt}{6pt}
+{0pt}{6pt plus 2pt minus 2pt}{3pt}
 
 % 子子节标题
 \titleformat{\subsubsection}
-  {\zihao{-4}\heiti}
-  {\thesubsubsection}{1em}{}
+{\zihao{-4}\heiti}
+{\thesubsubsection}{1em}{}
 \titlespacing*{\subsubsection}
-  {0pt}{0pt}{0pt}
+{0pt}{0pt}{0pt}
 
 %%% =================== 其他页面设置 =================== %%%
 \ctexset{
@@ -158,7 +158,7 @@
 \RequirePackage{physics}    % 物理符号
 \RequirePackage{setspace}   % 行距
 \RequirePackage{tocloft}    % 目录
-\RequirePackage{xkeyval}    % key-value 参数
+\RequirePackage{kvoptions}  % key-value 参数
 \RequirePackage{xparse}     % 变长参数命令
 
 %%% ---------------------- 超链接 ---------------------- %%%
@@ -242,7 +242,7 @@
   \swjtu@stepCurrent%
   \ifnum\value{swjtu@currentIndex}>\value{swjtu@itemCount}
   \else
-  \swjtu@explainSymbol #1%
+    \swjtu@explainSymbol #1%
   \fi
 }
 
@@ -266,29 +266,25 @@
 }
 
 %%% ======================= 扉页 ======================= %%%
+\SetupKeyvalOptions{
+  family=swjtu/titlePage,
+  prefix=swjtu@titlePage@
+}
+
 %%% --------------------- 参数定义 --------------------- %%%
-\define@key[swjtu]{titlePage}{ctitle}{\def\swjtu@ctitle{#1}}
-\define@key[swjtu]{titlePage}{etitle}{\def\swjtu@etitle{#1}}
-\define@key[swjtu]{titlePage}{grade}{\def\swjtu@grade{#1}}
-\define@key[swjtu]{titlePage}{id}{\def\swjtu@id{#1}}
-\define@key[swjtu]{titlePage}{name}{\def\swjtu@name{#1}}
-\define@key[swjtu]{titlePage}{major}{\def\swjtu@major{#1}}
-\define@key[swjtu]{titlePage}{advisor}{\def\swjtu@advisor{#1}}
-\define@key[swjtu]{titlePage}{year}{\def\swjtu@year{#1}}
-\define@key[swjtu]{titlePage}{month}{\def\swjtu@month{#1}}
+\DeclareStringOption{ctitle}
+\DeclareStringOption{etitle}
+\DeclareStringOption{grade}
+\DeclareStringOption{id}
+\DeclareStringOption{name}
+\DeclareStringOption{major}
+\DeclareStringOption{advisor}
+\DeclareStringOption{year}
+\DeclareStringOption{month}
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTitlePage}[1][]{%
-  \def\swjtu@ctitle{}
-  \def\swjtu@etitle{}
-  \def\swjtu@grade{}
-  \def\swjtu@id{}
-  \def\swjtu@name{}
-  \def\swjtu@major{}
-  \def\swjtu@advisor{}
-  \def\swjtu@year{}
-  \def\swjtu@month{}
-  \setkeys[swjtu]{titlePage}{#1}
+  \setkeys{swjtu/titlePage}{#1}
 
   \begin{titlepage}
     \onehalfspacing \zihao{5}
@@ -308,8 +304,8 @@
 
       % 中英文题目
       \begin{allheiti} \singlespacing \zihao{2}
-        \swjtu@ctitle\strut\\
-        \MakeUppercase{\swjtu@etitle}
+        \swjtu@titlePage@ctitle\strut\\
+        \MakeUppercase{\swjtu@titlePage@etitle}
       \end{allheiti}
 
       % 空行 * 7
@@ -318,11 +314,11 @@
       % 个人信息
       \begin{allheiti}
         \begin{tabular}{l}
-          年\hspace{2em}级:~\swjtu@grade \\
-          学\hspace{2em}号:~\swjtu@id    \\
-          姓\hspace{2em}名:~\swjtu@name  \\
-          专\hspace{2em}业:~\swjtu@major \\
-          指导老师:~\swjtu@advisor
+          年\hspace{2em}级:~\swjtu@titlePage@grade \\
+          学\hspace{2em}号:~\swjtu@titlePage@id    \\
+          姓\hspace{2em}名:~\swjtu@titlePage@name  \\
+          专\hspace{2em}业:~\swjtu@titlePage@major \\
+          指导老师:~\swjtu@titlePage@advisor
         \end{tabular}
       \end{allheiti}
 
@@ -331,7 +327,7 @@
 
       % 日期
       \begin{allsongti}
-        \swjtu@year\:年\:\swjtu@month\:月
+        \swjtu@titlePage@year\:年\:\swjtu@titlePage@month\:月
       \end{allsongti}
     \end{center}
   \end{titlepage}
@@ -343,21 +339,22 @@
 }
 
 %%% =================== 学术诚信声明 =================== %%%
+\SetupKeyvalOptions{
+  family=swjtu/integrity,
+  prefix=swjtu@integrity@
+}
+
 %%% --------------------- 参数定义 --------------------- %%%
-\define@key[swjtu]{integrity}{signature}{\def\swjtu@signature{#1}}
-\define@key[swjtu]{integrity}{year}{\def\swjtu@year{#1}}
-\define@key[swjtu]{integrity}{month}{\def\swjtu@month{#1}}
-\define@key[swjtu]{integrity}{day}{\def\swjtu@day{#1}}
+\DeclareStringOption{signature}
+\DeclareStringOption{year}
+\DeclareStringOption{month}
+\DeclareStringOption{day}
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuIntegrityDeclaration}[1][]{%
-  \def\swjtu@signature{}
-  \def\swjtu@year{}
-  \def\swjtu@month{}
-  \def\swjtu@day{}
-  \setkeys[swjtu]{integrity}{#1}
+  \setkeys{swjtu/integrity}{#1}
 
-  \begin{cleanpage}
+  \begin{titlepage}
     \doublespacing \zihao{4}
 
     % 标题
@@ -380,8 +377,8 @@
     % 签名
     {\noindent \hspace*{0.5\linewidth}
       作者签名：%
-      \ifx\swjtu@signature\@empty\else
-        \raisebox{-0.5\baselineskip}{\includegraphics[height=1.5\baselineskip]{\swjtu@signature}}
+      \ifx\swjtu@integrity@signature\@empty\else
+        \raisebox{-0.5\baselineskip}{\includegraphics[height=1.5\baselineskip]{\swjtu@integrity@signature}}
       \fi
     }
 
@@ -391,37 +388,33 @@
     % 日期
     \begin{allsongti} \zihao{4}
       \noindent \hspace*{0.5\linewidth}
-      日期：\swjtu@year~年~\swjtu@month~月~\swjtu@day~日
+      日期：\swjtu@integrity@year~年~\swjtu@integrity@month~月~\swjtu@integrity@day~日
     \end{allsongti}
-  \end{cleanpage}
+  \end{titlepage}
 }
 
 %%% =================== 版权使用授权 =================== %%%
+\SetupKeyvalOptions{
+  family=swjtu/copyright,
+  prefix=swjtu@copyright@
+}
+
 %%% --------------------- 参数定义 --------------------- %%%
-\define@key[swjtu]{copyright}{confidentialityPeriod}{\def\swjtu@confidentialityPeriod{#1}}
-\define@key[swjtu]{copyright}{authorSignature}{\def\swjtu@authorSignature{#1}}
-\define@key[swjtu]{copyright}{advisorSignature}{\def\swjtu@advisorSignature{#1}}
-\define@key[swjtu]{copyright}{authorYear}{\def\swjtu@authorYear{#1}}
-\define@key[swjtu]{copyright}{authorMonth}{\def\swjtu@authorMonth{#1}}
-\define@key[swjtu]{copyright}{authorDay}{\def\swjtu@authorDay{#1}}
-\define@key[swjtu]{copyright}{advisorYear}{\def\swjtu@advisorYear{#1}}
-\define@key[swjtu]{copyright}{advisorMonth}{\def\swjtu@advisorMonth{#1}}
-\define@key[swjtu]{copyright}{advisorDay}{\def\swjtu@advisorDay{#1}}
+\DeclareStringOption{confidentialityPeriod}
+\DeclareStringOption{authorSignature}
+\DeclareStringOption{advisorSignature}
+\DeclareStringOption{authorYear}
+\DeclareStringOption{authorMonth}
+\DeclareStringOption{authorDay}
+\DeclareStringOption{advisorYear}
+\DeclareStringOption{advisorMonth}
+\DeclareStringOption{advisorDay}
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuCopyrightAuthorization}[1][]{%
-  \def\swjtu@confidentialityPeriod{0}
-  \def\swjtu@authorSignature{}
-  \def\swjtu@advisorSignature{}
-  \def\swjtu@authorYear{}
-  \def\swjtu@authorMonth{}
-  \def\swjtu@authorDay{}
-  \def\swjtu@advisorYear{}
-  \def\swjtu@advisorMonth{}
-  \def\swjtu@advisorDay{}
-  \setkeys[swjtu]{copyright}{#1}
+  \setkeys{swjtu/copyright}{#1}
 
-  \begin{cleanpage}
+  \begin{titlepage}
     \doublespacing \zihao{4}
 
     % 标题
@@ -440,8 +433,8 @@
       本毕业设计（论文）作者同意学校保留并向国家有关部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。本人授权西南交通大学可以将本毕业设计（论文）的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和汇编本毕业设计（论文）。
 
       % 保密
-      \ifnum\swjtu@confidentialityPeriod>0
-        \hspace{7em}保密\(\boxsurd\)，在~\underline{\hspace{0.5em}\swjtu@confidentialityPeriod\hspace{0.5em}}~年解密后适用本授权书。
+      \ifnum\swjtu@copyright@confidentialityPeriod>0
+        \hspace{7em}保密\(\boxsurd\)，在~\underline{\hspace{0.5em}\swjtu@copyright@confidentialityPeriod\hspace{0.5em}}~年解密后适用本授权书。
 
         本论文属于
 
@@ -464,229 +457,204 @@
     \noindent
     \begin{tabularx}{\linewidth}{@{}XX@{}}
       作者签名：%
-      \ifx\swjtu@authorSignature\@empty\else
+      \ifx\swjtu@copyright@authorSignature\@empty\else
         \raisebox{-0.5\baselineskip}{
-          \includegraphics[height=1.5\baselineskip, width=3cm, keepaspectratio]{\swjtu@authorSignature}
+          \includegraphics[height=1.5\baselineskip, width=3cm, keepaspectratio]{\swjtu@copyright@authorSignature}
         }
       \fi
        &
       指导教师签名：%
-      \ifx\swjtu@advisorSignature\@empty\else
+      \ifx\swjtu@copyright@advisorSignature\@empty\else
         \raisebox{-0.5\baselineskip}{
-          \includegraphics[height=1.5\baselineskip, width=3cm, keepaspectratio]{\swjtu@advisorSignature}
+          \includegraphics[height=1.5\baselineskip, width=3cm, keepaspectratio]{\swjtu@copyright@advisorSignature}
         }
       \fi \\
       ~
        &
       ~   \\
-      日期：~\swjtu@authorYear~年~\swjtu@authorMonth~月~\swjtu@authorDay~日
+      日期：~\swjtu@copyright@authorYear~年~\swjtu@copyright@authorMonth~月~\swjtu@copyright@authorDay~日
        &
-      日期：~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日
+      日期：~\swjtu@copyright@advisorYear~年~\swjtu@copyright@advisorMonth~月~\swjtu@copyright@advisorDay~日
     \end{tabularx}
-
-  \end{cleanpage}
+  \end{titlepage}
 }
 
 %%% ====================== 任务书 ====================== %%%
+\SetupKeyvalOptions{
+  family=swjtu/task,
+  prefix=swjtu@task@
+}
+
 %%% --------------------- 参数定义 --------------------- %%%
-\define@key[swjtu]{task}{class}{\def\swjtu@class{#1}}
-\define@key[swjtu]{task}{name}{\def\swjtu@name{#1}}
-\define@key[swjtu]{task}{id}{\def\swjtu@id{#1}}
-\define@key[swjtu]{task}{issueYear}{\def\swjtu@issueYear{#1}}
-\define@key[swjtu]{task}{issueMonth}{\def\swjtu@issueMonth{#1}}
-\define@key[swjtu]{task}{issueDay}{\def\swjtu@issueDay{#1}}
-\define@key[swjtu]{task}{dueYear}{\def\swjtu@dueYear{#1}}
-\define@key[swjtu]{task}{dueMonth}{\def\swjtu@dueMonth{#1}}
-\define@key[swjtu]{task}{dueDay}{\def\swjtu@dueDay{#1}}
-\define@key[swjtu]{task}{title}{\def\swjtu@title{#1}}
-\define@key[swjtu]{task}{purpose}{\def\swjtu@purpose{#1}}
-\define@key[swjtu]{task}{tasks}{\def\swjtu@tasks{#1}}
-\define@key[swjtu]{task}{requirement}{\def\swjtu@requirement{#1}}
-\define@key[swjtu]{task}{weeks}{\def\swjtu@weeks{#1}}
-\define@key[swjtu]{task}{partOne}{\def\swjtu@partOne{#1}}
-\define@key[swjtu]{task}{partOneWeeks}{\def\swjtu@partOneWeeks{#1}}
-\define@key[swjtu]{task}{partTwo}{\def\swjtu@partTwo{#1}}
-\define@key[swjtu]{task}{partTwoWeeks}{\def\swjtu@partTwoWeeks{#1}}
-\define@key[swjtu]{task}{partThree}{\def\swjtu@partThree{#1}}
-\define@key[swjtu]{task}{partThreeWeeks}{\def\swjtu@partThreeWeeks{#1}}
-\define@key[swjtu]{task}{partFour}{\def\swjtu@partFour{#1}}
-\define@key[swjtu]{task}{partFourWeeks}{\def\swjtu@partFourWeeks{#1}}
-\define@key[swjtu]{task}{partFive}{\def\swjtu@partFive{#1}}
-\define@key[swjtu]{task}{partFiveWeeks}{\def\swjtu@partFiveWeeks{#1}}
-\define@key[swjtu]{task}{partReview}{\def\swjtu@partReview{#1}}
-\define@key[swjtu]{task}{partReviewWeeks}{\def\swjtu@partReviewWeeks{#1}}
-\define@key[swjtu]{task}{remark}{\def\swjtu@remark{#1}}
-\define@key[swjtu]{task}{advisor}{\def\swjtu@advisor{#1}}
-\define@key[swjtu]{task}{advisorYear}{\def\swjtu@advisorYear{#1}}
-\define@key[swjtu]{task}{advisorMonth}{\def\swjtu@advisorMonth{#1}}
-\define@key[swjtu]{task}{advisorDay}{\def\swjtu@advisorDay{#1}}
+\DeclareStringOption{class}
+\DeclareStringOption{name}
+\DeclareStringOption{id}
+\DeclareStringOption{issueYear}
+\DeclareStringOption{issueMonth}
+\DeclareStringOption{issueDay}
+\DeclareStringOption{dueYear}
+\DeclareStringOption{dueMonth}
+\DeclareStringOption{dueDay}
+\DeclareStringOption{title}
+\DeclareStringOption{purpose}
+\DeclareStringOption{tasks}
+\DeclareStringOption{requirement}
+\DeclareStringOption{weeks}
+\DeclareStringOption{partOne}
+\DeclareStringOption{partOneWeeks}
+\DeclareStringOption{partTwo}
+\DeclareStringOption{partTwoWeeks}
+\DeclareStringOption{partThree}
+\DeclareStringOption{partThreeWeeks}
+\DeclareStringOption{partFour}
+\DeclareStringOption{partFourWeeks}
+\DeclareStringOption{partFive}
+\DeclareStringOption{partFiveWeeks}
+\DeclareStringOption{partReview}
+\DeclareStringOption{partReviewWeeks}
+\DeclareStringOption{remark}
+\DeclareStringOption{advisor}
+\DeclareStringOption{advisorYear}
+\DeclareStringOption{advisorMonth}
+\DeclareStringOption{advisorDay}
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTask}[1][]{%
-  \def\swjtu@class{}
-  \def\swjtu@name{}
-  \def\swjtu@id{}
-  \def\swjtu@issueYear{}
-  \def\swjtu@issueMonth{}
-  \def\swjtu@issueDay{}
-  \def\swjtu@dueYear{}
-  \def\swjtu@dueMonth{}
-  \def\swjtu@dueDay{}
-  \def\swjtu@title{}
-  \def\swjtu@purpose{}
-  \def\swjtu@tasks{}
-  \def\swjtu@requirement{}
-  \def\swjtu@weeks{}
-  \def\swjtu@partOne{}
-  \def\swjtu@partOneWeeks{}
-  \def\swjtu@partTwo{}
-  \def\swjtu@partTwoWeeks{}
-  \def\swjtu@partThree{}
-  \def\swjtu@partThreeWeeks{}
-  \def\swjtu@partFour{}
-  \def\swjtu@partFourWeeks{}
-  \def\swjtu@partFive{}
-  \def\swjtu@partFiveWeeks{}
-  \def\swjtu@partReview{}
-  \def\swjtu@partReviewWeeks{}
-  \def\swjtu@remark{}
-  \def\swjtu@advisor{}
-  \def\swjtu@advisorYear{}
-  \def\swjtu@advisorMonth{}
-  \def\swjtu@advisorDay{}
-  \setkeys[swjtu]{task}{#1}
-
-  \pagestyle{fancy}
+  \setkeys{swjtu/task}{#1}
 
   \begin{cleanpage}
     \pagenumbering{Roman}
-  
+
     % 标题
     \begin{center}
       {\zihao{3} \heiti \textbf{毕业设计（论文）任务书}}
     \end{center}
-  
+
     % 空行
     \vspace{\baselineskip}
-  
+
     \begin{allsongti}
       \setlength{\parindent}{0pt}
       \setlength{\baselineskip}{26pt}
-  
+
       % 班级姓名学号
       \begin{tabularx}{\linewidth}{@{}>{\hsize=1.2\hsize}X>{\hsize=0.9\hsize}X>{\hsize=0.9\hsize}X@{}}
-        班\hspace{2em}级\underline{\hspace{0.5em}\swjtu@class\hfill}
-          &
-        学生姓名\underline{\hspace{0.5em}\swjtu@name\hfill}
-          &
-        学\hspace{2em}号\underline{\hspace{0.5em}\swjtu@id\hfill}
+        班\hspace{2em}级\underline{\hspace{0.5em}\swjtu@task@class\hfill}
+         &
+        学生姓名\underline{\hspace{0.5em}\swjtu@task@name\hfill}
+         &
+        学\hspace{2em}号\underline{\hspace{0.5em}\swjtu@task@id\hfill}
       \end{tabularx}
-  
+
       % 日期
-      发题日期：~\swjtu@issueYear~年~\swjtu@issueMonth~月~\swjtu@issueDay~日
+      发题日期：~\swjtu@task@issueYear~年~\swjtu@task@issueMonth~月~\swjtu@task@issueDay~日
       \hfill
-      完成日期：~\swjtu@dueYear~年~\swjtu@dueMonth~月~\swjtu@dueDay~日
-  
+      完成日期：~\swjtu@task@dueYear~年~\swjtu@task@dueMonth~月~\swjtu@task@dueDay~日
+
       % 题目
-      题\hspace{2em}目\underline{\hspace{0.5em}\swjtu@title\hfill}
-  
+      题\hspace{2em}目\underline{\hspace{0.5em}\swjtu@task@title\hfill}
+
       % 1、本设计（论文）的目的、意义
       1、本设计（论文）的目的、意义
-      
-      \underline{\swjtu@purpose\hfill}
-  
+
+      \underline{\swjtu@task@purpose\hfill}
+
       % 2、学生应完成的任务
       2、学生应完成的任务
-      
-      \underline{\swjtu@tasks\hfill}
-  
+
+      \underline{\swjtu@task@tasks\hfill}
+
       % 3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
       3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
-  
-      \underline{\swjtu@requirement\hfill}
-  
+
+      \underline{\swjtu@task@requirement\hfill}
+
       \newpage
-  
+
       % 4、本设计（论文）各部分内容及时间分配
-      4、本设计（论文）各部分内容及时间分配（共\underline{\hspace{0.5em}\swjtu@weeks\hspace{0.5em}}周）：
-  
+      4、本设计（论文）各部分内容及时间分配（共\underline{\hspace{0.5em}\swjtu@task@weeks\hspace{0.5em}}周）：
+
       { \setlength{\parindent}{1.5em}
-      第一部分\underline{\hspace{0.5em}\swjtu@partOne\hfill} (\swjtu@partOneWeeks~周)
-  
-      第二部分\underline{\hspace{0.5em}\swjtu@partTwo\hfill} (\swjtu@partTwoWeeks~周)
-  
-      第三部分\underline{\hspace{0.5em}\swjtu@partThree\hfill} (\swjtu@partThreeWeeks~周)
-  
-      第四部分\underline{\hspace{0.5em}\swjtu@partFour\hfill} (\swjtu@partFourWeeks~周)
-  
-      第五部分\underline{\hspace{0.5em}\swjtu@partFive\hfill} (\swjtu@partFiveWeeks~周)
-  
-      评阅及答辩\underline{\hspace{0.5em}\swjtu@partReview\hfill} (\swjtu@partReviewWeeks~周)%
+      第一部分\underline{\hspace{0.5em}\swjtu@task@partOne\hfill} (\swjtu@task@partOneWeeks~周)
+
+      第二部分\underline{\hspace{0.5em}\swjtu@task@partTwo\hfill} (\swjtu@task@partTwoWeeks~周)
+
+      第三部分\underline{\hspace{0.5em}\swjtu@task@partThree\hfill} (\swjtu@task@partThreeWeeks~周)
+
+      第四部分\underline{\hspace{0.5em}\swjtu@task@partFour\hfill} (\swjtu@task@partFourWeeks~周)
+
+      第五部分\underline{\hspace{0.5em}\swjtu@task@partFive\hfill} (\swjtu@task@partFiveWeeks~周)
+
+      评阅及答辩\underline{\hspace{0.5em}\swjtu@task@partReview\hfill} (\swjtu@task@partReviewWeeks~周)%
       }
-  
+
       % 空行
       \vspace{\baselineskip}
-  
+
       % 备注
-      备\hspace{2em}注\underline{\hspace{0.5em}\swjtu@remark\hfill}
-  
+      备\hspace{2em}注\underline{\hspace{0.5em}\swjtu@task@remark\hfill}
+
       % 空行
       \vspace{\baselineskip}
-  
+
       % 指导教师与日期
-      指导教师：\underline{\makebox[5em][l]{\hspace{0.5em}\swjtu@advisor}}\hspace{2em}~\swjtu@advisorYear~年~\swjtu@advisorMonth~月~\swjtu@advisorDay~日\par
+      指导教师：\underline{\makebox[5em][l]{\hspace{0.5em}\swjtu@task@advisor}}\hspace{2em}~\swjtu@task@advisorYear~年~\swjtu@task@advisorMonth~月~\swjtu@task@advisorDay~日\par
     \end{allsongti}
   \end{cleanpage}
 }
 
 %%% ===================== 中文摘要 ===================== %%%
+\SetupKeyvalOptions{
+  family=swjtu/abstractCN,
+  prefix=swjtu@abstractCN@
+}
+
 %%% --------------------- 参数定义 --------------------- %%%
-\define@key[swjtu]{abstractCN}{abstract}{\def\swjtu@abstractCN{#1}}
-\define@key[swjtu]{abstractCN}{keywords}{\def\swjtu@keywordsCN{#1}}
+\DeclareStringOption{abstract}
+\DeclareStringOption{keywords}
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuAbstractCN}[1][]{%
-  \def\swjtu@abstractCN{}
-  \def\swjtu@keywordsCN{}
-  \setkeys[swjtu]{abstractCN}{#1}
+  \setkeys{swjtu/abstractCN}{#1}
 
-  \begin{titlepage}
+  \begin{cleanpage}
     % 标题
     \begin{center}
-      {\zihao{-2} \heiti 摘\ 要}
+      {\zihao{-2} \heiti 摘\hspace{3em}要}
     \end{center}
-  
+
     % 空行
     \vspace{\baselineskip}
-  
+
     % 摘要正文
-    \swjtu@abstractCN
-  
+    \swjtu@abstractCN@abstract
+
     % 空行
     \vspace{\baselineskip}
-  
+
     % 关键词
     {\heiti
       \noindent
-      关键词：\hspace{1em}\swjtu@keywordsCN
+      关键词：\hspace{1em}\swjtu@abstractCN@keywords
     }
-    
-  \end{titlepage}
+  \end{cleanpage}
 }
 
 %%% ===================== 英文摘要 ===================== %%%
+\SetupKeyvalOptions{
+  family=swjtu/abstractEN,
+  prefix=swjtu@abstractEN@
+}
+
 %%% --------------------- 参数定义 --------------------- %%%
-\define@key[swjtu]{abstractEN}{abstract}{\def\swjtu@abstractEN{#1}}
-\define@key[swjtu]{abstractEN}{keywords}{\def\swjtu@keywordsEN{#1}}
+\DeclareStringOption{abstract}
+\DeclareStringOption{keywords}
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuAbstractEN}[1][]{%
-  \def\swjtu@abstractEN{}
-  \def\swjtu@keywordsEN{}
-  \setkeys[swjtu]{abstractEN}{#1}
+  \setkeys{swjtu/abstractEN}{#1}
 
   \begin{cleanpage}
-
     % 标题
     \begin{center}
       \zihao{-2} Abstract
@@ -696,14 +664,14 @@
     \vspace{\baselineskip}
 
     % 摘要正文
-    \swjtu@abstractEN
+    \swjtu@abstractEN@abstract
 
     % 空行
     \vspace{\baselineskip}
 
     % 关键词
     \noindent
-    Key words:\hspace{1em}\swjtu@keywordsEN
+    Key words:\hspace{1em}\swjtu@abstractEN@keywords
   \end{cleanpage}
 }
 
@@ -738,17 +706,11 @@
 
 %%% ----------------------- 缩进 ----------------------- %%%
 \setlength{\cftchapindent}{0em}   % 章
-\setlength{\cftsecindent}{2em}    % 节
-\setlength{\cftsubsecindent}{4em} % 子节
+\setlength{\cftsecindent}{0em}    % 节
+\setlength{\cftsubsecindent}{2em} % 子节
 
 %%% --------------------- 目录间距 --------------------- %%%
-\setlength{\cftbeforechapskip}{0.25\baselineskip}  % 章 段前 0.25 行
-\setlength{\cftbeforesecskip}{0pt}
-\setlength{\cftbeforesubsecskip}{0pt}
-
-% 章 段后 0.25 行
-\renewcommand{\cftchapafterpnum}{}
-\renewcommand{\cftchapafterpnum}{\par\vspace{0.25\baselineskip}}
+\setlength{\cftbeforechapskip}{0pt} % 章
 
 %%% ---------------------- 引导符 ---------------------- %%%
 \renewcommand{\cftdotsep}{1}                           % 点线密度
@@ -757,36 +719,32 @@
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTableOfContents}{%
   \begin{cleanpage}
-
     % 标题
     \begin{center}
-      {\zihao{-2} \heiti 目\ 录}
+      \heiti 目\hspace{1em}录
     \end{center}
 
     % 空行
     \vspace{\baselineskip}
 
-    % 把所有 plain 样式都重定义成 fancy
-    \makeatletter
-    \let\ps@plain\ps@fancy
-    \makeatother
-
     % 正文
-    \begin{adjustwidth}{0em}{0em}
-      \begin{spacing}{1.3}
+    \begin{adjustwidth}{4em}{4em}
+      \begin{spacing}{1.5}
         \tableofcontents
       \end{spacing}
     \end{adjustwidth}
-    
+
+    \thispagestyle{fancy}
   \end{cleanpage}
 }
 
 %%% ======================= 正文 ======================= %%%
-\newcommand{\swjtuIntroduction}[1]{ 
+\newcommand{\swjtuIntroduction}[1]{
   \cleardoublepage
   \pagenumbering{arabic} % 重置页码
   \chapter{#1}
 } % 绪论章节
+
 \newcommand{\swjtuChapter}[1]{\chapter{#1}} % 正常章节
 
 %%% ======================= 结论 ======================= %%%
