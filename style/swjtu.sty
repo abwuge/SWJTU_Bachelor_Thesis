@@ -717,6 +717,9 @@
 \makeatother
 
 %%% ======================= 目录 ======================= %%%
+%%% --------------------- 设置页面 --------------------- %%%
+\tocloftpagestyle{fancy}
+
 %%% ------------------- 去除自带标题 ------------------- %%%
 \renewcommand{\contentsname}{}
 \setlength{\cftbeforetoctitleskip}{0pt}
@@ -774,8 +777,6 @@
         \tableofcontents
       \end{spacing}
     \end{adjustwidth}
-
-    \thispagestyle{fancy}
   \end{fancyPage}
 }
 
