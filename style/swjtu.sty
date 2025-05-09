@@ -20,6 +20,7 @@
 \RequirePackage{tocloft}     % 目录格式
 \RequirePackage{xeCJKfntef}  % 中文下划线
 \RequirePackage{xparse}      % 高级命令
+\RequirePackage{xstring}    % 字符串处理
 
 % 参考文献处理
 \RequirePackage[
@@ -285,7 +286,6 @@
   family=swjtu/titlePage,
   prefix=swjtu@titlePage@
 }
-
 \DeclareStringOption{ctitle}
 \DeclareStringOption{etitle}
 \DeclareStringOption{grade}
@@ -301,7 +301,6 @@
   family=swjtu/integrity,
   prefix=swjtu@integrity@
 }
-
 \DeclareStringOption{signature}
 \DeclareStringOption{year}
 \DeclareStringOption{month}
@@ -312,7 +311,6 @@
   family=swjtu/copyright,
   prefix=swjtu@copyright@
 }
-
 \DeclareStringOption{confidentialityPeriod}
 \DeclareStringOption{authorSignature}
 \DeclareStringOption{advisorSignature}
@@ -328,7 +326,6 @@
   family=swjtu/task,
   prefix=swjtu@task@
 }
-
 \DeclareStringOption{class}
 \DeclareStringOption{name}
 \DeclareStringOption{id}
@@ -366,7 +363,6 @@
   family=swjtu/abstractCN,
   prefix=swjtu@abstractCN@
 }
-
 \DeclareStringOption{abstract}
 \DeclareStringOption{keywords}
 
@@ -375,15 +371,37 @@
   family=swjtu/abstractEN,
   prefix=swjtu@abstractEN@
 }
-
 \DeclareStringOption{abstract}
 \DeclareStringOption{keywords}
 
-%%% ======================= 扉页 ======================= %%%
+%%% --------------------- 特殊格式 --------------------- %%%
+\SetupKeyvalOptions{
+  family=swjtu/pageStyle,
+  prefix=swjtu@pageStyle@
+}
+\DeclareStringOption{taskOneTwo}
+
+%%% ===================== 格式分配 ===================== %%%
+% 利用扉页命令获取用于所在专业信息
+% 从而可以根据用于专业信息指定专业格式
 \makeatletter
 \newcommand{\swjtuTitlePage}[1][]{%
   \setkeys{swjtu/titlePage}{#1}
 
+  \IfSubStr{\swjtu@titlePage@major}{软件工程}{%
+    \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
+  }{%
+    % 暂时无需实现其他专业的特殊格式
+  }
+
+  % 实际生成扉页
+  \swjtu@generateTitlePage
+}
+\makeatother
+
+%%% ==================== 扉页（实） ==================== %%%
+\makeatletter
+\newcommand{\swjtu@generateTitlePage}[1][]{
   \begin{emptyPage}
     \onehalfspacing \zihao{5}
 
@@ -590,21 +608,17 @@
       % 题目
       题\hspace{2em}目\underline{\hspace{0.5em}\swjtu@task@title\hfill}
 
-      % % 1、本设计（论文）的目的、意义
-      % 1、本设计（论文）的目的、意义\underline{\hspace{0.5em}\swjtu@purpose\hfill}
-
-      % % 2、学生应完成的任务
-      % 2、学生应完成的任务\underline{\hspace{0.5em}\swjtu@tasks\hfill}
-
       % 1、本设计（论文）的目的、意义
-      1、本设计（论文）的目的、意义
-
-      \underline{\swjtu@task@purpose\hfill}
-
       % 2、学生应完成的任务
-      2、学生应完成的任务
-
-      \underline{\swjtu@task@tasks\hfill}
+      \ifdefvoid{\swjtu@pageStyle@taskOneTwo}{%
+        1、本设计（论文）的目的、意义\underline{\hspace{0.5em}\swjtu@task@purpose\hfill}\par
+        2、学生应完成的任务\underline{\hspace{0.5em}\swjtu@task@tasks\hfill}
+      }{%
+        1、本设计（论文）的目的、意义\par
+        \underline{\swjtu@task@purpose\hfill}\par
+        2、学生应完成的任务\par
+        \underline{\swjtu@task@tasks\hfill}
+      }
 
       % 3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
       3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
