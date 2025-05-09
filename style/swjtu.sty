@@ -216,9 +216,17 @@
 }
 
 %%% ---------------------- 干净页 ---------------------- %%%
-\newenvironment{cleanpage}{
+\NewEnviron{fancyPage}[1][]{
   \clearpage
-}{
+  \thispagestyle{fancy}
+  \BODY
+  \clearpage
+}
+
+\NewEnviron{emptyPage}[1][]{
+  \clearpage
+  \thispagestyle{empty}
+  \BODY
   \clearpage
 }
 
@@ -286,7 +294,7 @@
 \newcommand{\swjtuTitlePage}[1][]{%
   \setkeys{swjtu/titlePage}{#1}
 
-  \begin{titlepage}
+  \begin{emptyPage}
     \onehalfspacing \zihao{5}
 
     \begin{center}
@@ -330,7 +338,7 @@
         \swjtu@titlePage@year\:年\:\swjtu@titlePage@month\:月
       \end{allsongti}
     \end{center}
-  \end{titlepage}
+  \end{emptyPage}
 
   % 空白页
   \newpage
@@ -354,7 +362,7 @@
 \newcommand{\swjtuIntegrityDeclaration}[1][]{%
   \setkeys{swjtu/integrity}{#1}
 
-  \begin{titlepage}
+  \begin{emptyPage}
     \doublespacing \zihao{4}
 
     % 标题
@@ -390,7 +398,7 @@
       \noindent \hspace*{0.5\linewidth}
       日期：\swjtu@integrity@year~年~\swjtu@integrity@month~月~\swjtu@integrity@day~日
     \end{allsongti}
-  \end{titlepage}
+  \end{emptyPage}
 }
 
 %%% =================== 版权使用授权 =================== %%%
@@ -414,7 +422,7 @@
 \newcommand{\swjtuCopyrightAuthorization}[1][]{%
   \setkeys{swjtu/copyright}{#1}
 
-  \begin{titlepage}
+  \begin{emptyPage}
     \doublespacing \zihao{4}
 
     % 标题
@@ -476,7 +484,7 @@
        &
       日期：~\swjtu@copyright@advisorYear~年~\swjtu@copyright@advisorMonth~月~\swjtu@copyright@advisorDay~日
     \end{tabularx}
-  \end{titlepage}
+  \end{emptyPage}
 }
 
 %%% ====================== 任务书 ====================== %%%
@@ -522,7 +530,7 @@
 \newcommand{\swjtuTask}[1][]{%
   \setkeys{swjtu/task}{#1}
 
-  \begin{cleanpage}
+  \begin{fancyPage}
     \pagenumbering{Roman}
 
     % 标题
@@ -600,7 +608,7 @@
       % 指导教师与日期
       指导教师：\underline{\makebox[5em][l]{\hspace{0.5em}\swjtu@task@advisor}}\hspace{2em}~\swjtu@task@advisorYear~年~\swjtu@task@advisorMonth~月~\swjtu@task@advisorDay~日\par
     \end{allsongti}
-  \end{cleanpage}
+  \end{fancyPage}
 }
 
 %%% ===================== 中文摘要 ===================== %%%
@@ -617,7 +625,7 @@
 \newcommand{\swjtuAbstractCN}[1][]{%
   \setkeys{swjtu/abstractCN}{#1}
 
-  \begin{cleanpage}
+  \begin{fancyPage}
     % 标题
     \begin{center}
       {\zihao{-2} \heiti 摘\hspace{3em}要}
@@ -637,7 +645,7 @@
       \noindent
       关键词：\hspace{1em}\swjtu@abstractCN@keywords
     }
-  \end{cleanpage}
+  \end{fancyPage}
 }
 
 %%% ===================== 英文摘要 ===================== %%%
@@ -654,7 +662,7 @@
 \newcommand{\swjtuAbstractEN}[1][]{%
   \setkeys{swjtu/abstractEN}{#1}
 
-  \begin{cleanpage}
+  \begin{fancyPage}
     % 标题
     \begin{center}
       \zihao{-2} Abstract
@@ -672,7 +680,7 @@
     % 关键词
     \noindent
     Key words:\hspace{1em}\swjtu@abstractEN@keywords
-  \end{cleanpage}
+  \end{fancyPage}
 }
 
 %%% ======================= 目录 ======================= %%%
@@ -718,7 +726,7 @@
 
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTableOfContents}{%
-  \begin{cleanpage}
+  \begin{fancyPage}
     % 标题
     \begin{center}
       \heiti 目\hspace{1em}录
@@ -735,7 +743,7 @@
     \end{adjustwidth}
 
     \thispagestyle{fancy}
-  \end{cleanpage}
+  \end{fancyPage}
 }
 
 %%% ======================= 正文 ======================= %%%
