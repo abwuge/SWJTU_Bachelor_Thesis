@@ -38,7 +38,6 @@
 ]{cleveref}
 
 \ProvidesPackage{style/swjtu}[SWJTU Thesis Style]
-
 %%% ======================= 排版 ======================= %%%
 %%% ----------------------- 页面 ----------------------- %%%
 \geometry{
@@ -280,14 +279,13 @@
 }
 \makeatother
 
-%%% ======================= 扉页 ======================= %%%
-\makeatletter
+%%% ===================== 参数定义 ===================== %%%
+%%% ----------------------- 扉页 ----------------------- %%%
 \SetupKeyvalOptions{
   family=swjtu/titlePage,
   prefix=swjtu@titlePage@
 }
 
-%%% --------------------- 参数定义 --------------------- %%%
 \DeclareStringOption{ctitle}
 \DeclareStringOption{etitle}
 \DeclareStringOption{grade}
@@ -298,7 +296,91 @@
 \DeclareStringOption{year}
 \DeclareStringOption{month}
 
-%%% ----------------------- 命令 ----------------------- %%%
+%%% ------------------- 学术诚信声明 ------------------- %%%
+\SetupKeyvalOptions{
+  family=swjtu/integrity,
+  prefix=swjtu@integrity@
+}
+
+\DeclareStringOption{signature}
+\DeclareStringOption{year}
+\DeclareStringOption{month}
+\DeclareStringOption{day}
+
+%%% ------------------- 版权使用授权 ------------------- %%%
+\SetupKeyvalOptions{
+  family=swjtu/copyright,
+  prefix=swjtu@copyright@
+}
+
+\DeclareStringOption{confidentialityPeriod}
+\DeclareStringOption{authorSignature}
+\DeclareStringOption{advisorSignature}
+\DeclareStringOption{authorYear}
+\DeclareStringOption{authorMonth}
+\DeclareStringOption{authorDay}
+\DeclareStringOption{advisorYear}
+\DeclareStringOption{advisorMonth}
+\DeclareStringOption{advisorDay}
+
+%%% ---------------------- 任务书 ---------------------- %%%
+\SetupKeyvalOptions{
+  family=swjtu/task,
+  prefix=swjtu@task@
+}
+
+\DeclareStringOption{class}
+\DeclareStringOption{name}
+\DeclareStringOption{id}
+\DeclareStringOption{issueYear}
+\DeclareStringOption{issueMonth}
+\DeclareStringOption{issueDay}
+\DeclareStringOption{dueYear}
+\DeclareStringOption{dueMonth}
+\DeclareStringOption{dueDay}
+\DeclareStringOption{title}
+\DeclareStringOption{purpose}
+\DeclareStringOption{tasks}
+\DeclareStringOption{requirement}
+\DeclareStringOption{weeks}
+\DeclareStringOption{partOne}
+\DeclareStringOption{partOneWeeks}
+\DeclareStringOption{partTwo}
+\DeclareStringOption{partTwoWeeks}
+\DeclareStringOption{partThree}
+\DeclareStringOption{partThreeWeeks}
+\DeclareStringOption{partFour}
+\DeclareStringOption{partFourWeeks}
+\DeclareStringOption{partFive}
+\DeclareStringOption{partFiveWeeks}
+\DeclareStringOption{partReview}
+\DeclareStringOption{partReviewWeeks}
+\DeclareStringOption{remark}
+\DeclareStringOption{advisor}
+\DeclareStringOption{advisorYear}
+\DeclareStringOption{advisorMonth}
+\DeclareStringOption{advisorDay}
+
+%%% --------------------- 中文摘要 --------------------- %%%
+\SetupKeyvalOptions{
+  family=swjtu/abstractCN,
+  prefix=swjtu@abstractCN@
+}
+
+\DeclareStringOption{abstract}
+\DeclareStringOption{keywords}
+
+%%% --------------------- 英文摘要 --------------------- %%%
+\SetupKeyvalOptions{
+  family=swjtu/abstractEN,
+  prefix=swjtu@abstractEN@
+}
+
+\DeclareStringOption{abstract}
+\DeclareStringOption{keywords}
+
+%%% ======================= 扉页 ======================= %%%
+\makeatletter
 \newcommand{\swjtuTitlePage}[1][]{%
   \setkeys{swjtu/titlePage}{#1}
 
@@ -357,18 +439,6 @@
 
 %%% =================== 学术诚信声明 =================== %%%
 \makeatletter
-\SetupKeyvalOptions{
-  family=swjtu/integrity,
-  prefix=swjtu@integrity@
-}
-
-%%% --------------------- 参数定义 --------------------- %%%
-\DeclareStringOption{signature}
-\DeclareStringOption{year}
-\DeclareStringOption{month}
-\DeclareStringOption{day}
-
-%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuIntegrityDeclaration}[1][]{%
   \setkeys{swjtu/integrity}{#1}
 
@@ -414,23 +484,6 @@
 
 %%% =================== 版权使用授权 =================== %%%
 \makeatletter
-\SetupKeyvalOptions{
-  family=swjtu/copyright,
-  prefix=swjtu@copyright@
-}
-
-%%% --------------------- 参数定义 --------------------- %%%
-\DeclareStringOption{confidentialityPeriod}
-\DeclareStringOption{authorSignature}
-\DeclareStringOption{advisorSignature}
-\DeclareStringOption{authorYear}
-\DeclareStringOption{authorMonth}
-\DeclareStringOption{authorDay}
-\DeclareStringOption{advisorYear}
-\DeclareStringOption{advisorMonth}
-\DeclareStringOption{advisorDay}
-
-%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuCopyrightAuthorization}[1][]{%
   \setkeys{swjtu/copyright}{#1}
 
@@ -502,45 +555,6 @@
 
 %%% ====================== 任务书 ====================== %%%
 \makeatletter
-\SetupKeyvalOptions{
-  family=swjtu/task,
-  prefix=swjtu@task@
-}
-
-%%% --------------------- 参数定义 --------------------- %%%
-\DeclareStringOption{class}
-\DeclareStringOption{name}
-\DeclareStringOption{id}
-\DeclareStringOption{issueYear}
-\DeclareStringOption{issueMonth}
-\DeclareStringOption{issueDay}
-\DeclareStringOption{dueYear}
-\DeclareStringOption{dueMonth}
-\DeclareStringOption{dueDay}
-\DeclareStringOption{title}
-\DeclareStringOption{purpose}
-\DeclareStringOption{tasks}
-\DeclareStringOption{requirement}
-\DeclareStringOption{weeks}
-\DeclareStringOption{partOne}
-\DeclareStringOption{partOneWeeks}
-\DeclareStringOption{partTwo}
-\DeclareStringOption{partTwoWeeks}
-\DeclareStringOption{partThree}
-\DeclareStringOption{partThreeWeeks}
-\DeclareStringOption{partFour}
-\DeclareStringOption{partFourWeeks}
-\DeclareStringOption{partFive}
-\DeclareStringOption{partFiveWeeks}
-\DeclareStringOption{partReview}
-\DeclareStringOption{partReviewWeeks}
-\DeclareStringOption{remark}
-\DeclareStringOption{advisor}
-\DeclareStringOption{advisorYear}
-\DeclareStringOption{advisorMonth}
-\DeclareStringOption{advisorDay}
-
-%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTask}[1][]{%
   \setkeys{swjtu/task}{#1}
 
@@ -575,6 +589,12 @@
 
       % 题目
       题\hspace{2em}目\underline{\hspace{0.5em}\swjtu@task@title\hfill}
+
+      % % 1、本设计（论文）的目的、意义
+      % 1、本设计（论文）的目的、意义\underline{\hspace{0.5em}\swjtu@purpose\hfill}
+
+      % % 2、学生应完成的任务
+      % 2、学生应完成的任务\underline{\hspace{0.5em}\swjtu@tasks\hfill}
 
       % 1、本设计（论文）的目的、意义
       1、本设计（论文）的目的、意义
@@ -628,16 +648,6 @@
 
 %%% ===================== 中文摘要 ===================== %%%
 \makeatletter
-\SetupKeyvalOptions{
-  family=swjtu/abstractCN,
-  prefix=swjtu@abstractCN@
-}
-
-%%% --------------------- 参数定义 --------------------- %%%
-\DeclareStringOption{abstract}
-\DeclareStringOption{keywords}
-
-%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuAbstractCN}[1][]{%
   \setkeys{swjtu/abstractCN}{#1}
 
@@ -667,16 +677,6 @@
 
 %%% ===================== 英文摘要 ===================== %%%
 \makeatletter
-\SetupKeyvalOptions{
-  family=swjtu/abstractEN,
-  prefix=swjtu@abstractEN@
-}
-
-%%% --------------------- 参数定义 --------------------- %%%
-\DeclareStringOption{abstract}
-\DeclareStringOption{keywords}
-
-%%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuAbstractEN}[1][]{%
   \setkeys{swjtu/abstractEN}{#1}
 
