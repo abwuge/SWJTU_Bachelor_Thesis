@@ -727,6 +727,7 @@
 \makeatother
 
 %%% ======================= 目录 ======================= %%%
+\makeatletter
 %%% --------------------- 设置页面 --------------------- %%%
 \tocloftpagestyle{fancy}
 
@@ -788,22 +789,16 @@
     \vspace{\baselineskip}
 
     % 正文
-    \ifdefvoid{\swjtu@pageStyle@contentsMargin}{%
-      \begin{adjustwidth}{0em}{0em}
-        \begin{spacing}{1.5}
-          \tableofcontents
-        \end{spacing}
-      \end{adjustwidth}
-    }{%
-      \begin{adjustwidth}{4em}{4em}
-        \begin{spacing}{1.5}
-          \tableofcontents
-        \end{spacing}
-      \end{adjustwidth}
-    }
-      
+    \begin{adjustwidth}{\swjtu@pageStyle@contentsMargin}{\swjtu@pageStyle@contentsMargin}
+      \begin{spacing}{1.5}
+        \tableofcontents
+      \end{spacing}
+    \end{adjustwidth}
+
   \end{fancyPage}
 }
+\makeatother
+
 
 %%% ======================= 正文 ======================= %%%
 \newcommand{\swjtuIntroduction}[1]{
