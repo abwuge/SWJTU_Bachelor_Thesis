@@ -236,6 +236,14 @@
   \clearpage
 }
 
+% 带页眉页脚的标题页
+\NewEnviron{fancytitlePage}[1][]{
+  \cleardoublepage
+  \thispagestyle{fancy}
+  \BODY
+  \clearpage
+}
+
 %%% ===================== 公式注释 ===================== %%%
 \makeatletter
 \newcounter{swjtu@itemCount}
@@ -380,6 +388,8 @@
   prefix=swjtu@pageStyle@
 }
 \DeclareStringOption{taskOneTwo}
+\DeclareStringOption{contentsIndent}
+\DeclareStringOption[4em]{contentsMargin}
 
 %%% ===================== 格式分配 ===================== %%%
 % 利用扉页命令获取用于所在专业信息
@@ -390,6 +400,8 @@
 
   \IfSubStr{\swjtu@titlePage@major}{软件工程}{%
     \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
+    \setkeys{swjtu/pageStyle}{contentsIndent=step}
+    \setkeys{swjtu/pageStyle}{contentsMargin=0em}
   }{%
     % 暂时无需实现其他专业的特殊格式
   }
@@ -402,7 +414,7 @@
 %%% ==================== 扉页（实） ==================== %%%
 \makeatletter
 \newcommand{\swjtu@generateTitlePage}[1][]{
-  \begin{emptyPage}
+  \begin{titlepage}
     \onehalfspacing \zihao{5}
 
     \begin{center}
@@ -446,10 +458,8 @@
         \swjtu@titlePage@year\:年\:\swjtu@titlePage@month\:月
       \end{allsongti}
     \end{center}
-  \end{emptyPage}
+  \end{titlepage}
 
-  % 空白页
-  \newpage
   \thispagestyle{empty}
   \mbox{}
 }
@@ -665,7 +675,7 @@
 \newcommand{\swjtuAbstractCN}[1][]{%
   \setkeys{swjtu/abstractCN}{#1}
 
-  \begin{fancyPage}
+  \begin{fancytitlePage}
     % 标题
     \begin{center}
       {\zihao{-2} \heiti 摘\hspace{3em}要}
@@ -685,7 +695,7 @@
       \noindent
       关键词：\hspace{1em}\swjtu@abstractCN@keywords
     }
-  \end{fancyPage}
+  \end{fancytitlePage}
 }
 \makeatother
 
@@ -749,9 +759,15 @@
 \renewcommand{\cftsubsecaftersnum}{\hspace{0.5em}} % 子节
 
 %%% ----------------------- 缩进 ----------------------- %%%
-\setlength{\cftchapindent}{0em}   % 章
-\setlength{\cftsecindent}{0em}    % 节
-\setlength{\cftsubsecindent}{2em} % 子节
+\ifdefvoid{\swjtu@pageStyle@contentsIndent}{%
+  \setlength{\cftchapindent}{0em}   % 章
+  \setlength{\cftsecindent}{2em}    % 节
+  \setlength{\cftsubsecindent}{4em} % 子节
+}{%
+  \setlength{\cftchapindent}{0em}   % 章
+  \setlength{\cftsecindent}{0em}    % 节
+  \setlength{\cftsubsecindent}{2em} % 子节
+}
 
 %%% --------------------- 目录间距 --------------------- %%%
 \setlength{\cftbeforechapskip}{0pt} % 章
@@ -772,11 +788,20 @@
     \vspace{\baselineskip}
 
     % 正文
-    \begin{adjustwidth}{4em}{4em}
-      \begin{spacing}{1.5}
-        \tableofcontents
-      \end{spacing}
-    \end{adjustwidth}
+    \ifdefvoid{\swjtu@pageStyle@contentsMargin}{%
+      \begin{adjustwidth}{0em}{0em}
+        \begin{spacing}{1.5}
+          \tableofcontents
+        \end{spacing}
+      \end{adjustwidth}
+    }{%
+      \begin{adjustwidth}{4em}{4em}
+        \begin{spacing}{1.5}
+          \tableofcontents
+        \end{spacing}
+      \end{adjustwidth}
+    }
+      
   \end{fancyPage}
 }
 
