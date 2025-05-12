@@ -21,6 +21,7 @@
 点击[此处](https://abwuge.github.io/SWJTU_Bachelor_Thesis/SWJTU_Bachelor_Thesis.pdf)预览该模板。
 
 ## 使用说明
+### 创建项目
 1. 克隆或从[Release](../../releases/latest)下载本项目到本地：
    ```shell
    git clone https://github.com/abwuge/SWJTU_Bachelor_Thesis.git
@@ -57,7 +58,14 @@
 
 或者点击[此处](https://abwuge.github.io/SWJTU_Bachelor_Thesis)直接在Overleaf中创建该项目。
 
-### 模板自定义命令说明
+### 宏包键值对参数介绍
+- `[ ]` `major`：所在专业，请使用教务处的标准专业名称。
+  > 不同专业的论文要求可能不同，若不手动设置专业名称，将使用西南交通大学提供的模板作为默认模板。
+  > 
+  > 若您发现设定专业后，格式仍然为交大默认模板，很可能是尚未实现对应专业，请[提交 Issue](../../issues/new)
+
+
+### 模板自定义命令介绍
 #### 无参数命令
 - `\songti`：将中文切换到模板内置字体——宋体。
 - `\heiti`：将中文切换到模板内置字体——黑体。
