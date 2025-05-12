@@ -39,6 +39,37 @@
 ]{cleveref}
 
 \ProvidesPackage{style/swjtu}[SWJTU Thesis Style]
+%%% ===================== 宏包参数 ===================== %%%
+\makeatletter
+\SetupKeyvalOptions{
+  family=swjtu,
+  prefix=swjtu@
+}
+\DeclareStringOption{major}
+\ProcessKeyvalOptions{swjtu}
+\makeatother
+
+%%% ===================== 特殊格式 ===================== %%%
+\makeatletter
+%%% --------------------- 参数定义 --------------------- %%%
+\SetupKeyvalOptions{
+  family=swjtu/pageStyle,
+  prefix=swjtu@pageStyle@
+}
+\DeclareStringOption{taskOneTwo}
+\DeclareStringOption{contentsIndent}
+\DeclareStringOption[4em]{contentsMargin}
+
+%%% --------------------- 格式分配 --------------------- %%%
+  \IfSubStr{\swjtu@major}{软件工程}{%
+    \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
+    \setkeys{swjtu/pageStyle}{contentsIndent=step}
+    \setkeys{swjtu/pageStyle}{contentsMargin=0em}
+  }{%
+    % 暂时无需实现其他专业的特殊格式
+  }
+\makeatother
+
 %%% ======================= 排版 ======================= %%%
 %%% ----------------------- 页面 ----------------------- %%%
 \geometry{
@@ -382,38 +413,11 @@
 \DeclareStringOption{abstract}
 \DeclareStringOption{keywords}
 
-%%% --------------------- 特殊格式 --------------------- %%%
-\SetupKeyvalOptions{
-  family=swjtu/pageStyle,
-  prefix=swjtu@pageStyle@
-}
-\DeclareStringOption{taskOneTwo}
-\DeclareStringOption{contentsIndent}
-\DeclareStringOption[4em]{contentsMargin}
-
-%%% ===================== 格式分配 ===================== %%%
-% 利用扉页命令获取用于所在专业信息
-% 从而可以根据用于专业信息指定专业格式
+%%% ======================= 扉页 ======================= %%%
 \makeatletter
 \newcommand{\swjtuTitlePage}[1][]{%
   \setkeys{swjtu/titlePage}{#1}
 
-  \IfSubStr{\swjtu@titlePage@major}{软件工程}{%
-    \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
-    \setkeys{swjtu/pageStyle}{contentsIndent=step}
-    \setkeys{swjtu/pageStyle}{contentsMargin=0em}
-  }{%
-    % 暂时无需实现其他专业的特殊格式
-  }
-
-  % 实际生成扉页
-  \swjtu@generateTitlePage
-}
-\makeatother
-
-%%% ==================== 扉页（实） ==================== %%%
-\makeatletter
-\newcommand{\swjtu@generateTitlePage}[1][]{
   \begin{titlepage}
     \onehalfspacing \zihao{5}
 
@@ -762,12 +766,12 @@
 %%% ----------------------- 缩进 ----------------------- %%%
 \ifdefvoid{\swjtu@pageStyle@contentsIndent}{%
   \setlength{\cftchapindent}{0em}   % 章
-  \setlength{\cftsecindent}{2em}    % 节
-  \setlength{\cftsubsecindent}{4em} % 子节
-}{%
-  \setlength{\cftchapindent}{0em}   % 章
   \setlength{\cftsecindent}{0em}    % 节
   \setlength{\cftsubsecindent}{2em} % 子节
+}{%
+  \setlength{\cftchapindent}{0em}   % 章
+  \setlength{\cftsecindent}{2em}    % 节
+  \setlength{\cftsubsecindent}{4em} % 子节
 }
 
 %%% --------------------- 目录间距 --------------------- %%%
