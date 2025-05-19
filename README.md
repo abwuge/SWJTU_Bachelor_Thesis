@@ -143,6 +143,7 @@
 ### 模板自定义环境说明
 - `allsongti`：中英文字体均设置为内置字体——宋体。
 - `allheiti`：中英文字体均设置为内置字体——黑体。
+- `swjtuCodeBlock`: 代码框。
 
 ## 目录结构说明
    ```powershell

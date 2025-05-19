@@ -63,13 +63,13 @@
 \DeclareStringOption[4em]{contentsMargin}
 
 %%% --------------------- 格式分配 --------------------- %%%
-  \IfSubStr{\swjtu@major}{软件工程}{%
-    \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
-    \setkeys{swjtu/pageStyle}{contentsIndent=step}
-    \setkeys{swjtu/pageStyle}{contentsMargin=0em}
-  }{%
-    % 暂时无需实现其他专业的特殊格式
-  }
+\IfSubStr{\swjtu@major}{软件工程}{%
+  \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
+  \setkeys{swjtu/pageStyle}{contentsIndent=step}
+  \setkeys{swjtu/pageStyle}{contentsMargin=0em}
+}{%
+  % 暂时无需实现其他专业的特殊格式
+}
 \makeatother
 
 %%% ======================= 排版 ======================= %%%
@@ -215,30 +215,30 @@
 \definecolor{code@purple}{rgb}{0.58,0,0.82}
 \definecolor{code@backcolour}{rgb}{0.95,0.95,0.92}
 
-\lstdefinestyle{codeStyle}{
+\lstnewenvironment{swjtuCodeBlock}[1][]{
+  \lstset{
     backgroundcolor=\color{code@backcolour},
     commentstyle=\color{code@green},
     keywordstyle=\color{magenta},
     numberstyle=\tiny\color{code@gray},
     stringstyle=\color{code@purple},
     basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
     showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
+    showtabs=false,
+    tabsize=2,
+    #1
+  }
+  \renewcommand{\lstlistingname}{代码}
+}{
 }
 \makeatother
-
-\lstset{style=codeStyle}
-
-\DeclareCaptionLabelFormat{chinese}{代码 #2}
-\captionsetup[lstlisting]{labelformat=chinese}
 
 %%% ===================== 公式注释 ===================== %%%
 \makeatletter
