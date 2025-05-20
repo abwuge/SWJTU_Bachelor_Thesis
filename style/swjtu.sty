@@ -58,15 +58,39 @@
   family=swjtu/pageStyle,
   prefix=swjtu@pageStyle@
 }
+% 摘要
+\DeclareStringOption[\hspace{3em}]{absTitleSpace}
+% 封面
+\DeclareStringOption{titTableRowHeight}
+% 任务书
 \DeclareStringOption{taskOneTwo}
-\DeclareStringOption{contentsIndent}
-\DeclareStringOption[4em]{contentsMargin}
+% 目录
+\DeclareStringOption[-4]{contentsTitleZihao}
+\DeclareStringOption[\hspace{1em}]{contentsTitleSpace}
+\DeclareStringOption{contentsIndent} % 目录缩进风格
+\DeclareStringOption[4em]{contentsMargin} % 目录页边距
+\DeclareStringOption[0]{chapSkipFactor} % 目录章前行距倍率
+\DeclareStringOption[0]{secSkipFactor} % 目录节前行距倍率
+\DeclareStringOption[0]{subsecSkipFactor} % 目录子节前行距倍率
+\DeclareStringOption[0]{chapAfterSkipFactor} % 目录章后行距倍率
+% 正文
+\DeclareStringOption[1em]{chapTitLabelsep} % 章编号和章节标题正文之间的水平间距
+\DeclareStringOption[0.5em]{secTitLabelsep} % 节编号和章节标题正文之间的水平间距
+\DeclareStringOption[0.5em]{subsecTitLabelsep} % 子节编号和章节标题正文之间的水平间距
+\DeclareStringOption[0.5em]{subsubsecTitLabelsep} % 子子节编号和章节标题正文之间的水平间距
 
 %%% --------------------- 格式分配 --------------------- %%%
 \IfSubStr{\swjtu@major}{软件工程}{%
+  \setkeys{swjtu/pageStyle}{titTableRowHeight=1.2cm}
   \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
   \setkeys{swjtu/pageStyle}{contentsIndent=step}
   \setkeys{swjtu/pageStyle}{contentsMargin=0em}
+  \setkeys{swjtu/pageStyle}{chapSkipFactor=0.25}
+  \setkeys{swjtu/pageStyle}{chapAfterSkipFactor=0.25}
+  \setkeys{swjtu/pageStyle}{absTitleSpace=\hspace{0.5em}}
+  \setkeys{swjtu/pageStyle}{contentsTitleSpace=\hspace{0.5em}}
+  \setkeys{swjtu/pageStyle}{contentsTitleZihao=-2}
+  \setkeys{swjtu/pageStyle}{chapTitLabelsep=0.5em}
 }{%
   % 暂时无需实现其他专业的特殊格式
 }
@@ -175,26 +199,35 @@
 \captionsetup[table]{labelsep=space}
 
 %%% ===================== 标题间距 ===================== %%%
+\makeatletter
+% 章标题
+\titleformat{\chapter}[hang]
+{\zihao{-2}\heiti\centering}
+{第 \thechapter 章}{\swjtu@pageStyle@chapTitLabelsep}{}
+\titlespacing*{\chapter}
+{0pt}{0pt plus 2pt minus 2pt}{6pt}
+
 % 节标题
 \titleformat{\section}
 {\zihao{-3}\heiti}
-{\thesection}{1em}{}
+{\thesection}{\swjtu@pageStyle@secTitLabelsep}{}
 \titlespacing*{\section}
 {0pt}{12pt plus 2pt minus 2pt}{6pt}
 
 % 子节标题
 \titleformat{\subsection}
 {\zihao{4}\heiti}
-{\thesubsection}{1em}{}
+{\thesubsection}{\swjtu@pageStyle@subsecTitLabelsep}{}
 \titlespacing*{\subsection}
 {0pt}{6pt plus 2pt minus 2pt}{3pt}
 
 % 子子节标题
 \titleformat{\subsubsection}
 {\zihao{-4}\heiti}
-{\thesubsubsection}{1em}{}
+{\thesubsubsection}{\swjtu@pageStyle@subsubsecTitLabelsep}{}
 \titlespacing*{\subsubsection}
 {0pt}{0pt}{0pt}
+\makeatother
 
 %%% =================== 其他页面设置 =================== %%%
 \ctexset{
@@ -297,6 +330,10 @@
 \crefname{table}{表}{表}
 \crefrangeformat{table}{表#3#1#4到#5#2#6}
 \crefmultiformat{table}{表#2#1#3}{和#2#1#3}{、#2#1#3}{和#2#1#3}
+
+\crefname{listing}{代码}{代码}
+\crefrangeformat{listing}{代码#3#1#4到#5#2#6}
+\crefmultiformat{listing}{代码#2#1#3}{和#2#1#3}{、#2#1#3}{和#2#1#3}
 
 %%% ---------------------- 下划线 ---------------------- %%%
 \renewcommand{\underline}{\CJKunderline[skip=false]}
@@ -448,6 +485,8 @@
 \DeclareStringOption{keywords}
 
 %%% ======================= 扉页 ======================= %%%
+\RequirePackage{array}
+
 \makeatletter
 \newcommand{\swjtuTitlePage}[1][]{%
   \setkeys{swjtu/titlePage}{#1}
@@ -478,23 +517,40 @@
       \vspace{7\baselineskip}
 
       % 个人信息
-      \begin{allheiti}
-        \begin{tabular}{l}
-          年\hspace{2em}级:~\swjtu@titlePage@grade \\
-          学\hspace{2em}号:~\swjtu@titlePage@id    \\
-          姓\hspace{2em}名:~\swjtu@titlePage@name  \\
-          专\hspace{2em}业:~\swjtu@titlePage@major \\
-          指导老师:~\swjtu@titlePage@advisor
+      \ifdefvoid{\swjtu@pageStyle@titTableRowHeight}{%
+        \begin{allheiti}
+          \begin{tabular}{l}
+            年\hspace{2em}级:~\swjtu@titlePage@grade \\
+            学\hspace{2em}号:~\swjtu@titlePage@id    \\
+            姓\hspace{2em}名:~\swjtu@titlePage@name  \\
+            专\hspace{2em}业:~\swjtu@titlePage@major \\
+            指导老师:~\swjtu@titlePage@advisor
+          \end{tabular}
+        \end{allheiti}
+        % 空行 * 13
+        \vspace{13\baselineskip}
+        % 日期
+        \begin{allsongti}
+          \swjtu@titlePage@year\:年\:\swjtu@titlePage@month\:月
+        \end{allsongti}
+      }{
+        \begin{tabular}{
+          >{\rule{0pt}{1.2cm}}m{2.5cm}
+          >{\centering\arraybackslash\rule{0pt}{1.2cm}}m{4.51cm}
+        }
+          \heiti 年\hspace{2em}级: & \songti \swjtu@titlePage@grade \\ \cline{2-2}
+          \heiti 学\hspace{2em}号: & \songti \swjtu@titlePage@id \\ \cline{2-2}
+          \heiti 姓\hspace{2em}名: & \songti \swjtu@titlePage@name \\ \cline{2-2}
+          \heiti 专\hspace{2em}业: & \songti \swjtu@titlePage@major \\ \cline{2-2}
+          \heiti 指导老师:         & \songti \swjtu@titlePage@advisor \\ \cline{2-2}
+          \\
+          \multicolumn{2}{c}{%
+            \heiti
+            \rule{0pt}{1.2cm}% 设置行高
+            \swjtu@titlePage@year 年\swjtu@titlePage@month 月
+          } \\
         \end{tabular}
-      \end{allheiti}
-
-      % 空行 * 13
-      \vspace{13\baselineskip}
-
-      % 日期
-      \begin{allsongti}
-        \swjtu@titlePage@year\:年\:\swjtu@titlePage@month\:月
-      \end{allsongti}
+      }
     \end{center}
   \end{titlepage}
 
@@ -716,7 +772,7 @@
   \begin{fancytitlePage}
     % 标题
     \begin{center}
-      {\zihao{-2} \heiti 摘\hspace{3em}要}
+      {\zihao{-2} \heiti 摘\swjtu@pageStyle@absTitleSpace 要}
     \end{center}
 
     % 空行
@@ -809,7 +865,13 @@
 }
 
 %%% --------------------- 目录间距 --------------------- %%%
-\setlength{\cftbeforechapskip}{0pt} % 章
+\setlength{\cftbeforechapskip}{\dimexpr \swjtu@pageStyle@chapSkipFactor\baselineskip\relax}
+\setlength{\cftbeforesecskip}{\dimexpr \swjtu@pageStyle@secSkipFactor\baselineskip\relax}
+\setlength{\cftbeforesubsecskip}{\dimexpr \swjtu@pageStyle@subsecSkipFactor\baselineskip\relax}
+
+% 章 段后
+\renewcommand{\cftchapafterpnum}{}
+\renewcommand{\cftchapafterpnum}{\par\vspace{\dimexpr \swjtu@pageStyle@chapAfterSkipFactor\baselineskip\relax}}
 
 %%% ---------------------- 引导符 ---------------------- %%%
 \renewcommand{\cftdotsep}{1}                           % 点线密度
@@ -818,13 +880,14 @@
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTableOfContents}{%
   \begin{fancyPage}
+
     % 标题
     \begin{center}
-      \heiti 目\hspace{1em}录
+      \zihao{\swjtu@pageStyle@contentsTitleZihao} \heiti 目\swjtu@pageStyle@contentsTitleSpace 录
     \end{center}
 
     % 空行
-    \vspace{\baselineskip}
+    % \vspace{\baselineskip}
 
     % 正文
     \begin{adjustwidth}{\swjtu@pageStyle@contentsMargin}{\swjtu@pageStyle@contentsMargin}
