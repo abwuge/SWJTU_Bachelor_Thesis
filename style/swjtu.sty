@@ -59,14 +59,20 @@
   prefix=swjtu@pageStyle@
 }
 \DeclareStringOption{taskOneTwo}
-\DeclareStringOption{contentsIndent}
-\DeclareStringOption[4em]{contentsMargin}
+\DeclareStringOption{contentsIndent} % 目录缩进风格
+\DeclareStringOption[4em]{contentsMargin} % 目录页边距
+\DeclareStringOption[0]{chapSkipFactor} % 目录章前行距倍率
+\DeclareStringOption[0]{secSkipFactor} % 目录节前行距倍率
+\DeclareStringOption[0]{subsecSkipFactor} % 目录子节前行距倍率
+\DeclareStringOption[0]{chapAfterSkipFactor} % 目录章后行距倍率
 
 %%% --------------------- 格式分配 --------------------- %%%
 \IfSubStr{\swjtu@major}{软件工程}{%
   \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
   \setkeys{swjtu/pageStyle}{contentsIndent=step}
   \setkeys{swjtu/pageStyle}{contentsMargin=0em}
+  \setkeys{swjtu/pageStyle}{chapSkipFactor=0.25}
+  \setkeys{swjtu/pageStyle}{chapAfterSkipFactor=0.25}
 }{%
   % 暂时无需实现其他专业的特殊格式
 }
@@ -809,7 +815,13 @@
 }
 
 %%% --------------------- 目录间距 --------------------- %%%
-\setlength{\cftbeforechapskip}{0pt} % 章
+\setlength{\cftbeforechapskip}{\dimexpr \swjtu@pageStyle@chapSkipFactor\baselineskip\relax}
+\setlength{\cftbeforesecskip}{\dimexpr \swjtu@pageStyle@secSkipFactor\baselineskip\relax}
+\setlength{\cftbeforesubsecskip}{\dimexpr \swjtu@pageStyle@subsecSkipFactor\baselineskip\relax}
+
+% 章 段后
+\renewcommand{\cftchapafterpnum}{}
+\renewcommand{\cftchapafterpnum}{\par\vspace{\dimexpr \swjtu@pageStyle@chapAfterSkipFactor\baselineskip\relax}}
 
 %%% ---------------------- 引导符 ---------------------- %%%
 \renewcommand{\cftdotsep}{1}                           % 点线密度
@@ -818,6 +830,7 @@
 %%% ----------------------- 命令 ----------------------- %%%
 \newcommand{\swjtuTableOfContents}{%
   \begin{fancyPage}
+
     % 标题
     \begin{center}
       \heiti 目\hspace{1em}录
