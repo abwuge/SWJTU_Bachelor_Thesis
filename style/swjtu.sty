@@ -69,7 +69,7 @@
 \DeclareStringOption[16.5pt]{chapTitleAfterSpace}
 % 摘要
 \DeclareStringOption[\hspace{3em}]{absTitleSpace}
-% 封面
+% 扉页
 \DeclareStringOption{titTableRowHeight}
 % 任务书
 \DeclareStringOption{taskOneTwo}
@@ -236,11 +236,9 @@
 {\thesubsubsection}{\swjtu@pageStyle@subsubsecTitLabelsep}{}
 \titlespacing*{\subsubsection}
 {0pt}{0pt}{0pt}
-\makeatother
 
-%%% =================== 章标题间距 =================== %%%
-\makeatletter
 
+% 章标题
 \newlength{\chapterbeforeskip}
 \setlength{\chapterbeforeskip}{\swjtu@pageStyle@chapTitleBeforeSpace}
 \addtolength{\chapterbeforeskip}{-40pt}
@@ -259,12 +257,13 @@
   }
 }
 
+% 章*标题
 \titleformat{name=\chapter,numberless}[hang]
 {\centering\zihao{-2}\heiti}{}{0pt}{}
 \titlespacing*{name=\chapter,numberless}
 {0pt}{\chapterbeforeskip}{\swjtu@pageStyle@chapTitleAfterSpace}
-  
-%%% =================== 其他页面设置 =================== %%%
+ 
+% 其他页面大标题
 \newlength{\chapTitleBeforeSpace}
 \newlength{\chapTitleAfterSpace}
 
@@ -609,18 +608,18 @@
         \end{allsongti}
       }{
         \begin{tabular}{
-          >{\rule{0pt}{1.2cm}}m{2.5cm}
-          >{\centering\arraybackslash\rule{0pt}{1.2cm}}m{4.51cm}
+          >{\rule{0pt}{1.1cm}}m{2.1cm}
+          >{\centering\arraybackslash\rule{0pt}{1.1cm}}m{4.0cm}
         }
-          \heiti 年\hspace{2em}级: & \songti \swjtu@titlePage@grade \\ \cline{2-2}
-          \heiti 学\hspace{2em}号: & \songti \swjtu@titlePage@id \\ \cline{2-2}
-          \heiti 姓\hspace{2em}名: & \songti \swjtu@titlePage@name \\ \cline{2-2}
-          \heiti 专\hspace{2em}业: & \songti \swjtu@titlePage@major \\ \cline{2-2}
-          \heiti 指导老师:         & \songti \swjtu@titlePage@advisor \\ \cline{2-2}
+          \heiti 年\hspace{2em}级: & \heiti \swjtu@titlePage@grade \\ \cline{2-2}
+          \heiti 学\hspace{2em}号: & \heiti \swjtu@titlePage@id \\ \cline{2-2}
+          \heiti 姓\hspace{2em}名: & \heiti \swjtu@titlePage@name \\ \cline{2-2}
+          \heiti 专\hspace{2em}业: & \heiti \swjtu@titlePage@major \\ \cline{2-2}
+          \heiti 指导老师:         & \heiti \swjtu@titlePage@advisor \\ \cline{2-2}
           \\
           \multicolumn{2}{c}{%
             \heiti
-            \rule{0pt}{1.2cm}% 设置行高
+            \rule{0pt}{1.1cm}% 设置行高
             \swjtu@titlePage@year 年\swjtu@titlePage@month 月
           } \\
         \end{tabular}
