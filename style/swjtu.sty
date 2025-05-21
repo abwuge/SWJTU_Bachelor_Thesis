@@ -58,6 +58,9 @@
   family=swjtu/pageStyle,
   prefix=swjtu@pageStyle@
 }
+% 标题
+\DeclareStringOption[17pt]{chapTitleBeforeSpace}
+\DeclareStringOption[16.5pt]{chapTitleAfterSpace}
 % 摘要
 \DeclareStringOption[\hspace{3em}]{absTitleSpace}
 % 封面
@@ -91,6 +94,8 @@
   \setkeys{swjtu/pageStyle}{contentsTitleSpace=\hspace{0.5em}}
   \setkeys{swjtu/pageStyle}{contentsTitleZihao=-2}
   \setkeys{swjtu/pageStyle}{chapTitLabelsep=0.5em}
+  \setkeys{swjtu/pageStyle}{chapTitleBeforeSpace=20pt}
+  \setkeys{swjtu/pageStyle}{chapTitleAfterSpace=20pt}
 }{%
   % 暂时无需实现其他专业的特殊格式
 }
@@ -200,12 +205,6 @@
 
 %%% ===================== 标题间距 ===================== %%%
 \makeatletter
-% 章标题
-\titleformat{\chapter}[hang]
-{\zihao{-2}\heiti\centering}
-{第 \thechapter 章}{\swjtu@pageStyle@chapTitLabelsep}{}
-\titlespacing*{\chapter}
-{0pt}{0pt plus 2pt minus 2pt}{6pt}
 
 % 节标题
 \titleformat{\section}
@@ -230,16 +229,30 @@
 \makeatother
 
 %%% =================== 其他页面设置 =================== %%%
-\ctexset{
-  chapter = {
-    number = \arabic{chapter},
-    format = \zihao{-2} \heiti \centering,
-    pagestyle = fancy,
-    beforeskip = 0pt,
-    afterskip = \baselineskip,
-   }
-}
-\raggedbottom % 避免强制拉伸
+\makeatletter
+
+\def\@makechapterhead#1{%
+  \thispagestyle{fancy}
+  \vspace*{-30pt}
+  \vspace*{\swjtu@pageStyle@chapTitleBeforeSpace}
+  {\parindent \z@ \centering \normalfont
+    \zihao{-2}\heiti   
+    第 \thechapter 章\hspace{\swjtu@pageStyle@chapTitLabelsep} #1\par\nobreak
+    \vspace*{\swjtu@pageStyle@chapTitleAfterSpace}
+    % \vspace{0\baselineskip}
+  }}
+  
+\def\@makeschapterhead#1{%
+  \thispagestyle{fancy}
+  \vspace*{-30pt}
+  \vspace*{\swjtu@pageStyle@chapTitleBeforeSpace}
+  {\parindent \z@ \centering \normalfont
+    \zihao{-2}\heiti   
+    #1\par\nobreak
+    \vspace*{\swjtu@pageStyle@chapTitleAfterSpace}
+  }}
+  
+\makeatother
 
 %%% ====================== 代码框 ====================== %%%
 \makeatletter
@@ -913,7 +926,7 @@
 
 %%% ======================= 结论 ======================= %%%
 \newcommand{\swjtuConclusion}[1]{%
-  \newpage
+  \clearpage
   \phantomsection % 添加锚点
   \chapter*{#1}
   \addcontentsline{toc}{chapter}{#1} % 添加到目录
