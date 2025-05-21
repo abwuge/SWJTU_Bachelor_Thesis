@@ -101,10 +101,10 @@
   \setkeys{swjtu/pageStyle}{contentsTitleZihao=-2}
   \setkeys{swjtu/pageStyle}{chapTitLabelsep=0.5em}
   \setkeys{swjtu/pageStyle}{chapTitleBeforeSpace=20pt}
-  \setkeys{swjtu/pageStyle}{chapTitleAfterSpace=20pt}
+  \setkeys{swjtu/pageStyle}{chapTitleAfterSpace=8pt}
   \setkeys{swjtu/pageStyle}{defaultSkipFactor=1.3}
   \setkeys{swjtu/pageStyle}{otherTitleBeforeSpace=20pt}
-  \setkeys{swjtu/pageStyle}{otherTitleAfterSpace=20pt}
+  \setkeys{swjtu/pageStyle}{otherTitleAfterSpace=15pt}
 }{%
   % 暂时无需实现其他专业的特殊格式
 }
@@ -237,38 +237,33 @@
 {0pt}{0pt}{0pt}
 \makeatother
 
-%%% =================== 其他页面设置 =================== %%%
+%%% =================== 章标题间距 =================== %%%
 \makeatletter
 
-\def\@makechapterhead#1{%
-  \thispagestyle{fancy}
-  \vspace*{-40pt}
-  \vspace*{\swjtu@pageStyle@chapTitleBeforeSpace}
-  {\parindent \z@ \centering \normalfont
-    \zihao{-2}\heiti   
-    第 \thechapter 章\hspace{\swjtu@pageStyle@chapTitLabelsep} #1\par\nobreak
-    \vspace*{\swjtu@pageStyle@chapTitleAfterSpace}
-    % \vspace{0\baselineskip}
-  }}
+\newlength{\chapterbeforeskip}
+\setlength{\chapterbeforeskip}{\swjtu@pageStyle@chapTitleBeforeSpace}
+\addtolength{\chapterbeforeskip}{-40pt}
+
+\titleformat{\chapter}[hang] 
+{\normalfont\centering\zihao{-2}\heiti}
+{第 \thechapter 章}{\swjtu@pageStyle@chapTitLabelsep} {}
+\titlespacing*{\chapter}
+{0pt}{\chapterbeforeskip}{\swjtu@pageStyle@chapTitleAfterSpace}
 
 \ctexset{
   chapter = {
     name = {第,章},
-    number = \arabic{chapter}
+    number = \arabic{chapter},
+    pagestyle=fancy
   }
 }
+
+\titleformat{name=\chapter,numberless}[hang]
+{\centering\zihao{-2}\heiti}{}{0pt}{}
+\titlespacing*{name=\chapter,numberless}
+{0pt}{\chapterbeforeskip}{\swjtu@pageStyle@chapTitleAfterSpace}
   
-\def\@makeschapterhead#1{%
-  \thispagestyle{fancy}
-  \vspace*{-40pt}
-  \vspace*{\swjtu@pageStyle@chapTitleBeforeSpace}
-  {\parindent \z@ \centering \normalfont
-    \zihao{-2}\heiti   
-    #1\par\nobreak
-    \vspace*{\swjtu@pageStyle@chapTitleAfterSpace}
-  }}
-
-
+%%% =================== 其他页面设置 =================== %%%
 \newlength{\chapTitleBeforeSpace}
 \newlength{\chapTitleAfterSpace}
 
@@ -794,15 +789,15 @@
         2、学生应完成的任务\underline{\hspace{0.5em}\swjtu@task@tasks\hfill}
       }{%
         1、本设计（论文）的目的、意义\par
-        \underline{\swjtu@task@purpose\hfill}\par
+        \underline{\hspace{2em}\swjtu@task@purpose\hfill}\par
         2、学生应完成的任务\par
-        \underline{\swjtu@task@tasks\hfill}
+        \underline{\hspace{2em}\swjtu@task@tasks\hfill}
       }
 
       % 3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
       3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
 
-      \underline{\swjtu@task@requirement\hfill}
+      \underline{\hspace{2em}\swjtu@task@requirement\hfill}
 
       \newpage
 
