@@ -67,6 +67,10 @@
 \DeclareStringOption[\baselineskip]{otherTitleAfterSpace}
 \DeclareStringOption[17pt]{chapTitleBeforeSpace}
 \DeclareStringOption[16.5pt]{chapTitleAfterSpace}
+% 学术诚信声明
+\DeclareStringOption[true]{ceclarationTitleTextBf}
+% 授权书
+\DeclareStringOption[true]{copyrightTitleTextBf}
 % 摘要
 \DeclareStringOption[\hspace{3em}]{absTitleSpace}
 % 扉页
@@ -90,7 +94,11 @@
 \DeclareStringOption[0.5em]{subsubsecTitLabelsep} % 子子节编号和章节标题正文之间的水平间距
 
 %%% --------------------- 格式分配 --------------------- %%%
-\IfSubStr{\swjtu@major}{软件工程}{%
+\ifboolexpr{
+  test {\IfSubStr{\swjtu@major}{软件工程}} or
+  test {\IfSubStr{\swjtu@major}{人工智能}} or
+  test {\IfSubStr{\swjtu@major}{计算机科学与技术}}
+}{
   \setkeys{swjtu/pageStyle}{titTableRowHeight=1.2cm}
   \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
   \setkeys{swjtu/pageStyle}{contentsIndent=step}
@@ -106,9 +114,12 @@
   \setkeys{swjtu/pageStyle}{defaultSkipFactor=1.3}
   \setkeys{swjtu/pageStyle}{otherTitleBeforeSpace=20pt}
   \setkeys{swjtu/pageStyle}{otherTitleAfterSpace=15pt}
-}{%
-  % 暂时无需实现其他专业的特殊格式
+  \setkeys{swjtu/pageStyle}{ceclarationTitleTextBf=false}
+  \setkeys{swjtu/pageStyle}{copyrightTitleTextBf=false}
+}{
+  % 其他专业的设置
 }
+
 \makeatother
 
 %%% ======================= 排版 ======================= %%%
@@ -643,8 +654,13 @@
     % 标题
     \begin{center}
       \begin{allheiti} \onehalfspacing \zihao{-2}
-        \textbf{西南交通大学}\par
-        \textbf{本科毕业设计（论文）学术诚信声明}\par
+        \ifbool{\swjtu@pageStyle@ceclarationTitleTextBf}{
+          \textbf{西南交通大学}\par
+          \textbf{本科毕业设计（论文）学术诚信声明}\par
+        }{
+          西南交通大学\par
+          本科毕业设计（论文）学术诚信声明\par
+        }
       \end{allheiti}
     \end{center}
 
@@ -688,8 +704,13 @@
     % 标题
     \begin{center}
       \begin{allheiti} \onehalfspacing \zihao{-2}
-        \textbf{西南交通大学}\par
-        \textbf{本科毕业设计（论文）版权使用授权书}\par
+        \ifbool{\swjtu@pageStyle@ceclarationTitleTextBf}{
+          \textbf{西南交通大学}\par
+          \textbf{本科毕业设计（论文）版权使用授权书}\par
+        }{
+          西南交通大学\par
+          本科毕业设计（论文）版权使用授权书\par
+        }
       \end{allheiti}
     \end{center}
 
