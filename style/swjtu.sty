@@ -25,6 +25,7 @@
 \RequirePackage{xstring}     % 字符串处理
 \RequirePackage{algorithm}   % 伪代码
 \RequirePackage{algorithmic} % 伪代码
+\RequirePackage{xstring}     % 用于 \IfEqCase 判断
 
 % 参考文献处理
 \RequirePackage[
@@ -33,8 +34,8 @@
 
 % 超链接
 \RequirePackage[
-  colorlinks=true,
-  hidelinks,
+  % colorlinks=true,
+  % hidelinks,
 ]{hyperref}
 
 % 智能交叉引用
@@ -61,6 +62,8 @@
   prefix=swjtu@pageStyle@
 }
 % 标题
+\DeclareStringOption[0pt]{otherTitleBeforeSpace}
+\DeclareStringOption[\baselineskip]{otherTitleAfterSpace}
 \DeclareStringOption[17pt]{chapTitleBeforeSpace}
 \DeclareStringOption[16.5pt]{chapTitleAfterSpace}
 % 摘要
@@ -78,6 +81,7 @@
 \DeclareStringOption[0]{secSkipFactor} % 目录节前行距倍率
 \DeclareStringOption[0]{subsecSkipFactor} % 目录子节前行距倍率
 \DeclareStringOption[0]{chapAfterSkipFactor} % 目录章后行距倍率
+\DeclareStringOption[1.5]{defaultSkipFactor}
 % 正文
 \DeclareStringOption[1em]{chapTitLabelsep} % 章编号和章节标题正文之间的水平间距
 \DeclareStringOption[0.5em]{secTitLabelsep} % 节编号和章节标题正文之间的水平间距
@@ -98,6 +102,9 @@
   \setkeys{swjtu/pageStyle}{chapTitLabelsep=0.5em}
   \setkeys{swjtu/pageStyle}{chapTitleBeforeSpace=20pt}
   \setkeys{swjtu/pageStyle}{chapTitleAfterSpace=20pt}
+  \setkeys{swjtu/pageStyle}{defaultSkipFactor=1.3}
+  \setkeys{swjtu/pageStyle}{otherTitleBeforeSpace=20pt}
+  \setkeys{swjtu/pageStyle}{otherTitleAfterSpace=20pt}
 }{%
   % 暂时无需实现其他专业的特殊格式
 }
@@ -235,7 +242,7 @@
 
 \def\@makechapterhead#1{%
   \thispagestyle{fancy}
-  \vspace*{-30pt}
+  \vspace*{-40pt}
   \vspace*{\swjtu@pageStyle@chapTitleBeforeSpace}
   {\parindent \z@ \centering \normalfont
     \zihao{-2}\heiti   
@@ -243,16 +250,53 @@
     \vspace*{\swjtu@pageStyle@chapTitleAfterSpace}
     % \vspace{0\baselineskip}
   }}
+
+\ctexset{
+  chapter = {
+    name = {第,章},
+    number = \arabic{chapter}
+  }
+}
   
 \def\@makeschapterhead#1{%
   \thispagestyle{fancy}
-  \vspace*{-30pt}
+  \vspace*{-40pt}
   \vspace*{\swjtu@pageStyle@chapTitleBeforeSpace}
   {\parindent \z@ \centering \normalfont
     \zihao{-2}\heiti   
     #1\par\nobreak
     \vspace*{\swjtu@pageStyle@chapTitleAfterSpace}
   }}
+
+
+\newlength{\chapTitleBeforeSpace}
+\newlength{\chapTitleAfterSpace}
+
+\NewDocumentCommand{\CustomChapter}{s O{0pt} O{0pt} O{\zihao{-2}} O{false} m}{%
+  \setlength{\chapTitleBeforeSpace}{#2}%
+  \setlength{\chapTitleAfterSpace}{#3}%
+  \thispagestyle{fancy}
+  \vspace*{-40pt}
+  \vspace*{\chapTitleBeforeSpace}
+  {\centering
+    \par\noindent
+    #4 % 字号设置
+    \heiti % 基础字体黑体
+    \IfEqCase{#5}{%
+      {true}{\textbf} % 加粗时用 \textbf
+      {false}{\relax} % 不加粗时什么都不做
+    }[\textbf] % 默认加粗
+    % 应用 \textbf 或不应用
+    {%
+      \IfBooleanTF{#1} % 是否星号（无编号）
+        {#6}            % 星号：无编号，直接标题文本
+        {第 \arabic{chapter} 章\quad #6} % 非星号：带编号
+    }%
+    \par
+  }
+  \vspace*{\chapTitleAfterSpace}
+  \IfBooleanF{#1}{\refstepcounter{chapter}} % 非星号时计数器+1
+}
   
 \makeatother
 
@@ -720,12 +764,7 @@
     \pagenumbering{Roman}
 
     % 标题
-    \begin{center}
-      {\zihao{3} \heiti \textbf{毕业设计（论文）任务书}}
-    \end{center}
-
-    % 空行
-    \vspace{\baselineskip}
+    \CustomChapter*[\swjtu@pageStyle@otherTitleBeforeSpace][\swjtu@pageStyle@otherTitleAfterSpace][\zihao{3}][true]{毕业设计（论文）任务书}
 
     \begin{allsongti}
       \setlength{\parindent}{0pt}
@@ -807,12 +846,7 @@
 
   \begin{fancytitlePage}
     % 标题
-    \begin{center}
-      {\zihao{-2} \heiti 摘\swjtu@pageStyle@absTitleSpace 要}
-    \end{center}
-
-    % 空行
-    \vspace{\baselineskip}
+    \CustomChapter*[\swjtu@pageStyle@otherTitleBeforeSpace][\swjtu@pageStyle@otherTitleAfterSpace]{摘\swjtu@pageStyle@absTitleSpace 要}
 
     % 摘要正文
     \swjtu@abstractCN@abstract
@@ -836,12 +870,7 @@
 
   \begin{fancyPage}
     % 标题
-    \begin{center}
-      \zihao{-2} Abstract
-    \end{center}
-
-    % 空行
-    \vspace{\baselineskip}
+    \CustomChapter*[\swjtu@pageStyle@otherTitleBeforeSpace][\swjtu@pageStyle@otherTitleAfterSpace]{Abstract}
 
     % 摘要正文
     \swjtu@abstractEN@abstract
@@ -918,16 +947,13 @@
   \begin{fancyPage}
 
     % 标题
-    \begin{center}
-      \zihao{\swjtu@pageStyle@contentsTitleZihao} \heiti 目\swjtu@pageStyle@contentsTitleSpace 录
-    \end{center}
-
-    % 空行
-    % \vspace{\baselineskip}
+    \CustomChapter*[\swjtu@pageStyle@otherTitleBeforeSpace][\swjtu@pageStyle@otherTitleAfterSpace]{目\swjtu@pageStyle@contentsTitleSpace 录}
 
     % 正文
+    \vspace*{-\dimexpr \swjtu@pageStyle@chapSkipFactor\baselineskip\relax}
+    
     \begin{adjustwidth}{\swjtu@pageStyle@contentsMargin}{\swjtu@pageStyle@contentsMargin}
-      \begin{spacing}{1.5}
+      \begin{spacing}{\swjtu@pageStyle@defaultSkipFactor}
         \tableofcontents
       \end{spacing}
     \end{adjustwidth}
@@ -951,10 +977,6 @@
   \phantomsection % 添加锚点
   \chapter*{#1}
   \addcontentsline{toc}{chapter}{#1} % 添加到目录
-
-  % 修改结论节号格式
-  \setcounter{section}{0}
-  \renewcommand{\thesection}{\arabic{section}}
 }
 
 %%% ======================= 致谢 ======================= %%%
