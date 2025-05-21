@@ -1,5 +1,6 @@
 %%% ==================== 基础包引入 ==================== %%%
 \RequirePackage{amssymb}     % 数学符号库，提供各种数学符号
+\RequirePackage{array}       % 对齐
 \RequirePackage{booktabs}    % 制作美观的表格
 \RequirePackage{caption}     % 设置浮动体的标题格式
 \RequirePackage{changepage}  % 调整页面参数和页边距
@@ -519,8 +520,6 @@
 \DeclareStringOption{keywords}
 
 %%% ======================= 扉页 ======================= %%%
-\RequirePackage{array}
-
 \makeatletter
 \newcommand{\swjtuTitlePage}[1][]{%
   \setkeys{swjtu/titlePage}{#1}
@@ -533,7 +532,7 @@
       ~\\ \vspace{2\baselineskip}
 
       % 标题
-      \begin{allheiti} \doublespacing \zihao{-2}
+      \begin{allheiti} \onehalfspacing \zihao{-2}
         西\hspace{0.5em}南\hspace{0.5em}交\hspace{0.5em}通\hspace{0.5em}大\hspace{0.5em}学\par
         本科毕业设计（论文）
       \end{allheiti}
@@ -542,7 +541,7 @@
       \vspace{3\baselineskip}
 
       % 中英文题目
-      \begin{allheiti} \singlespacing \zihao{2}
+      \begin{allheiti} \zihao{2}
         \swjtu@titlePage@ctitle\par
         \MakeUppercase{\swjtu@titlePage@etitle}
       \end{allheiti}
