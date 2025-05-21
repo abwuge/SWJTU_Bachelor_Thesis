@@ -23,6 +23,8 @@
 \RequirePackage{xeCJKfntef}  % 中文下划线
 \RequirePackage{xparse}      % 高级命令
 \RequirePackage{xstring}     % 字符串处理
+\RequirePackage{algorithm}   % 伪代码
+\RequirePackage{algorithmic} % 伪代码
 
 % 参考文献处理
 \RequirePackage[
@@ -31,7 +33,7 @@
 
 % 超链接
 \RequirePackage[
-  colorlinks=false,
+  colorlinks=true,
   hidelinks,
 ]{hyperref}
 
@@ -286,6 +288,12 @@
 }
 \makeatother
 
+%%% ====================== 伪代码 ====================== %%%
+
+\floatname{algorithm}{算法}
+\newcommand{\Input}{\STATE {\bfseries 输入：}}
+\newcommand{\Output}{\STATE {\bfseries 输出：}}
+
 %%% ===================== 公式注释 ===================== %%%
 \makeatletter
 \newcounter{swjtu@itemCount}
@@ -347,6 +355,19 @@
 \crefname{listing}{代码}{代码}
 \crefrangeformat{listing}{代码#3#1#4到#5#2#6}
 \crefmultiformat{listing}{代码#2#1#3}{和#2#1#3}{、#2#1#3}{和#2#1#3}
+
+\crefname{algorithm}{算法}{算法}
+\crefrangeformat{algorithm}{算法#3#1#4到#5#2#6}
+\crefmultiformat{algorithm}{算法#2#1#3}{和#2#1#3}{、#2#1#3}{和#2#1#3}
+
+% 适配 hyperref 的 \autoref
+\renewcommand{\equationautorefname}{式}
+\renewcommand{\figureautorefname}{图}
+\renewcommand{\tableautorefname}{表}
+\providecommand{\listingautorefname}{代码}
+\renewcommand{\listingautorefname}{代码}
+\providecommand{\algorithmautorefname}{算法}
+\renewcommand{\algorithmautorefname}{算法}
 
 %%% ---------------------- 下划线 ---------------------- %%%
 \renewcommand{\underline}{\CJKunderline[skip=false]}
