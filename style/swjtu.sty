@@ -26,6 +26,7 @@
 \RequirePackage{xstring}     % 字符串处理
 \RequirePackage{algorithm}   % 伪代码
 \RequirePackage{algorithmic} % 伪代码
+\RequirePackage{xstring}     % 用于 \IfEqCase 判断
 
 % 参考文献处理
 \RequirePackage[
@@ -34,8 +35,8 @@
 
 % 超链接
 \RequirePackage[
-  colorlinks=true,
-  hidelinks,
+  % colorlinks=true,
+  % hidelinks,
 ]{hyperref}
 
 % 智能交叉引用
@@ -62,11 +63,17 @@
   prefix=swjtu@pageStyle@
 }
 % 标题
+\DeclareStringOption[0pt]{otherTitleBeforeSpace}
+\DeclareStringOption[\baselineskip]{otherTitleAfterSpace}
 \DeclareStringOption[17pt]{chapTitleBeforeSpace}
 \DeclareStringOption[16.5pt]{chapTitleAfterSpace}
+% 学术诚信声明
+\DeclareStringOption[true]{ceclarationTitleTextBf}
+% 授权书
+\DeclareStringOption[true]{copyrightTitleTextBf}
 % 摘要
 \DeclareStringOption[\hspace{3em}]{absTitleSpace}
-% 封面
+% 扉页
 \DeclareStringOption{titTableRowHeight}
 % 任务书
 \DeclareStringOption{taskOneTwo}
@@ -79,6 +86,7 @@
 \DeclareStringOption[0]{secSkipFactor} % 目录节前行距倍率
 \DeclareStringOption[0]{subsecSkipFactor} % 目录子节前行距倍率
 \DeclareStringOption[0]{chapAfterSkipFactor} % 目录章后行距倍率
+\DeclareStringOption[1.5]{defaultSkipFactor}
 % 正文
 \DeclareStringOption[1em]{chapTitLabelsep} % 章编号和章节标题正文之间的水平间距
 \DeclareStringOption[0.5em]{secTitLabelsep} % 节编号和章节标题正文之间的水平间距
@@ -86,7 +94,11 @@
 \DeclareStringOption[0.5em]{subsubsecTitLabelsep} % 子子节编号和章节标题正文之间的水平间距
 
 %%% --------------------- 格式分配 --------------------- %%%
-\IfSubStr{\swjtu@major}{软件工程}{%
+\ifboolexpr{
+  test {\IfSubStr{\swjtu@major}{软件工程}} or
+  test {\IfSubStr{\swjtu@major}{人工智能}} or
+  test {\IfSubStr{\swjtu@major}{计算机科学与技术}}
+}{
   \setkeys{swjtu/pageStyle}{titTableRowHeight=1.2cm}
   \setkeys{swjtu/pageStyle}{taskOneTwo=newLine}
   \setkeys{swjtu/pageStyle}{contentsIndent=step}
@@ -98,10 +110,16 @@
   \setkeys{swjtu/pageStyle}{contentsTitleZihao=-2}
   \setkeys{swjtu/pageStyle}{chapTitLabelsep=0.5em}
   \setkeys{swjtu/pageStyle}{chapTitleBeforeSpace=20pt}
-  \setkeys{swjtu/pageStyle}{chapTitleAfterSpace=20pt}
-}{%
-  % 暂时无需实现其他专业的特殊格式
+  \setkeys{swjtu/pageStyle}{chapTitleAfterSpace=8pt}
+  \setkeys{swjtu/pageStyle}{defaultSkipFactor=1.3}
+  \setkeys{swjtu/pageStyle}{otherTitleBeforeSpace=20pt}
+  \setkeys{swjtu/pageStyle}{otherTitleAfterSpace=15pt}
+  \setkeys{swjtu/pageStyle}{ceclarationTitleTextBf=false}
+  \setkeys{swjtu/pageStyle}{copyrightTitleTextBf=false}
+}{
+  % 其他专业的设置
 }
+
 \makeatother
 
 %%% ======================= 排版 ======================= %%%
@@ -203,6 +221,8 @@
 \renewcommand{\theequation}{\thechapter-\arabic{equation}}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
 \renewcommand{\thetable}{\thechapter-\arabic{table}}
+\renewcommand{\thealgorithm}{\thechapter-\arabic{algorithm}}
+% \renewcommand{\thelstlisting}{\thechapter-\arabic{lstlisting}}
 \captionsetup[figure]{labelsep=space}
 \captionsetup[table]{labelsep=space}
 
@@ -229,31 +249,62 @@
 {\thesubsubsection}{\swjtu@pageStyle@subsubsecTitLabelsep}{}
 \titlespacing*{\subsubsection}
 {0pt}{0pt}{0pt}
-\makeatother
 
-%%% =================== 其他页面设置 =================== %%%
-\makeatletter
 
-\def\@makechapterhead#1{%
+% 章标题
+\newlength{\chapterbeforeskip}
+\setlength{\chapterbeforeskip}{\swjtu@pageStyle@chapTitleBeforeSpace}
+\addtolength{\chapterbeforeskip}{-40pt}
+
+\titleformat{\chapter}[hang] 
+{\normalfont\centering\zihao{-2}\heiti}
+{第 \thechapter 章}{\swjtu@pageStyle@chapTitLabelsep} {}
+\titlespacing*{\chapter}
+{0pt}{\chapterbeforeskip}{\swjtu@pageStyle@chapTitleAfterSpace}
+
+\ctexset{
+  chapter = {
+    name = {第,章},
+    number = \arabic{chapter},
+    pagestyle=fancy
+  }
+}
+
+% 章*标题
+\titleformat{name=\chapter,numberless}[hang]
+{\centering\zihao{-2}\heiti}{}{0pt}{}
+\titlespacing*{name=\chapter,numberless}
+{0pt}{\chapterbeforeskip}{\swjtu@pageStyle@chapTitleAfterSpace}
+ 
+% 其他页面大标题
+\newlength{\chapTitleBeforeSpace}
+\newlength{\chapTitleAfterSpace}
+
+\NewDocumentCommand{\CustomChapter}{s O{0pt} O{0pt} O{\zihao{-2}} O{false} m}{%
+  \setlength{\chapTitleBeforeSpace}{#2}%
+  \setlength{\chapTitleAfterSpace}{#3}%
   \thispagestyle{fancy}
-  \vspace*{-30pt}
-  \vspace*{\swjtu@pageStyle@chapTitleBeforeSpace}
-  {\parindent \z@ \centering \normalfont
-    \zihao{-2}\heiti   
-    第 \thechapter 章\hspace{\swjtu@pageStyle@chapTitLabelsep} #1\par\nobreak
-    \vspace*{\swjtu@pageStyle@chapTitleAfterSpace}
-    % \vspace{0\baselineskip}
-  }}
-  
-\def\@makeschapterhead#1{%
-  \thispagestyle{fancy}
-  \vspace*{-30pt}
-  \vspace*{\swjtu@pageStyle@chapTitleBeforeSpace}
-  {\parindent \z@ \centering \normalfont
-    \zihao{-2}\heiti   
-    #1\par\nobreak
-    \vspace*{\swjtu@pageStyle@chapTitleAfterSpace}
-  }}
+  \vspace*{-40pt}
+  \vspace*{\chapTitleBeforeSpace}
+  {\centering
+    \par\noindent
+    #4 % 字号设置
+    \heiti % 基础字体黑体
+    \IfEqCase{#5}{%
+      {true}{\textbf} % 加粗时用 \textbf
+      {false}{\relax} % 不加粗时什么都不做
+    }[\textbf] % 默认加粗
+    % 应用 \textbf 或不应用
+    {%
+      \IfBooleanTF{#1} % 是否星号（无编号）
+        {#6}            % 星号：无编号，直接标题文本
+        {第 \arabic{chapter} 章\quad #6} % 非星号：带编号
+    }%
+    \par
+  }
+  \vspace*{\chapTitleAfterSpace}
+  \IfBooleanF{#1}{\refstepcounter{chapter}} % 非星号时计数器+1
+}
   
 \makeatother
 
@@ -570,18 +621,18 @@
         \end{allsongti}
       }{
         \begin{tabular}{
-          >{\rule{0pt}{1.2cm}}m{2.5cm}
-          >{\centering\arraybackslash\rule{0pt}{1.2cm}}m{4.51cm}
+          >{\rule{0pt}{1.1cm}}m{2.1cm}
+          >{\centering\arraybackslash\rule{0pt}{1.1cm}}m{4.0cm}
         }
-          \heiti 年\hspace{2em}级: & \songti \swjtu@titlePage@grade \\ \cline{2-2}
-          \heiti 学\hspace{2em}号: & \songti \swjtu@titlePage@id \\ \cline{2-2}
-          \heiti 姓\hspace{2em}名: & \songti \swjtu@titlePage@name \\ \cline{2-2}
-          \heiti 专\hspace{2em}业: & \songti \swjtu@titlePage@major \\ \cline{2-2}
-          \heiti 指导老师:         & \songti \swjtu@titlePage@advisor \\ \cline{2-2}
+          \heiti 年\hspace{2em}级: & \heiti \swjtu@titlePage@grade \\ \cline{2-2}
+          \heiti 学\hspace{2em}号: & \heiti \swjtu@titlePage@id \\ \cline{2-2}
+          \heiti 姓\hspace{2em}名: & \heiti \swjtu@titlePage@name \\ \cline{2-2}
+          \heiti 专\hspace{2em}业: & \heiti \swjtu@titlePage@major \\ \cline{2-2}
+          \heiti 指导老师:         & \heiti \swjtu@titlePage@advisor \\ \cline{2-2}
           \\
           \multicolumn{2}{c}{%
             \heiti
-            \rule{0pt}{1.2cm}% 设置行高
+            \rule{0pt}{1.1cm}% 设置行高
             \swjtu@titlePage@year 年\swjtu@titlePage@month 月
           } \\
         \end{tabular}
@@ -605,8 +656,13 @@
     % 标题
     \begin{center}
       \begin{allheiti} \onehalfspacing \zihao{-2}
-        \textbf{西南交通大学}\par
-        \textbf{本科毕业设计（论文）学术诚信声明}\par
+        \ifbool{\swjtu@pageStyle@ceclarationTitleTextBf}{
+          \textbf{西南交通大学}\par
+          \textbf{本科毕业设计（论文）学术诚信声明}\par
+        }{
+          西南交通大学\par
+          本科毕业设计（论文）学术诚信声明\par
+        }
       \end{allheiti}
     \end{center}
 
@@ -650,8 +706,13 @@
     % 标题
     \begin{center}
       \begin{allheiti} \onehalfspacing \zihao{-2}
-        \textbf{西南交通大学}\par
-        \textbf{本科毕业设计（论文）版权使用授权书}\par
+        \ifbool{\swjtu@pageStyle@ceclarationTitleTextBf}{
+          \textbf{西南交通大学}\par
+          \textbf{本科毕业设计（论文）版权使用授权书}\par
+        }{
+          西南交通大学\par
+          本科毕业设计（论文）版权使用授权书\par
+        }
       \end{allheiti}
     \end{center}
 
@@ -719,12 +780,7 @@
     \pagenumbering{Roman}
 
     % 标题
-    \begin{center}
-      {\zihao{3} \heiti \textbf{毕业设计（论文）任务书}}
-    \end{center}
-
-    % 空行
-    \vspace{\baselineskip}
+    \CustomChapter*[\swjtu@pageStyle@otherTitleBeforeSpace][\swjtu@pageStyle@otherTitleAfterSpace][\zihao{3}][true]{毕业设计（论文）任务书}
 
     \begin{allsongti}
       \setlength{\parindent}{0pt}
@@ -754,15 +810,15 @@
         2、学生应完成的任务\underline{\hspace{0.5em}\swjtu@task@tasks\hfill}
       }{%
         1、本设计（论文）的目的、意义\par
-        \underline{\swjtu@task@purpose\hfill}\par
+        \underline{\hspace{2em}\swjtu@task@purpose\hfill}\par
         2、学生应完成的任务\par
-        \underline{\swjtu@task@tasks\hfill}
+        \underline{\hspace{2em}\swjtu@task@tasks\hfill}
       }
 
       % 3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
       3、本设计（论文）与本专业的毕业要求达成度如何？（如在知识结构、能力结构、素质结构等方面有哪些有效的训练。）
 
-      \underline{\swjtu@task@requirement\hfill}
+      \underline{\hspace{2em}\swjtu@task@requirement\hfill}
 
       \newpage
 
@@ -806,12 +862,7 @@
 
   \begin{fancytitlePage}
     % 标题
-    \begin{center}
-      {\zihao{-2} \heiti 摘\swjtu@pageStyle@absTitleSpace 要}
-    \end{center}
-
-    % 空行
-    \vspace{\baselineskip}
+    \CustomChapter*[\swjtu@pageStyle@otherTitleBeforeSpace][\swjtu@pageStyle@otherTitleAfterSpace]{摘\swjtu@pageStyle@absTitleSpace 要}
 
     % 摘要正文
     \swjtu@abstractCN@abstract
@@ -835,12 +886,7 @@
 
   \begin{fancyPage}
     % 标题
-    \begin{center}
-      \zihao{-2} Abstract
-    \end{center}
-
-    % 空行
-    \vspace{\baselineskip}
+    \CustomChapter*[\swjtu@pageStyle@otherTitleBeforeSpace][\swjtu@pageStyle@otherTitleAfterSpace]{Abstract}
 
     % 摘要正文
     \swjtu@abstractEN@abstract
@@ -917,16 +963,13 @@
   \begin{fancyPage}
 
     % 标题
-    \begin{center}
-      \zihao{\swjtu@pageStyle@contentsTitleZihao} \heiti 目\swjtu@pageStyle@contentsTitleSpace 录
-    \end{center}
-
-    % 空行
-    % \vspace{\baselineskip}
+    \CustomChapter*[\swjtu@pageStyle@otherTitleBeforeSpace][\swjtu@pageStyle@otherTitleAfterSpace]{目\swjtu@pageStyle@contentsTitleSpace 录}
 
     % 正文
+    \vspace*{-\dimexpr \swjtu@pageStyle@chapSkipFactor\baselineskip\relax}
+    
     \begin{adjustwidth}{\swjtu@pageStyle@contentsMargin}{\swjtu@pageStyle@contentsMargin}
-      \begin{spacing}{1.5}
+      \begin{spacing}{\swjtu@pageStyle@defaultSkipFactor}
         \tableofcontents
       \end{spacing}
     \end{adjustwidth}
@@ -950,10 +993,6 @@
   \phantomsection % 添加锚点
   \chapter*{#1}
   \addcontentsline{toc}{chapter}{#1} % 添加到目录
-
-  % 修改结论节号格式
-  \setcounter{section}{0}
-  \renewcommand{\thesection}{\arabic{section}}
 }
 
 %%% ======================= 致谢 ======================= %%%
