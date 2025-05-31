@@ -1074,6 +1074,10 @@
   \phantomsection % 添加锚点
   \chapter*{#1}
   \addcontentsline{toc}{chapter}{#1} % 添加到目录
+
+  % 修改结论节号格式
+  \setcounter{section}{0}
+  \renewcommand{\thesection}{\arabic{section}}
 }
 
 %%% ======================= 致谢 ======================= %%%
