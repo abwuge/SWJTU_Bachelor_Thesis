@@ -19,6 +19,7 @@
 \RequirePackage{kvoptions}   % 键值对参数
 \RequirePackage{listings}    % 代码块
 \RequirePackage{microtype}   % 自动排版
+\RequirePackage{pgffor}      % 循环命令
 \RequirePackage{physics}     % 物理符号
 \RequirePackage{placeins}    % 浮动体
 \RequirePackage{setspace}    % 行间距
@@ -78,6 +79,7 @@
 
 % 扉页
 \DeclareStringOption{titTableRowHeight}
+\DeclareBoolOption[false]{underline}
 
 % 学术诚信声明
 \DeclareStringOption[true]{ceclarationTitleTextBf}
@@ -114,6 +116,7 @@
 %%% -------- 格式设定（按各自专业设定相关参数） -------- %%%
 \IfSubStr{应用物理学}{\swjtu@major}{
   \setkeys{swjtu/thesisStyle}{approver=true}
+  \setkeys{swjtu/thesisStyle}{underline=true}
 }{
   \IfSubStr{软件工程, 人工智能, 计算机科学与技术}{\swjtu@major}{
     % 计算机与人工智能学院
@@ -469,6 +472,31 @@
   \clearpage
 }
 
+%%% =================== 测量最大长度 =================== %%%
+\makeatletter
+%%% ----------------------- 参数 ----------------------- %%%
+\newlength{\swjtu@measure@maxWidth}  % 最大宽度
+\newlength{\swjtu@measure@tempWidth} % 临时宽度
+
+%%% --------------------- 两两比较 --------------------- %%%
+\newcommand{\swjtu@measure@getWider}[1]{%
+    \settowidth{\swjtu@measure@tempWidth}{#1}
+
+    \ifdim \swjtu@measure@tempWidth > \swjtu@measure@maxWidth
+        \global\swjtu@measure@maxWidth=\swjtu@measure@tempWidth%
+    \fi
+}
+
+%%% ------------------- 获取最大长度 ------------------- %%%
+\newcommand{\swjtu@measure@getMaxWidth}[1]{%
+    \setlength{\swjtu@measure@maxWidth}{0em}%
+    \foreach \str in {#1} {%
+            \swjtu@measure@getWider{\str}%
+        }%
+}
+
+\makeatother
+
 %%% ===================== 参数定义 ===================== %%%
 %%% -------------------- 前置页标题 -------------------- %%%
 \SetupKeyvalOptions{
@@ -630,15 +658,34 @@
 
       % 个人信息
       \ifdefvoid{\swjtu@thesisStyle@titTableRowHeight}{%
+      \ifswjtu@thesisStyle@underline
+      \swjtu@measure@getMaxWidth{
+                \swjtu@titlePage@grade,
+                \swjtu@titlePage@id,
+                \swjtu@titlePage@name,
+                \swjtu@titlePage@major,
+                \swjtu@titlePage@advisor
+            }
+            \begin{allheiti}
+                \begin{tabular}{lm{2em + \swjtu@measure@maxWidth}}
+                    年\hspace{2em}级： & \underline{\makebox[\linewidth][c]{\swjtu@titlePage@grade}}   \\
+                    学\hspace{2em}号： & \underline{\makebox[\linewidth][c]{\swjtu@titlePage@id}}      \\
+                    姓\hspace{2em}名： & \underline{\makebox[\linewidth][c]{\swjtu@titlePage@name}}    \\
+                    专\hspace{2em}业： & \underline{\makebox[\linewidth][c]{\swjtu@titlePage@major}}   \\
+                    指导教师：           & \underline{\makebox[\linewidth][c]{\swjtu@titlePage@advisor}} \\
+                \end{tabular}
+            \end{allheiti}
+      \else
         \begin{allheiti}
           \begin{tabular}{l}
-            年\hspace{2em}级:~\swjtu@titlePage@grade \\
-            学\hspace{2em}号:~\swjtu@titlePage@id    \\
-            姓\hspace{2em}名:~\swjtu@titlePage@name  \\
-            专\hspace{2em}业:~\swjtu@titlePage@major \\
-            指导老师:~\swjtu@titlePage@advisor
+            年\hspace{2em}级：\swjtu@titlePage@grade \\
+            学\hspace{2em}号：\swjtu@titlePage@id    \\
+            姓\hspace{2em}名：\swjtu@titlePage@name  \\
+            专\hspace{2em}业：\swjtu@titlePage@major \\
+            指导老师：\swjtu@titlePage@advisor
           \end{tabular}
         \end{allheiti}
+        \fi
 
         % 空行 * 13
         \vspace{13\baselineskip}
