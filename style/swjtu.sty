@@ -987,15 +987,16 @@
 
 %%% --------------------- 条目字体 --------------------- %%%
 % 章目录项
-\renewcommand{\cftchapfont}{\heiti}         % 标题
+\renewcommand{\cftchapfont}{\heiti}          % 标题
 \renewcommand{\cftchappagefont}{\rmfamily}   % 页码
+\ctexset{chapter/number = \arabic{chapter}}  % 章编号格式
 
 % 节目录项
-\renewcommand{\cftsecfont}{\songti}         % 标题
+\renewcommand{\cftsecfont}{\songti}          % 标题
 \renewcommand{\cftsecpagefont}{\rmfamily}    % 页码
 
 % 子节目录项
-\renewcommand{\cftsubsecfont}{\songti}      % 标题
+\renewcommand{\cftsubsecfont}{\songti}       % 标题
 \renewcommand{\cftsubsecpagefont}{\rmfamily} % 页码
 
 %%% -------------------- 编号盒宽度 -------------------- %%%
