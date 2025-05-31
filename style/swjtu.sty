@@ -91,6 +91,8 @@
 
 % 摘要
 \DeclareStringOption[\hspace{3em}]{absTitleSpace}
+\DeclareBoolOption[true]{spaceInKeyWords}
+\DeclareStringOption[\enheiti]{abstractENTitleFontType}
 
 % 目录
 \DeclareStringOption[\zihao{-4}]{contentsTitleZihao}
@@ -132,6 +134,8 @@
     \setkeys{swjtu/thesisStyle}{otherTitleAfterSpace=15pt}
     \setkeys{swjtu/thesisStyle}{ceclarationTitleTextBf=false}
     \setkeys{swjtu/thesisStyle}{copyrightTitleTextBf=false}
+    \setkeys{swjtu/thesisStyle}{spaceInKeyWords=false}
+    \setkeys{swjtu/thesisStyle}{abstractENTitleFontType=}
   }{
     % 其他专业的设置
   }
@@ -476,6 +480,7 @@
 \DeclareStringOption[\zihao{-2}]{fontsize}
 \DeclareBoolOption[true]{boldfont}
 \DeclareStringOption{title}
+\DeclareStringOption{fonttype}
 
 %%% ----------------------- 扉页 ----------------------- %%%
 \SetupKeyvalOptions{
@@ -583,9 +588,9 @@
 
   {\centering \singlespacing \heiti \swjtu@frontMatterTitle@fontsize
     \ifswjtu@frontMatterTitle@boldfont
-      \textbf{\swjtu@frontMatterTitle@title}\par
+      \textbf{\swjtu@frontMatterTitle@fonttype\swjtu@frontMatterTitle@title}\par
     \else
-      \swjtu@frontMatterTitle@title\par
+      {\swjtu@frontMatterTitle@fonttype\swjtu@frontMatterTitle@title}\par
     \fi
 
     \vspace*{\swjtu@frontMatterTitle@afterspace}\par
@@ -949,6 +954,7 @@
       beforespace=\swjtu@thesisStyle@otherTitleBeforeSpace,
       afterspace=\swjtu@thesisStyle@otherTitleAfterSpace,
       boldfont=false,
+      fonttype=\swjtu@thesisStyle@abstractENTitleFontType,
       title=Abstract
     ]
 
@@ -960,7 +966,11 @@
 
     % 关键词
     \noindent
-    \textbf{Keywords:}\hspace{0em}\swjtu@abstractEN@keywords
+    \ifswjtu@thesisStyle@spaceInKeyWords
+        \textbf{\enheiti Key words:} \swjtu@abstractEN@keywords
+    \else
+      \textbf{Keywords:}\swjtu@abstractEN@keywords
+    \fi
   \end{fancyPage}
 }
 \makeatother
