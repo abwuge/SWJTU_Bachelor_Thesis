@@ -152,7 +152,6 @@
     % 其他专业的设置
   }
 }
-
 \makeatother
 
 %%% ======================= 排版 ======================= %%%
@@ -320,6 +319,7 @@
 
 %%% ====================== 代码框 ====================== %%%
 \makeatletter
+
 \definecolor{code@green}{rgb}{0,0.6,0}
 \definecolor{code@gray}{rgb}{0.5,0.5,0.5}
 \definecolor{code@purple}{rgb}{0.58,0,0.82}
@@ -357,6 +357,7 @@
 
 %%% ===================== 公式注释 ===================== %%%
 \makeatletter
+
 \newcounter{swjtu@itemCount}
 \newcounter{swjtu@currentIndex}
 \newlength{\swjtu@labelwidth}
@@ -501,7 +502,6 @@
       \swjtu@measure@getWider{\str}%
     }%
 }
-
 \makeatother
 
 %%% ===================== 参数定义 ===================== %%%
@@ -616,6 +616,7 @@
 
 %%% ==================== 前置页标题 ==================== %%%
 \makeatletter
+
 \newcommand{\frontMatterTitle}[1][]{%
   \setkeys{swjtu/frontMatterTitle}{#1}
 
@@ -635,6 +636,7 @@
 
 %%% ======================= 扉页 ======================= %%%
 \makeatletter
+
 \newcommand{\swjtuTitlePage}[1][]{%
   \setkeys{swjtu/titlePage}{#1}
 
@@ -729,6 +731,7 @@
 
 %%% =================== 学术诚信声明 =================== %%%
 \makeatletter
+
 \newcommand{\swjtuIntegrityDeclaration}[1][]{%
   \setkeys{swjtu/integrity}{#1}
 
@@ -779,6 +782,7 @@
 
 %%% =================== 版权使用授权 =================== %%%
 \makeatletter
+
 \newcommand{\swjtuCopyrightAuthorization}[1][]{%
   \setkeys{swjtu/copyright}{#1}
 
@@ -855,6 +859,7 @@
 
 %%% ====================== 任务书 ====================== %%%
 \makeatletter
+
 \newcommand{\swjtuTask}[1][]{%
   \setkeys{swjtu/task}{#1}
 
@@ -967,6 +972,7 @@
 
 %%% ===================== 中文摘要 ===================== %%%
 \makeatletter
+
 \newcommand{\swjtuAbstractCN}[1][]{%
   \setkeys{swjtu/abstractCN}{#1}
 
@@ -1003,6 +1009,7 @@
 
 %%% ===================== 英文摘要 ===================== %%%
 \makeatletter
+
 \newcommand{\swjtuAbstractEN}[1][]{%
   \setkeys{swjtu/abstractEN}{#1}
 
@@ -1144,14 +1151,18 @@
 \inswjtuappendixfalse
 
 %%% ----------------------- 命令 ----------------------- %%%
+\makeatletter
+
 \newcommand{\swjtuAppendix}[1]{%
   \ifinswjtuappendix
     % 已经切换到附录模式
   \else
     % 切换到附录模式
-    \ctexset{
-      chapter/name = {附录},
-    }
+    \ctexset{chapter/name = {附录}}
+    \titleformat{\chapter}
+    {\centering\zihao{-2}\heiti}
+    {附录\thechapter}{\swjtu@thesisStyle@mainText@chapterTitleLabelSeparation}{}
+
     \setcounter{chapter}{0}
     \renewcommand{\thesection}{\thechapter.\arabic{section}}
     \renewcommand{\theHchapter}{A\thechapter}
@@ -1159,3 +1170,4 @@
   \fi
   \chapter{#1}
 }
+\makeatother
