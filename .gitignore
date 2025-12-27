@@ -1,6 +1,7 @@
 # VSCode settings
 .vscode/
 .github/prompts/
+.github/instructions/
 
 # Latex files
 build/
