@@ -34,7 +34,7 @@ jobs:
           echo "version=$TAG_VERSION" >> $GITHUB_OUTPUT
 
       - name: Set up TeX Live
-        uses: teatimeguest/setup-texlive-action@v3
+        uses: TeX-Live/setup-texlive-action@v3
         with:
           packages: >
             scheme-full
