@@ -97,8 +97,6 @@
 \DeclareStringOption[0pt]{abstract@titleBeforeSkip}
 \DeclareStringOption[\baselineskip]{abstract@titleAfterSkip}
 \DeclareStringOption[\hspace{3em}]{abstractCN@titleSpacing}
-\DeclareStringOption[]{abstractEN@titleFontType}
-\DeclareStringOption[\enheiti]{abstractEN@keyWordsFontType}
 \DeclareStringOption[\hspace{0.5em}]{abstractEN@keyWordsSpacing}
 
 % 目录
@@ -133,7 +131,6 @@
     \setkeys{swjtu/thesisStyle}{abstract@titleBeforeSkip=20pt}
     \setkeys{swjtu/thesisStyle}{abstract@titleAfterSkip=20pt}
     \setkeys{swjtu/thesisStyle}{abstractCN@titleSpacing=\hspace{0.5em}}
-    \setkeys{swjtu/thesisStyle}{abstractEN@keyWordsFontType=}
     \setkeys{swjtu/thesisStyle}{abstractEN@keyWordsSpacing=}
     \setkeys{swjtu/thesisStyle}{contents@titleFontSize=\zihao{-2}}
     \setkeys{swjtu/thesisStyle}{contents@titleSpacing=\hspace{0.5em}}
@@ -1018,7 +1015,6 @@
       beforeSkip=\swjtu@thesisStyle@abstract@titleBeforeSkip,
       afterSkip=\swjtu@thesisStyle@abstract@titleAfterSkip,
       boldfont=false,
-      fonttype=\swjtu@thesisStyle@abstractEN@titleFontType,
       title=Abstract
     ]
 
@@ -1030,7 +1026,7 @@
 
     % 关键词
     \noindent
-    \textbf{\swjtu@thesisStyle@abstractEN@keyWordsFontType Key\swjtu@thesisStyle@abstractEN@keyWordsSpacing words:} \swjtu@abstractEN@keywords
+    \textbf{Key\swjtu@thesisStyle@abstractEN@keyWordsSpacing words:} \swjtu@abstractEN@keywords
   \end{fancyPage}
 }
 \makeatother
