@@ -25,11 +25,22 @@ jobs:
       - name: Resolve TeX Live packages
         run: python3 .github/scripts/resolve_texlive_packages.py --platform x86_64-linux --output .github/texlive-packages.generated
 
+      - name: Read TeX Live cache scope
+        id: texlive-cache
+        run: |
+          release=$(sed -n 's/^# TeX Live release: //p' .github/texlive-packages.generated)
+          if [[ -z "$release" || "$release" == "unknown" ]]; then
+            release=current
+          fi
+          echo "release=$release" >> "$GITHUB_OUTPUT"
+
       - name: Cache TeX Live
         uses: actions/cache@v5.0.5
         with:
           path: .texlive
-          key: texlive-${{ runner.os }}-${{ hashFiles('.github/texlive-packages.generated', '.github/scripts/setup_texlive.py') }}
+          key: texlive-${{ runner.os }}-x86_64-linux-${{ steps.texlive-cache.outputs.release }}-${{ hashFiles('.github/texlive-packages.generated') }}
+          restore-keys: |
+            texlive-${{ runner.os }}-x86_64-linux-${{ steps.texlive-cache.outputs.release }}-
 
       - name: Set up TeX Live
         run: python3 .github/scripts/setup_texlive.py --platform x86_64-linux --package-file .github/texlive-packages.generated
