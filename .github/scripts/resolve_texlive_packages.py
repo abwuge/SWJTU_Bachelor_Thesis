@@ -29,11 +29,6 @@ BASE_PACKAGES = {
     "scheme-basic",
     "xetex",
 }
-LOCAL_PACKAGE_PREFIXES = (
-    "style/",
-    "./",
-    "../",
-)
 TEXT_EXTENSIONS = {
     ".cls",
     ".ltx",
@@ -147,8 +142,6 @@ def package_file_exists(root: Path, name: str, extension: str) -> bool:
 
 
 def package_is_local(root: Path, name: str, extension: str) -> bool:
-    if name.startswith(LOCAL_PACKAGE_PREFIXES):
-        return package_file_exists(root, name, extension)
     return package_file_exists(root, name, extension)
 
 

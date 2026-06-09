@@ -116,7 +116,10 @@ def extract_installer(archive: Path, destination: Path) -> None:
                 if link_target.is_absolute():
                     raise RuntimeError(f"Archive member has absolute link target: {member.name}")
                 ensure_within_directory(destination, member_path.parent / link_target)
-        tar.extractall(destination)
+        if sys.version_info >= (3, 12):
+            tar.extractall(destination, filter="data")
+        else:
+            tar.extractall(destination)
 
 
 def install_infra(
@@ -204,7 +207,7 @@ def setup_texlive(args: argparse.Namespace) -> None:
         raise RuntimeError(f"TeX Live bin directory does not exist: {texlive_bin}")
 
     env = os.environ.copy()
-    env["PATH"] = f"{texlive_bin}{os.pathsep}{env['PATH']}"
+    env["PATH"] = f"{texlive_bin}{os.pathsep}{env.get('PATH', '')}"
 
     tlmgr = str(texlive_bin / "tlmgr")
     run([tlmgr, "option", "docfiles", "0"], env=env)
