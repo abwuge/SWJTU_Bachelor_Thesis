@@ -19,6 +19,7 @@ on:
       - 'SWJTU_Bachelor_Thesis.tex'
 
 permissions:
+  contents: read
   id-token: write
   pages: write
 
@@ -27,15 +28,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.3
 
       - name: Resolve TeX Live packages
         run: python3 .github/scripts/resolve_texlive_packages.py --platform x86_64-linux --output .github/texlive-packages.generated
 
-      - name: Set up TeX Live
-        uses: TeX-Live/setup-texlive-action@v3
+      - name: Cache TeX Live
+        uses: actions/cache@v5.0.5
         with:
-          package-file: .github/texlive-packages.generated
+          path: .texlive
+          key: texlive-${{ runner.os }}-${{ hashFiles('.github/texlive-packages.generated', '.github/scripts/setup_texlive.py') }}
+
+      - name: Set up TeX Live
+        run: python3 .github/scripts/setup_texlive.py --platform x86_64-linux --package-file .github/texlive-packages.generated
 
       - name: Build PDF
         run: python3 .github/scripts/build_latex.py
@@ -105,13 +110,13 @@ jobs:
           EOF
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6.0.0
 
       - name: Upload static site to GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5.0.0
         with:
           path: site
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5.0.0
