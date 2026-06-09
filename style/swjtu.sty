@@ -145,7 +145,33 @@
     \setkeys{swjtu/thesisStyle}{mainText@chapterTitleBeforeSkip=20pt}
     \setkeys{swjtu/thesisStyle}{mainText@chapterTitleAfterSkip=8pt}
   }{
-    % 其他专业的设置
+    \IfSubStr{通信工程}{\swjtu@major}{ % 信息科学与技术学院：通信工程
+      \setkeys{swjtu/thesisStyle}{titlePage@titTableRowHeight=1.2cm}
+      \setkeys{swjtu/thesisStyle}{declaration@titleBoldFont=false}
+      \setkeys{swjtu/thesisStyle}{copyright@titleBoldFont=false}
+      \setkeys{swjtu/thesisStyle}{task@titleBeforeSkip=18pt}
+      \setkeys{swjtu/thesisStyle}{task@titleAfterSkip=18pt}
+      \setkeys{swjtu/thesisStyle}{task@taskOneSeparated=true}
+      \setkeys{swjtu/thesisStyle}{task@taskTwoSeparated=true}
+      \setkeys{swjtu/thesisStyle}{abstract@titleBeforeSkip=20pt}
+      \setkeys{swjtu/thesisStyle}{abstract@titleAfterSkip=20pt}
+      \setkeys{swjtu/thesisStyle}{abstractCN@titleSpacing=\hspace{0.5em}}
+      \setkeys{swjtu/thesisStyle}{abstractEN@keyWordsSpacing=}
+      \setkeys{swjtu/thesisStyle}{contents@titleFontSize=\zihao{-2}}
+      \setkeys{swjtu/thesisStyle}{contents@titleSpacing=\hspace{0.5em}}
+      \setkeys{swjtu/thesisStyle}{contents@titleBeforeSkip=20pt}
+      \setkeys{swjtu/thesisStyle}{contents@titleAfterSkip=20pt}
+      \setkeys{swjtu/thesisStyle}{contents@chapterBeforeSkip=0.25\baselineskip}
+      \setkeys{swjtu/thesisStyle}{contents@chapterAfterSkip=0.25\baselineskip}
+      \setkeys{swjtu/thesisStyle}{contents@indentType=step}
+      \setkeys{swjtu/thesisStyle}{contents@margin=0em}
+      \setkeys{swjtu/thesisStyle}{contents@contentsLineSpacing=1}
+      \setkeys{swjtu/thesisStyle}{mainText@chapterTitleLabelSeparation=0.5em}
+      \setkeys{swjtu/thesisStyle}{mainText@chapterTitleBeforeSkip=20pt}
+      \setkeys{swjtu/thesisStyle}{mainText@chapterTitleAfterSkip=20pt}
+    }{
+      % 其他专业的设置
+    }
   }
 }
 \makeatother
