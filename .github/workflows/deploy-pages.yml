@@ -8,6 +8,8 @@ on:
     tags:
       - 'v*.*.*'
     paths:
+      - '.github/scripts/**'
+      - '.github/workflows/deploy-pages.yml'
       - 'appendix/**'
       - 'bibliography/**'
       - 'chapters/**'
@@ -27,19 +29,16 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Resolve TeX Live packages
+        run: python3 .github/scripts/resolve_texlive_packages.py --platform x86_64-linux --output .github/texlive-packages.generated
+
       - name: Set up TeX Live
         uses: TeX-Live/setup-texlive-action@v3
         with:
-          packages: >
-            scheme-full
+          package-file: .github/texlive-packages.generated
 
       - name: Build PDF
-        run: |
-          mkdir -p build/appendix build/chapters
-          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
-          biber --output-directory=build SWJTU_Bachelor_Thesis
-          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
-          xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=build SWJTU_Bachelor_Thesis.tex
+        run: python3 .github/scripts/build_latex.py
 
       - name: Prepare site directory
         run: |
