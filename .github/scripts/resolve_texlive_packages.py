@@ -18,7 +18,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 
-TLPDB_URL = "https://mirror.ctan.org/systems/texlive/tlnet/tlpkg/texlive.tlpdb.xz"
+DEFAULT_TLPDB_URLS = [
+    "https://mirrors.ctan.org/systems/texlive/tlnet/tlpkg/texlive.tlpdb.xz",
+    "https://mirror.ctan.org/systems/texlive/tlnet/tlpkg/texlive.tlpdb.xz",
+    "https://ctan.math.utah.edu/ctan/tex-archive/systems/texlive/tlnet/tlpkg/texlive.tlpdb.xz",
+    "https://mirror.math.princeton.edu/pub/CTAN/systems/texlive/tlnet/tlpkg/texlive.tlpdb.xz",
+]
 BASE_PACKAGES = {
     "biber",
     "scheme-basic",
@@ -57,13 +62,25 @@ def guess_texlive_platform() -> str:
     )
 
 
-def read_tlpdb(path: Path | None) -> str:
+def read_tlpdb(path: Path | None, urls: list[str]) -> str:
     if path is not None:
         return lzma.decompress(path.read_bytes()).decode("utf-8", errors="replace")
 
-    with urllib.request.urlopen(TLPDB_URL, timeout=120) as response:
-        compressed = response.read()
-    return lzma.decompress(compressed).decode("utf-8", errors="replace")
+    errors: list[str] = []
+    for url in urls:
+        try:
+            print(f"Downloading TeX Live package database from {url}")
+            with urllib.request.urlopen(url, timeout=45) as response:
+                compressed = response.read()
+            return lzma.decompress(compressed).decode("utf-8", errors="replace")
+        except Exception as error:
+            errors.append(f"{url}: {error}")
+            print(f"Failed to download {url}: {error}", file=sys.stderr)
+
+    raise RuntimeError(
+        "Could not download texlive.tlpdb.xz from any configured URL:\n"
+        + "\n".join(errors)
+    )
 
 
 def parse_tlpdb(text: str) -> dict[str, TexLivePackage]:
@@ -255,6 +272,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--platform", default=None)
     parser.add_argument("--tlpdb", type=Path, default=None)
+    parser.add_argument(
+        "--tlpdb-url",
+        action="append",
+        default=[],
+        help="URL for texlive.tlpdb.xz; may be passed multiple times",
+    )
     return parser.parse_args()
 
 
@@ -262,7 +285,8 @@ def main() -> int:
     args = parse_args()
     root = args.root.resolve()
     texlive_platform = args.platform or guess_texlive_platform()
-    packages = parse_tlpdb(read_tlpdb(args.tlpdb))
+    urls = args.tlpdb_url or DEFAULT_TLPDB_URLS
+    packages = parse_tlpdb(read_tlpdb(args.tlpdb, urls))
     required_files = collect_required_files(root)
 
     root_packages = set(BASE_PACKAGES)
