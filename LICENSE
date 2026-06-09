@@ -1,11 +1,21 @@
-许可证
-版权所有 © abwuge, 2025。保留所有权利。
-- 用途限制
-本模板及其任何直接或间接修改版本仅限用于个人学习、学术研究用途等任何非盈利活动。任何未经书面授权的商业用途，包括但不限于销售、转售、分发等盈利活动，均被严格禁止。
-- 修改与再分发
-（a）允许对模板进行修改后分发，但修改后的产品必须沿用该许可证，无论修改或再分发形式如何。
-（b）最终产品（例如学位论文或研究报告）不属于本模板或其修改版本的范畴，无需遵守本许可证条款。
-- 免责声明
-本模板按“现状”提供，不附带任何明示或暗示的保证，包括但不限于适销性或特定用途的适用性。因使用本模板或修改后的产品引发的任何直接或间接损失，版权所有者概不负责。
-- 其他条款
-若有任何疑问，请联系：abwuge@163.com。
+MIT License
+
+Copyright (c) 2025 abwuge
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

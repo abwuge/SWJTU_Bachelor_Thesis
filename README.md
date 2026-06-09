@@ -1,7 +1,7 @@
 <div align="center">
   <h1>西南交通大学本科毕业论文LaTeX模板</h1>
   
-  [![LICENSE](https://badgen.net/static/LICENSE/非商业许可)](LICENSE)
+  [![LICENSE](https://badgen.net/static/LICENSE/MIT)](LICENSE)
 </div>
 
 ---
@@ -10,7 +10,7 @@
 >
 > 0. 截至 2026 年毕业季，该仓库仍在维护，如有任何问题请及时提交[Issue](../../issues/new)或[Pull Request](../../pulls)。
 > 1. 截至 2025 年毕业季，教务网只支持 doc/docx 格式论文。但仅需将编译后的 pdf 直接转为 word 提交至教务网即可，即使直接转换后的 word 格式杂乱。
-> 2. 若需详细论文撰写示例，可通过[许可证](LICENSE)中的联系方式向仓库所有者获取其本科毕业论文仓库权限。
+> 2. 若需详细论文撰写示例，可通过提交[Issue](../../issues/new)向仓库所有者获取其本科毕业论文仓库权限。
 
 ## 简介
 
