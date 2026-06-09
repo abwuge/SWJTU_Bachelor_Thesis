@@ -2,9 +2,10 @@
 """Build the thesis and install missing TeX Live packages on demand.
 
 The package resolver prepares the primary TeX Live package list before the
-setup action runs. This script is the safety net for dependencies that are
-only visible while TeX expands package files, for example a package that
-loads another package without declaring it in texlive.tlpdb.
+official installer wrapper runs. This script is the safety net for
+dependencies that are only visible while TeX expands package files, for
+example a package that loads another package without declaring it in
+texlive.tlpdb.
 """
 
 from __future__ import annotations

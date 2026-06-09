@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.3
         with:
           fetch-depth: 0
           fetch-tags: true
@@ -36,10 +36,14 @@ jobs:
       - name: Resolve TeX Live packages
         run: python3 .github/scripts/resolve_texlive_packages.py --platform x86_64-linux --output .github/texlive-packages.generated
 
-      - name: Set up TeX Live
-        uses: TeX-Live/setup-texlive-action@v3
+      - name: Cache TeX Live
+        uses: actions/cache@v5.0.5
         with:
-          package-file: .github/texlive-packages.generated
+          path: .texlive
+          key: texlive-${{ runner.os }}-${{ hashFiles('.github/texlive-packages.generated', '.github/scripts/setup_texlive.py') }}
+
+      - name: Set up TeX Live
+        run: python3 .github/scripts/setup_texlive.py --platform x86_64-linux --package-file .github/texlive-packages.generated
 
       - name: Compile LaTeX (xelatex -> biber -> xelatex*2)
         run: python3 .github/scripts/build_latex.py
@@ -50,7 +54,7 @@ jobs:
             appendix/ bibliography/ chapters/ fonts/ signatures/ style/ SWJTU_Bachelor_Thesis.tex LICENSE
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3.0.0
         with:
           files: SWJTU_Bachelor_Thesis_v${{ steps.get-version.outputs.version }}.zip
           name: ${{ steps.get-version.outputs.version }}

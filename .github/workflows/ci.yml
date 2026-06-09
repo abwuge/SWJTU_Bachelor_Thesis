@@ -20,21 +20,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.3
 
       - name: Resolve TeX Live packages
         run: python3 .github/scripts/resolve_texlive_packages.py --platform x86_64-linux --output .github/texlive-packages.generated
 
-      - name: Set up TeX Live
-        uses: TeX-Live/setup-texlive-action@v3
+      - name: Cache TeX Live
+        uses: actions/cache@v5.0.5
         with:
-          package-file: .github/texlive-packages.generated
+          path: .texlive
+          key: texlive-${{ runner.os }}-${{ hashFiles('.github/texlive-packages.generated', '.github/scripts/setup_texlive.py') }}
+
+      - name: Set up TeX Live
+        run: python3 .github/scripts/setup_texlive.py --platform x86_64-linux --package-file .github/texlive-packages.generated
 
       - name: Compile LaTeX (xelatex -> biber -> xelatex*2)
         run: python3 .github/scripts/build_latex.py
 
       - name: Upload source files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: SWJTU_Bachelor_Thesis
           path: |
@@ -49,7 +53,7 @@ jobs:
 
       - name: Upload build log
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: build-log
           path: build/SWJTU_Bachelor_Thesis.log
