@@ -288,10 +288,10 @@ Windows 下的[TeX Live](https://tug.org/texlive/) & [VS Code](https://code.visu
 > [!TIP]
 > 若对您有帮助，请给这个项目点上 Star!
 
-<a href="https://www.star-history.com/#abwuge/SWJTU_Bachelor_Thesis&Date">
+<a href="https://www.star-history.com/?repos=abwuge%2FSWJTU_Bachelor_Thesis&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=abwuge/SWJTU_Bachelor_Thesis&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=abwuge/SWJTU_Bachelor_Thesis&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=abwuge/SWJTU_Bachelor_Thesis&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=abwuge/SWJTU_Bachelor_Thesis&type=date&theme=dark&legend=top-left&sealed_token=bUYFdUFSuky3LbbZP4Xoh5CBt2rInPGA1EmIZltHSnCb0bCu2nF9iaX0BxiHJBITkyheFn6iRQJRpHewXI5FGUpYfpV45kQp0XVUz4MPUmmZQB-48RsYB7y_tdpJBw5whRvXJXnOvkJxXoNbv7BfjNiQlLVedyePyrQs2KI1HBKPuZVZR4SQ4D1F5c2h" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=abwuge/SWJTU_Bachelor_Thesis&type=date&legend=top-left&sealed_token=bUYFdUFSuky3LbbZP4Xoh5CBt2rInPGA1EmIZltHSnCb0bCu2nF9iaX0BxiHJBITkyheFn6iRQJRpHewXI5FGUpYfpV45kQp0XVUz4MPUmmZQB-48RsYB7y_tdpJBw5whRvXJXnOvkJxXoNbv7BfjNiQlLVedyePyrQs2KI1HBKPuZVZR4SQ4D1F5c2h" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=abwuge/SWJTU_Bachelor_Thesis&type=date&legend=top-left&sealed_token=bUYFdUFSuky3LbbZP4Xoh5CBt2rInPGA1EmIZltHSnCb0bCu2nF9iaX0BxiHJBITkyheFn6iRQJRpHewXI5FGUpYfpV45kQp0XVUz4MPUmmZQB-48RsYB7y_tdpJBw5whRvXJXnOvkJxXoNbv7BfjNiQlLVedyePyrQs2KI1HBKPuZVZR4SQ4D1F5c2h" />
  </picture>
 </a>
